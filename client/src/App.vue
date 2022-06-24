@@ -44,13 +44,11 @@ export default {
 .app {
   width: 100vw;
   height: 100vh;
-  font-size: 10px;
+  //font-size: 10px;
   background-color: #A7D7C5;
 }
 
 .container {
-  width: 1440px;
-  margin: 0 auto;
   height: 100%;
 }
 

@@ -42,7 +42,7 @@ export default {
   flex-direction: column;
 
   &__label {
-    font-size: 14px;
+    font-size: 12px;
     padding-bottom: 5px;
     color: rgba(0, 0, 0, 0.5)
   }
@@ -52,7 +52,7 @@ export default {
     font-size: 14px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     outline: none;
-    border-radius: 3px;
+    border-radius: 10px;
   }
 }
 </style>

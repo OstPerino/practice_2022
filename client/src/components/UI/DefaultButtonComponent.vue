@@ -37,5 +37,9 @@ export default {
     cursor: pointer;
     border-radius: 30px;
   }
+
+  &__button:hover {
+    filter: brightness(105%);
+  }
 }
 </style>

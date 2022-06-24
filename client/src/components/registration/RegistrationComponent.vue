@@ -1,10 +1,11 @@
 <template>
   <div class="RegistrationComponent">
     <h2
-      class="RegistrationComponent__header RegistrationComponent__item"
+      class="RegistrationComponent__header"
     >
       Create an account
     </h2>
+    <span class="RegistrationComponent__mark">Create an account to<br>get access for all functions</span>
     <DefaultInputComponent
       class="RegistrationComponent__item"
       :placeholder="this.inputData.userNameInput.placeholderContent"
@@ -91,7 +92,13 @@ export default {
   &__header {
     font-size: 30px;
     color: #212B27;
-    margin-bottom: 30px;
+  }
+
+  &__mark {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #32403B;
   }
 
   &__button {
