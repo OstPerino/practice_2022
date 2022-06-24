@@ -40,17 +40,17 @@ export default {
 .DefaultInputComponent {
   display: flex;
   flex-direction: column;
-  width: 200px;
 
   &__label {
     font-size: 14px;
-    padding-bottom: 2px;
+    padding-bottom: 5px;
+    color: rgba(0, 0, 0, 0.5)
   }
 
   &__input {
     padding: 10px 5px;
     font-size: 14px;
-    border: 1px solid #000;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     outline: none;
     border-radius: 3px;
   }

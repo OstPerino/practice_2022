@@ -37,14 +37,15 @@ export default {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&display=swap');
-  font-family: 'Barlow', sans-serif;
+  @import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
+  font-family: 'Karla', sans-serif;
 }
 
 .app {
   width: 100vw;
   height: 100vh;
   font-size: 10px;
+  background-color: #A7D7C5;
 }
 
 .container {

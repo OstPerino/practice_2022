@@ -1,5 +1,10 @@
 <template>
   <div class="RegistrationComponent">
+    <h2
+      class="RegistrationComponent__header RegistrationComponent__item"
+    >
+      Create an account
+    </h2>
     <DefaultInputComponent
       class="RegistrationComponent__item"
       :placeholder="this.inputData.userNameInput.placeholderContent"
@@ -25,7 +30,7 @@
       v-model="inputData.confirmPasswordInput.value"
     />
     <DefaultButtonComponent
-      class="RegistrationComponent__item"
+      class="RegistrationComponent__button"
       :button-content="this.buttonData.buttonContent"
     />
   </div>
@@ -78,13 +83,20 @@ export default {
 .RegistrationComponent {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  background-color: #F6FBF9;
+  border-radius: 10px;
+  padding: 60px 80px;
 
-  &__item {
-    margin-bottom: 10px;
+  &__header {
+    font-size: 30px;
+    color: #212B27;
+    margin-bottom: 30px;
   }
 
-  &__item:last-child {
-    margin-bottom: 0;
+  &__button {
+    text-align: center;
+    margin-top: 20px;
   }
 }
 </style>
