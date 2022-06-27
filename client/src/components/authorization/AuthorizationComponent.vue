@@ -2,34 +2,36 @@
   <form class="AuthorizationComponent">
     <h2 class="AuthorizationComponent__header">Login</h2>
     <div class="AuthorizationComponent__container">
-    <DefaultInputComponent
-      class="AuthorizationComponent__item"
-      :placeholder="inputData.userNameInput.placeholderContent"
-      :label-value="inputData.userNameInput.labelContent"
-      v-model.trim="$v.inputData.userNameInput.value.$model"/>
-    <span
-      class="AuthorizationComponent__error"
-      v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
-    >
+      <DefaultInputComponent
+        class="AuthorizationComponent__item"
+        :placeholder="inputData.userNameInput.placeholderContent"
+        :label-value="inputData.userNameInput.labelContent"
+        v-model.trim="$v.inputData.userNameInput.value.$model"
+      />
+      <span
+        class="AuthorizationComponent__error"
+        v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
+      >
         Field is required.
       </span>
-    <span
-      class="AuthorizationComponent__error"
-      v-show="!$v.inputData.userNameInput.value.minLength"
-    >
+      <span
+        class="AuthorizationComponent__error"
+        v-show="!$v.inputData.userNameInput.value.minLength"
+      >
         Field must have at least {{ $v.inputData.userNameInput.value.$params.minLength.min }} characters.
       </span>
     </div>
     <div class="AuthorizationComponent__container">
-    <DefaultInputComponent
-      class="AuthorizationComponent__item"
-      :placeholder="this.inputData.userPasswordInput.placeholderContent"
-      :label-value="this.inputData.userPasswordInput.labelContent"
-      v-model.trim="$v.inputData.userPasswordInput.value.$model"/>
-    <span
-      class="AuthorizationComponent__error"
-      v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
-    >
+      <DefaultInputComponent
+        class="AuthorizationComponent__item"
+        :placeholder="this.inputData.userPasswordInput.placeholderContent"
+        :label-value="this.inputData.userPasswordInput.labelContent"
+        v-model.trim="$v.inputData.userPasswordInput.value.$model"
+      />
+      <span
+        class="AuthorizationComponent__error"
+        v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
+      >
         Field is required.
       </span>
     </div>
@@ -50,14 +52,6 @@ export default {
   components: {
     DefaultButtonComponent,
     DefaultInputComponent
-  },
-  mounted () {
-    console.log(this.$v)
-  },
-  computed: {
-    isDirty (expression, dirty) {
-      return !expression && dirty
-    }
   },
   validations: {
     inputData: {
@@ -101,7 +95,7 @@ export default {
   padding: 60px 80px;
 
   &__container {
-    padding-bottom: 20px;
+    padding: 0 15px 15px 0;
     position: relative;
   }
 
