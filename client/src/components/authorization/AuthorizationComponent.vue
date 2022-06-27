@@ -1,34 +1,73 @@
 <template>
-  <div class="AuthorizationComponent">
-    <lable>Authorization</lable>
+  <form class="AuthorizationComponent">
+    <h2 class="AuthorizationComponent__header">Login</h2>
+    <div class="AuthorizationComponent__container">
     <DefaultInputComponent
       class="AuthorizationComponent__item"
-      :placeholder="this.inputData.userNameInput.placeholderContent"
-      :label-value="this.inputData.userNameInput.labelContent"
-      v-model="inputData.userNameInput.value"/>
-
+      :placeholder="inputData.userNameInput.placeholderContent"
+      :label-value="inputData.userNameInput.labelContent"
+      v-model.trim="$v.inputData.userNameInput.value.$model"/>
+    <span
+      class="AuthorizationComponent__error"
+      v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
+    >
+        Field is required.
+      </span>
+    <span
+      class="AuthorizationComponent__error"
+      v-show="!$v.inputData.userNameInput.value.minLength"
+    >
+        Field must have at least {{ $v.inputData.userNameInput.value.$params.minLength.min }} characters.
+      </span>
+    </div>
+    <div class="AuthorizationComponent__container">
     <DefaultInputComponent
       class="AuthorizationComponent__item"
       :placeholder="this.inputData.userPasswordInput.placeholderContent"
       :label-value="this.inputData.userPasswordInput.labelContent"
-      v-model="inputData.userPasswordInput.value"/>
-
+      v-model.trim="$v.inputData.userPasswordInput.value.$model"/>
+    <span
+      class="AuthorizationComponent__error"
+      v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
+    >
+        Field is required.
+      </span>
+    </div>
     <DefaultButtonComponent
       class="AuthorizationComponent__button "
       :button-content="this.buttonData.buttonContent"
     />
-  </div>
+  </form>
 </template>
 
 <script>
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'authorization-component.vue',
   components: {
     DefaultButtonComponent,
     DefaultInputComponent
+  },
+  mounted () {
+    console.log(this.$v)
+  },
+  computed: {
+    isDirty (expression, dirty) {
+      return !expression && dirty
+    }
+  },
+  validations: {
+    inputData: {
+      userNameInput: {
+        value: { required, minLength: minLength(8) }
+      },
+      userPasswordInput: {
+        value: { required }
+      }
+    }
   },
   data: () => {
     return {
@@ -61,9 +100,15 @@ export default {
   border-radius: 10px;
   padding: 60px 80px;
 
+  &__container {
+    padding-bottom: 20px;
+    position: relative;
+  }
+
   &__header {
     font-size: 30px;
     color: #212B27;
+    text-align: center;
   }
 
   &__mark {
@@ -76,6 +121,14 @@ export default {
   &__button {
     text-align: center;
     margin-top: 20px;
+  }
+
+  &__error {
+    font-size: 12px;
+    color: #F47174;
+    position: absolute;
+    bottom: 0;
+    left: 5px;
   }
 }
 </style>
