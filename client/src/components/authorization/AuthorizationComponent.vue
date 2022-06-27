@@ -4,35 +4,34 @@
     <div class="AuthorizationComponent__container">
     <DefaultInputComponent
       class="AuthorizationComponent__item"
-      :placeholder="inputData.userEmailInput.placeholderContent"
-      :label-value="inputData.userEmailInput.labelContent"
-      v-model.trim="$v.inputData.userEmailInput.value.$model"/>
+      :placeholder="inputData.userNameInput.placeholderContent"
+      :label-value="inputData.userNameInput.labelContent"
+      v-model.trim="$v.inputData.userNameInput.value.$model"/>
     <span
       class="AuthorizationComponent__error"
-      v-show="!$v.inputData.userEmailInput.value.required && $v.inputData.userEmailInput.value.$dirty"
+      v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
     >
         Field is required.
-    </span>
+      </span>
     <span
       class="AuthorizationComponent__error"
-      v-show="!$v.inputData.userEmailInput.value.email"
+      v-show="!$v.inputData.userNameInput.value.minLength"
     >
-       Check if email is correct.
-    </span>
+        Field must have at least {{ $v.inputData.userNameInput.value.$params.minLength.min }} characters.
+      </span>
     </div>
     <div class="AuthorizationComponent__container">
     <DefaultInputComponent
       class="AuthorizationComponent__item"
       :placeholder="this.inputData.userPasswordInput.placeholderContent"
       :label-value="this.inputData.userPasswordInput.labelContent"
-      v-model.trim="$v.inputData.userPasswordInput.value.$model"
-    />
+      v-model.trim="$v.inputData.userPasswordInput.value.$model"/>
     <span
       class="AuthorizationComponent__error"
       v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
     >
         Field is required.
-    </span>
+      </span>
     </div>
     <DefaultButtonComponent
       class="AuthorizationComponent__button "
@@ -44,7 +43,7 @@
 <script>
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
-import { required, email } from 'vuelidate/lib/validators'
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'authorization-component.vue',
@@ -55,10 +54,15 @@ export default {
   mounted () {
     console.log(this.$v)
   },
+  computed: {
+    isDirty (expression, dirty) {
+      return !expression && dirty
+    }
+  },
   validations: {
     inputData: {
-      userEmailInput: {
-        value: { required, email }
+      userNameInput: {
+        value: { required, minLength: minLength(8) }
       },
       userPasswordInput: {
         value: { required }
@@ -68,7 +72,7 @@ export default {
   data: () => {
     return {
       inputData: {
-        userEmailInput: {
+        userNameInput: {
           labelContent: 'Email',
           placeholderContent: 'Type your email',
           value: ''
@@ -97,7 +101,7 @@ export default {
   padding: 60px 80px;
 
   &__container {
-    padding: 0 15px 15px 0;
+    padding-bottom: 20px;
     position: relative;
   }
 
