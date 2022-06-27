@@ -6,48 +6,89 @@
       Create an account
     </h2>
     <span class="RegistrationComponent__mark">Create an account to<br>get access for all functions</span>
-    <DefaultInputComponent
-      class="RegistrationComponent__item"
-      :placeholder="this.inputData.userNameInput.placeholderContent"
-      :label-value="this.inputData.userNameInput.labelContent"
-      v-model="inputData.userNameInput.value"
-    />
-    <DefaultInputComponent
-      class="RegistrationComponent__item"
-      :placeholder="this.inputData.userEmailInput.placeholderContent"
-      :label-value="this.inputData.userEmailInput.labelContent"
-      v-model="inputData.userEmailInput.value"
-    />
-    <DefaultInputComponent
-      class="RegistrationComponent__item"
-      :placeholder="this.inputData.userPasswordInput.placeholderContent"
-      :label-value="this.inputData.userPasswordInput.labelContent"
-      v-model="inputData.userPasswordInput.value"
-    />
-    <DefaultInputComponent
-      class="RegistrationComponent__item"
-      :placeholder="this.inputData.confirmPasswordInput.placeholderContent"
-      :label-value="this.inputData.confirmPasswordInput.labelContent"
-      v-model="inputData.confirmPasswordInput.value"
-    />
+    <div class="RegistrationComponent__container">
+      <DefaultInputComponent
+        class="RegistrationComponent__item"
+        :placeholder="inputData.userNameInput.placeholderContent"
+        :label-value="inputData.userNameInput.labelContent"
+        v-model.trim="$v.inputData.userNameInput.value.$model"
+      />
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userNameInput.value.required"
+      >
+        Field is required.
+      </span>
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userNameInput.value.minLength"
+      >
+        Field must have at least {{ $v.inputData.userNameInput.value.$params.minLength.min }} characters.
+      </span>
+    </div>
+    <div class="RegistrationComponent__container">
+      <DefaultInputComponent
+        class="RegistrationComponent__item"
+        :placeholder="inputData.userEmailInput.placeholderContent"
+        :label-value="inputData.userEmailInput.labelContent"
+        v-model.trim="$v.inputData.userEmailInput.value.$model"
+      />
+    </div>
+    <div class="RegistrationComponent__container">
+      <DefaultInputComponent
+        class="RegistrationComponent__item"
+        :placeholder="inputData.userPasswordInput.placeholderContent"
+        :label-value="inputData.userPasswordInput.labelContent"
+        v-model.trim="$v.inputData.userPasswordInput.value.$model"
+      />
+    </div>
+    <div class="RegistrationComponent__container">
+      <DefaultInputComponent
+        class="RegistrationComponent__item"
+        :placeholder="inputData.confirmPasswordInput.placeholderContent"
+        :label-value="inputData.confirmPasswordInput.labelContent"
+        v-model.trim="$v.inputData.confirmPasswordInput.value.$model"
+      />
+<!--      <span class="RegistrationComponent__error"></span>-->
+    </div>
     <DefaultButtonComponent
       class="RegistrationComponent__button"
-      :button-content="this.buttonData.buttonContent"
+      :button-content="buttonData.buttonContent"
     />
   </div>
 </template>
 
 <script>
+import { email, required, minLength, sameAs } from 'vuelidate/lib/validators'
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
 
 export default {
   name: 'registration-component.vue',
+  mounted () {
+    console.log(this.$v.inputData.userNameInput.value.$model)
+  },
   components: {
     DefaultInputComponent,
     DefaultButtonComponent
   },
-  data: () => {
+  validations: {
+    inputData: {
+      userNameInput: {
+        value: { required, minLength: minLength(8) }
+      },
+      userEmailInput: {
+        value: { required, email }
+      },
+      userPasswordInput: {
+        value: { required, minLength: minLength(8) }
+      },
+      confirmPasswordInput: {
+        value: { required, sameAs }
+      }
+    }
+  },
+  data () {
     return {
       inputData: {
         userNameInput: {
@@ -104,6 +145,10 @@ export default {
   &__button {
     text-align: center;
     margin-top: 20px;
+  }
+
+  &__error {
+    transition: 0.3s all;
   }
 }
 </style>
