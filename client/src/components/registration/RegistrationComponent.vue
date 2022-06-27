@@ -1,5 +1,5 @@
 <template>
-  <div class="RegistrationComponent">
+  <form class="RegistrationComponent">
     <h2
       class="RegistrationComponent__header"
     >
@@ -15,7 +15,7 @@
       />
       <span
         class="RegistrationComponent__error"
-        v-show="!$v.inputData.userNameInput.value.required"
+        v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
       >
         Field is required.
       </span>
@@ -33,6 +33,18 @@
         :label-value="inputData.userEmailInput.labelContent"
         v-model.trim="$v.inputData.userEmailInput.value.$model"
       />
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userEmailInput.value.required && $v.inputData.userEmailInput.value.$dirty"
+      >
+        Field is required.
+      </span>
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userEmailInput.value.email"
+      >
+        Field must look like an email.
+      </span>
     </div>
     <div class="RegistrationComponent__container">
       <DefaultInputComponent
@@ -41,6 +53,18 @@
         :label-value="inputData.userPasswordInput.labelContent"
         v-model.trim="$v.inputData.userPasswordInput.value.$model"
       />
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
+      >
+        Field is required.
+      </span>
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userPasswordInput.value.minLength"
+      >
+        Field must have at least {{ $v.inputData.userPasswordInput.value.$params.minLength.min }} characters.
+      </span>
     </div>
     <div class="RegistrationComponent__container">
       <DefaultInputComponent
@@ -49,13 +73,24 @@
         :label-value="inputData.confirmPasswordInput.labelContent"
         v-model.trim="$v.inputData.confirmPasswordInput.value.$model"
       />
-<!--      <span class="RegistrationComponent__error"></span>-->
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.confirmPasswordInput.value.required && $v.inputData.confirmPasswordInput.value.$dirty"
+      >
+        Field is required.
+      </span>
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.confirmPasswordInput.value.sameAs"
+      >
+        Field must be the same as password field.
+      </span>
     </div>
     <DefaultButtonComponent
       class="RegistrationComponent__button"
       :button-content="buttonData.buttonContent"
     />
-  </div>
+  </form>
 </template>
 
 <script>
@@ -66,11 +101,16 @@ import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
 export default {
   name: 'registration-component.vue',
   mounted () {
-    console.log(this.$v.inputData.userNameInput.value.$model)
+    console.log(this.$v.inputData.userPasswordInput.value.$model)
   },
   components: {
     DefaultInputComponent,
     DefaultButtonComponent
+  },
+  computed: {
+    isDirty (expression, dirty) {
+      return !expression && dirty
+    }
   },
   validations: {
     inputData: {
@@ -114,7 +154,8 @@ export default {
       },
       buttonData: {
         buttonContent: 'Sign up'
-      }
+      },
+      password: 'password'
     }
   }
 }
@@ -130,9 +171,14 @@ export default {
   border-radius: 10px;
   padding: 60px 80px;
 
+  &__container {
+    padding-bottom: 15px;
+    position: relative;
+  }
+
   &__header {
     font-size: 30px;
-    color: #212B27;
+    color: #181A18;
   }
 
   &__mark {
@@ -148,7 +194,11 @@ export default {
   }
 
   &__error {
-    transition: 0.3s all;
+    font-size: 12px;
+    color: #F47174;
+    position: absolute;
+    bottom: 0;
+    left: 5px;
   }
 }
 </style>
