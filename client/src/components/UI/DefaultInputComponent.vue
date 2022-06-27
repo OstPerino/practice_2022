@@ -6,6 +6,7 @@
         :value="this.value"
         @input="updateInput"
         :placeholder="this.placeholder"
+        :type="isPassword"
       />
     </div>
 </template>
@@ -25,6 +26,10 @@ export default {
     placeholder: {
       type: String,
       required: true
+    },
+    isPassword: {
+      type: Boolean,
+      required: false
     }
   },
   methods: {
@@ -40,19 +45,19 @@ export default {
 .DefaultInputComponent {
   display: flex;
   flex-direction: column;
-  width: 200px;
 
   &__label {
-    font-size: 14px;
-    padding-bottom: 2px;
+    font-size: 12px;
+    padding-bottom: 5px;
+    color: rgba(0, 0, 0, 0.5)
   }
 
   &__input {
     padding: 10px 5px;
     font-size: 14px;
-    border: 1px solid #000;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     outline: none;
-    border-radius: 3px;
+    border-radius: 10px;
   }
 }
 </style>

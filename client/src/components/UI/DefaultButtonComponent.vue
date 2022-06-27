@@ -27,5 +27,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.DefaultButtonComponent {
+  &__button {
+    background-color: #84C7AE;
+    padding: 15px 45px;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 30px;
+  }
 
+  &__button:hover {
+    filter: brightness(105%);
+  }
+}
 </style>
