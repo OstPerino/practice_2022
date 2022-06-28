@@ -6,6 +6,7 @@
         :value="this.value"
         @input="updateInput"
         :placeholder="this.placeholder"
+        :type="isPassword"
       />
     </div>
 </template>
@@ -25,6 +26,10 @@ export default {
     placeholder: {
       type: String,
       required: true
+    },
+    isPassword: {
+      type: Boolean,
+      required: false
     }
   },
   methods: {
