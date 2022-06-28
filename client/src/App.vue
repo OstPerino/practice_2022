@@ -5,26 +5,14 @@
   >
     <div class="container">
       <div class="flex-container">
-<!--        <registration-component-->
-<!--          class="RegistrationComponent"-->
-<!--        />-->
-        <authorization-component
-          class="AuthorizationComponent"
-        />
+        <router-view></router-view>
       </div>
     </div>
-    <router-view/>
   </div>
 </template>
 
 <script>
-// import registrationComponent from '@/components/registration/RegistrationComponent'
-import authorizationComponent from '@/components/authorization/AuthorizationComponent'
 export default {
-  components: {
-    // registrationComponent,
-    authorizationComponent
-  },
   data: () => {
     return {
     }

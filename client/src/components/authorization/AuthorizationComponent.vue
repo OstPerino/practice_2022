@@ -6,19 +6,20 @@
         class="AuthorizationComponent__item"
         :placeholder="inputData.userEmailInput.placeholderContent"
         :label-value="inputData.userEmailInput.labelContent"
-        v-model.trim="$v.inputData.userEmailInput.value.$model"/>
+        v-model.trim="$v.inputData.userEmailInput.value.$model"
+      />
       <span
         class="AuthorizationComponent__error"
         v-show="!$v.inputData.userEmailInput.value.required && $v.inputData.userEmailInput.value.$dirty"
       >
         Field is required.
-    </span>
+      </span>
       <span
         class="AuthorizationComponent__error"
         v-show="!$v.inputData.userEmailInput.value.email"
       >
        Check if email is correct.
-    </span>
+      </span>
     </div>
     <div class="AuthorizationComponent__container">
       <DefaultInputComponent
@@ -32,7 +33,7 @@
         v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
       >
         Field is required.
-    </span>
+      </span>
     </div>
     <DefaultButtonComponent
       class="AuthorizationComponent__button "
@@ -51,9 +52,6 @@ export default {
   components: {
     DefaultButtonComponent,
     DefaultInputComponent
-  },
-  mounted () {
-    console.log(this.$v)
   },
   validations: {
     inputData: {
