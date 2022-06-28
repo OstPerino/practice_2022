@@ -90,6 +90,20 @@
       class="RegistrationComponent__button"
       :button-content="buttonData.buttonContent"
     />
+    <div class="RegistrationComponent__registrationHref registrationHref">
+      <span
+        class="registrationHref__link"
+      >
+        Already have an account?
+      </span>
+      <br>
+      <router-link
+        to="/authorization"
+        class="registrationHref__link link"
+      >
+        Authorization
+      </router-link>
+    </div>
   </form>
 </template>
 
@@ -199,6 +213,19 @@ export default {
     position: absolute;
     bottom: 0;
     left: 5px;
+  }
+
+  .registrationHref {
+    text-align: center;
+    line-height: 20px;
+    &__link {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .link {
+      color: #48927c;
+      text-decoration: none;
+    }
   }
 }
 </style>

@@ -42,7 +42,8 @@
     <div class="AuthorizationComponent__registrationHref registrationHref">
       <span
         class="registrationHref__link"
-      >Doesn't have an account?
+      >
+        Doesn't have an account?
       </span>
       <br>
       <router-link
