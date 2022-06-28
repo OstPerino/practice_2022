@@ -1,6 +1,6 @@
 <template>
   <form class="AuthorizationComponent">
-    <h2 class="AuthorizationComponent__header">Login</h2>
+    <h2 class="AuthorizationComponent__header">Authorization</h2>
     <div class="AuthorizationComponent__container">
       <DefaultInputComponent
         class="AuthorizationComponent__item"
@@ -39,6 +39,19 @@
       class="AuthorizationComponent__button "
       :button-content="this.buttonData.buttonContent"
     />
+    <div class="AuthorizationComponent__registrationHref registrationHref">
+      <span
+        class="registrationHref__link"
+      >Doesn't have an account?
+      </span>
+      <br>
+      <router-link
+        to="/registration"
+        class="registrationHref__link link"
+      >
+        Registration
+      </router-link>
+    </div>
   </form>
 </template>
 
@@ -103,6 +116,7 @@ export default {
     font-size: 30px;
     color: #212B27;
     text-align: center;
+    margin-bottom: 15px;
   }
 
   &__mark {
@@ -123,6 +137,19 @@ export default {
     position: absolute;
     bottom: 0;
     left: 5px;
+  }
+
+  .registrationHref {
+    text-align: center;
+    line-height: 20px;
+    &__link {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .link {
+      color: #48927c;
+      text-decoration: none;
+    }
   }
 }
 </style>
