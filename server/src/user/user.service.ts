@@ -22,7 +22,7 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  findOne(userWhereUniqueInput: Prisma.UserWhereUniqueInput,) {
+  findOne(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
     return this.prisma.user.findUnique({
       where: userWhereUniqueInput,
     });
@@ -40,8 +40,15 @@ export class UserService {
   }
 
   remove(where: Prisma.UserWhereUniqueInput) {
-    return this.prisma.user.delete({
-      where,
-    });
+    return this.prisma.user.delete({ where });
   }
+
+  async getUserByLogin(login: string) {
+    const user = await this.prisma.user.findUnique({where: {login});
+    return user;
+  }
+
+
+
+
 }
