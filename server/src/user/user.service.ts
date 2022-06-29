@@ -44,7 +44,9 @@ export class UserService {
   }
 
   async getUserByLogin(login: string) {
-    const user = await this.prisma.user.findUnique({where: {login});
+    const user = await this.prisma.user.findUnique({where: {login}});
+    console.log(user);
+
     return user;
   }
 

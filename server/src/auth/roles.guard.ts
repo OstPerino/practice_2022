@@ -24,20 +24,27 @@ export class RolesGuard implements CanActivate {
                 context.getClass(),
             ])
             if (!requiredRoles) {
+              console.log('roles is null');
                 return true;
             }
             const req = context.switchToHttp().getRequest();
-            const authHeader = req.headers.authorization;
-            const bearer = authHeader.split(' ')[0]
-            const token = authHeader.split(' ')[1]
+            const authHeader = req.headers.cookie;
+            const nameToken = authHeader.split('=')[0]
+            const token = authHeader.split('=')[1]
 
-            if (bearer !== 'Bearer' || !token) {
-                throw new UnauthorizedException({message: 'Пользователь не авторизован'})
+            if (nameToken !== 'jwt' || !token) {
+                throw new UnauthorizedException({message: 'Пользователь не авторизован(Roles)'})
             }
 
             const user = this.jwtService.verify(token);
             req.user = user;
-            return user.role.some(role => requiredRoles.includes(role.value)); // ??user.roles or user.role??
+            console.log(user.role);
+            console.log(requiredRoles);
+            console.log('_role_');
+            const result = requiredRoles.some(role => user.role == role);
+            console.log(result);
+            return result;
+            //return user.role.some(role => requiredRoles.includes(role.value)); // ??user.roles or user.role??
         } catch (e) {
             console.log(e)
             throw new HttpException( 'Нет доступа', HttpStatus.FORBIDDEN)

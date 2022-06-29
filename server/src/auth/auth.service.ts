@@ -1,6 +1,6 @@
 import {HttpException, HttpStatus, Injectable, UnauthorizedException} from '@nestjs/common';
-import {CreateUserDto} from "../users/dto/create-user.dto";
-import {UserService} from "../users/user.service";
+import {CreateUserDto} from "../user/dto/create-user.dto";
+import {UserService} from "../user/user.service";
 import {JwtService} from "@nestjs/jwt";
 import * as bcrypt from 'bcryptjs'
 //import {User} from "../users/users.model";
@@ -12,19 +12,21 @@ export class AuthService {
                 private jwtService: JwtService) {}
 
     private async generateToken(userDto: CreateUserDto) {
-        const payload = {email: userDto.email, id: userDto.id, role: userDto.role}
-        return {
-            token: this.jwtService.sign(payload)
-        }
+        const payload = {email: userDto.email, id: userDto.id, role: userDto.role};
+        const tokenjwt = await this.jwtService.signAsync(payload);
+        return tokenjwt;
     }
 
     private async validateUser(userDto: CreateUserDto) {
         const user = await this.userService.getUserByLogin(userDto.login);
-        const passwordEquals = await bcrypt.compare(userDto.password, user.password);
-        if (user && passwordEquals) {
-            return user;
+        if(!user){
+          throw new UnauthorizedException({message: 'Пользователя с таким логином не существует!'})
         }
-        throw new UnauthorizedException({message: 'Некорректный логин или пароль!'})
+        const passwordEquals = await bcrypt.compare(userDto.password, user.password);
+        if (!passwordEquals) {
+          throw new UnauthorizedException({message: 'Неверный пароль!'});
+        }
+        return user;
     }
 
     async registration(userDto: CreateUserDto) {
@@ -34,12 +36,24 @@ export class AuthService {
         }
         const hashPassword = await bcrypt.hash(userDto.password, 5);
         const user = await this.userService.create({...userDto, password: hashPassword});
-        return true//this.generateToken(user)
+        return true;//this.generateToken(user)
     }
 
     async login(userDto: CreateUserDto) {
         const user = await this.validateUser(userDto);
         return this.generateToken(user)
-        // мы видимо должны отдать токен клинету чтобы он потом при заходе куда либо давал нам его
+        // мы видимо должны отдать токен клиенту чтобы он потом при заходе куда либо давал нам его
     }
+
+    /*
+    async checkGuard(userDto: CreateUserDto, token: string) {
+        const userdb = await this.userService.getUserByLogin(userDto.login);
+        const jwt = this.generateToken(userdb);
+        console.log(token);
+        console.log(jwt);
+
+        return true;
+    }
+    */
+
 }
