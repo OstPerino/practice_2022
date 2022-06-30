@@ -25,34 +25,30 @@ export class AuthController {
 
   @UseGuards(JwtNoAuthGuard)
   @Get('/login')
-  async logPage(){
-    return { message: 'This is logPage!' };
+  async logPage(@Res() res: Response){
+    res.status(200).end();
   }
 
   @Post('/register')
   async registration(@Res() res: Response, @Body() userDto: CreateUserDto) {
     if(Boolean(await this.authService.registration(userDto)) == true){
-
+      res.status(200).end();
       //res.redirect('/login');
-    }else{
-      return {registration: false}
-      // как пример, но по итогу(он не может отправить false(там внутри обрабатываются ошибки). Нам наверно надо
-      // отправлять message с тем что не удалось по той то причине зарегаться, вместо HttpException)
     }
-    // Поменять вывод что тут(вместо return другое)
+    res.status(400).end();
   }
 
   @UseGuards(JwtNoAuthGuard)
   @Get('/register')
-  async regPage(){
-    return {message: 'This is register Page!'};
+  async regPage(@Res() res: Response){
+    res.status(200).end();
   }
 
-  @Delete('/logout')
+  @Get('/logout')
   async logout(@Res({passthrough: true}) res: Response){
     console.log('Delete authorization token');
-    res.clearCookie('jwt');
-    return { message: 'jwt token delete!' }
+    res.clearCookie('Authentication');
+    res.status(200).end();
   }
 
 

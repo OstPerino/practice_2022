@@ -8,27 +8,22 @@ import {RolesGuard} from "./auth/roles.guard";
 export class AppController {
   constructor() {}
 
-  @Get()
-  index(@Res() res: Response) {
-    res.redirect('/login');
-  }
-
   @Roles('user','admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Get("/main")
-  mainPage() {
-    return "This is Main Page";
-    //
+  mainPage(@Res() res: Response) {
+    // return "This is Main Page";
+    res.status(200).end();
   }
 
   @Roles('admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Get("/other")
-  otherPage() {
-    return "This is Other Page";
-    //
+  otherPage(@Res() res: Response) {
+    // return "This is Other Page";
+    res.status(200).end();
   }
 
 }
