@@ -6,25 +6,21 @@ import {JwtService} from "@nestjs/jwt";
 export class JwtAuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) {
     }
-
-
-        //        ПРОБЛЕМА С ОБРАБОТКОЙ ИСКЛЮЧЕНИЙ
-
-
-
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const req = context.switchToHttp().getRequest()
         try {
             const authHeader = req.headers.cookie;// возможно надо будет просто вытащить cookie и уже их verify
             if(!authHeader){
               console.log('not cookie');
-              throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет куки)'});
+              // throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет куки)'});
+              return false;
             }
             const nameToken = authHeader.split('=')[0]
             const token = authHeader.split('=')[1]
 
             if (nameToken !== 'Authentication' && !token) {
-                throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет jwt токена)'});
+                //throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет jwt токена)'});
+                return false;
             }
 
             const user = this.jwtService.verify(token);

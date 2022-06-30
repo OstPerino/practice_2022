@@ -28,16 +28,16 @@ export class JwtNoAuthGuard implements CanActivate {
               return true;
             }
             const user = this.jwtService.verify(token); // verifyAsync
-            const userdb = this.userService.getUserByLogin(user.login);//this.authService.checkGuard(user, token);
+            //const userdb = this.userService.getUserByLogin(user.login);//this.authService.checkGuard(user, token);
 
             console.log(user);
-            console.log(userdb);
+            //console.log(userdb);
 
             console.log('Авторизованный пользователь!');
-              throw new BadRequestException({message: 'Пользователь авторизован'})
+              // throw new BadRequestException({message: 'Пользователь авторизован'})
 
             //req.user = user;
-            //return true;
+            return false;
         } catch (e) {
           console.log(e);
             throw new BadRequestException({message: 'Ошибка при обработке!'})
