@@ -24,7 +24,7 @@ export class JwtNoAuthGuard implements CanActivate {
             console.log('nameToken = ' + nameToken);
             console.log('token = ' + token);
 
-            if (nameToken !== 'jwt' && !token) {
+            if (nameToken !== 'Authentication' && !token) {
               return true;
             }
             const user = this.jwtService.verify(token); // verifyAsync

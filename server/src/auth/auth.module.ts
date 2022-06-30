@@ -8,11 +8,11 @@ import {JwtModule} from "@nestjs/jwt";
   controllers: [AuthController],
   providers: [AuthService],
   imports: [
-      forwardRef(() => UserModule), // forwardRef() need to use when !!!import and export!!! _rings_ appear
+      UserModule,//forwardRef(() => UserModule), // forwardRef() need to use when !!!import and export!!! _rings_ appear
       JwtModule.register({
         secret: process.env.PRIVATE_KEY || "project2022",
         signOptions: {
-          expiresIn: '24h'
+          expiresIn: process.env.JWT_EXPIRATION_TIME || '1h'
         }
       })
   ],

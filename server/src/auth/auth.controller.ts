@@ -13,10 +13,9 @@ export class AuthController {
   @Post('/login')
   async login(@Res({passthrough: true}) res: Response, @Body() userDto: CreateUserDto) {
     const jwtToken = await this.authService.login(userDto);
-    res.cookie('jwt', jwtToken, {httpOnly: true});
-    //res.redirect('/main');
-    return {message: 'token generate' };
-    // Поменять вывод что тут(вместо return другое)
+    //res.cookie('jwt', jwtToken, {httpOnly: true});
+    res.setHeader('Set-Cookie', jwtToken);
+    res.status(200).end();//.send( {message: 'Authentication(token generate)'} );
   }
 
   //@UseGuards(JwtNoAuthGuard)
@@ -34,7 +33,7 @@ export class AuthController {
   async registration(@Res() res: Response, @Body() userDto: CreateUserDto) {
     if(Boolean(await this.authService.registration(userDto)) == true){
 
-      res.redirect('/login');
+      //res.redirect('/login');
     }else{
       return {registration: false}
       // как пример, но по итогу(он не может отправить false(там внутри обрабатываются ошибки). Нам наверно надо
@@ -51,6 +50,7 @@ export class AuthController {
 
   @Delete('/logout')
   async logout(@Res({passthrough: true}) res: Response){
+    console.log('Delete authorization token');
     res.clearCookie('jwt');
     return { message: 'jwt token delete!' }
   }

@@ -32,7 +32,7 @@ export class RolesGuard implements CanActivate {
             const nameToken = authHeader.split('=')[0]
             const token = authHeader.split('=')[1]
 
-            if (nameToken !== 'jwt' || !token) {
+            if (nameToken !== 'Authentication' && !token) {
                 throw new UnauthorizedException({message: 'Пользователь не авторизован(Roles)'})
             }
 
