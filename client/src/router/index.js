@@ -1,16 +1,50 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import RegistrationComponent from '@/components/registration/RegistrationComponent'
+import AuthorizationComponent from '@/components/authorization/AuthorizationComponent'
+import MainComponent from '@/components/views/MainComponent'
 
 Vue.use(VueRouter)
-
-const routes = [
-
-]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes: [
+    {
+      path: '/authorization',
+      redirect: '/'
+    },
+    {
+      path: '/main',
+      name: 'Main',
+      component: MainComponent
+    },
+    {
+      path: '/',
+      name: 'Authorization',
+      component: AuthorizationComponent
+    },
+    {
+      path: '/registration',
+      name: 'Registration',
+      component: RegistrationComponent
+    }
+  ]
+})
+//
+router.beforeEach(async (to, from, next) => {
+  const response = await fetch('http://localhost:4000/isAuth',
+    {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'get'
+    })
+
+  console.log(response)
+  next()
 })
 
 export default router

@@ -1,5 +1,12 @@
+
+
+// TODO: Нет валидации
 export class CreateUserDto {
     id: Number
-    email: String
-    name: String
+    login: string
+    password: string
+    email: string
+    name: string
+    role: string
 }
+// change: String -> string
