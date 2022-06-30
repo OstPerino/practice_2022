@@ -1,125 +1,129 @@
 <template>
-  <form class="RegistrationComponent">
-    <h2
-      class="RegistrationComponent__header"
-    >
-      Create an account
-    </h2>
-    <span class="RegistrationComponent__mark">Create an account to<br>get access for all functions</span>
-    <div class="RegistrationComponent__container">
-      <DefaultInputComponent
-        class="RegistrationComponent__item"
-        :placeholder="inputData.userNameInput.placeholderContent"
-        :label-value="inputData.userNameInput.labelContent"
-        v-model.trim="$v.inputData.userNameInput.value.$model"
-      />
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
-      >
+  <div class="container">
+    <div class="flex-container">
+      <form class="RegistrationComponent">
+        <h2
+          class="RegistrationComponent__header"
+        >
+          Create an account
+        </h2>
+        <span class="RegistrationComponent__mark">Create an account to<br>get access for all functions</span>
+        <div class="RegistrationComponent__container">
+          <DefaultInputComponent
+            class="RegistrationComponent__item"
+            :placeholder="inputData.userNameInput.placeholderContent"
+            :label-value="inputData.userNameInput.labelContent"
+            v-model.trim="$v.inputData.userNameInput.value.$model"
+          />
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userNameInput.value.required && $v.inputData.userNameInput.value.$dirty"
+          >
         Field is required.
       </span>
-    </div>
-    <div class="RegistrationComponent__container">
-      <DefaultInputComponent
-        class="RegistrationComponent__item"
-        :placeholder="inputData.userLoginInput.placeholderContent"
-        :label-value="inputData.userLoginInput.labelContent"
-        v-model.trim="$v.inputData.userLoginInput.value.$model"
-      />
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userLoginInput.value.required && $v.inputData.userLoginInput.value.$dirty"
-      >
+        </div>
+        <div class="RegistrationComponent__container">
+          <DefaultInputComponent
+            class="RegistrationComponent__item"
+            :placeholder="inputData.userLoginInput.placeholderContent"
+            :label-value="inputData.userLoginInput.labelContent"
+            v-model.trim="$v.inputData.userLoginInput.value.$model"
+          />
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userLoginInput.value.required && $v.inputData.userLoginInput.value.$dirty"
+          >
         Field is required.
       </span>
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userLoginInput.value.minLength"
-      >
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userLoginInput.value.minLength"
+          >
         Field must have at least {{ $v.inputData.userLoginInput.value.$params.minLength.min }} characters.
       </span>
-    </div>
-    <div class="RegistrationComponent__container">
-      <DefaultInputComponent
-        class="RegistrationComponent__item"
-        :placeholder="inputData.userEmailInput.placeholderContent"
-        :label-value="inputData.userEmailInput.labelContent"
-        v-model.trim="$v.inputData.userEmailInput.value.$model"
-      />
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userEmailInput.value.required && $v.inputData.userEmailInput.value.$dirty"
-      >
+        </div>
+        <div class="RegistrationComponent__container">
+          <DefaultInputComponent
+            class="RegistrationComponent__item"
+            :placeholder="inputData.userEmailInput.placeholderContent"
+            :label-value="inputData.userEmailInput.labelContent"
+            v-model.trim="$v.inputData.userEmailInput.value.$model"
+          />
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userEmailInput.value.required && $v.inputData.userEmailInput.value.$dirty"
+          >
         Field is required.
       </span>
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userEmailInput.value.email"
-      >
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userEmailInput.value.email"
+          >
         Field must look like an email.
       </span>
-    </div>
-    <div class="RegistrationComponent__container">
-      <DefaultInputComponent
-        class="RegistrationComponent__item"
-        :placeholder="inputData.userPasswordInput.placeholderContent"
-        :label-value="inputData.userPasswordInput.labelContent"
-        v-model.trim="$v.inputData.userPasswordInput.value.$model"
-      />
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
-      >
+        </div>
+        <div class="RegistrationComponent__container">
+          <DefaultInputComponent
+            class="RegistrationComponent__item"
+            :placeholder="inputData.userPasswordInput.placeholderContent"
+            :label-value="inputData.userPasswordInput.labelContent"
+            v-model.trim="$v.inputData.userPasswordInput.value.$model"
+          />
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
+          >
         Field is required.
       </span>
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.userPasswordInput.value.minLength"
-      >
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.userPasswordInput.value.minLength"
+          >
         Field must have at least {{ $v.inputData.userPasswordInput.value.$params.minLength.min }} characters.
       </span>
-    </div>
-    <div class="RegistrationComponent__container">
-      <DefaultInputComponent
-        class="RegistrationComponent__item"
-        :placeholder="inputData.confirmPasswordInput.placeholderContent"
-        :label-value="inputData.confirmPasswordInput.labelContent"
-        v-model.trim="$v.inputData.confirmPasswordInput.value.$model"
-      />
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.confirmPasswordInput.value.required && $v.inputData.confirmPasswordInput.value.$dirty"
-      >
+        </div>
+        <div class="RegistrationComponent__container">
+          <DefaultInputComponent
+            class="RegistrationComponent__item"
+            :placeholder="inputData.confirmPasswordInput.placeholderContent"
+            :label-value="inputData.confirmPasswordInput.labelContent"
+            v-model.trim="$v.inputData.confirmPasswordInput.value.$model"
+          />
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.confirmPasswordInput.value.required && $v.inputData.confirmPasswordInput.value.$dirty"
+          >
         Field is required.
       </span>
-      <span
-        class="RegistrationComponent__error"
-        v-show="!$v.inputData.confirmPasswordInput.value.sameAs"
-      >
+          <span
+            class="RegistrationComponent__error"
+            v-show="!$v.inputData.confirmPasswordInput.value.sameAs"
+          >
         Field must be the same as password field.
       </span>
-    </div>
-    <DefaultButtonComponent
-      class="RegistrationComponent__button"
-      :button-content="buttonData.buttonContent"
-      @click.prevent="createUser"
-    />
-    <div class="RegistrationComponent__registrationHref registrationHref">
+        </div>
+        <DefaultButtonComponent
+          class="RegistrationComponent__button"
+          :button-content="buttonData.buttonContent"
+          @click.prevent="createUser"
+        />
+        <div class="RegistrationComponent__registrationHref registrationHref">
       <span
         class="registrationHref__link"
       >
         Already have an account?
       </span>
-      <br>
-      <router-link
-        to="/authorization"
-        class="registrationHref__link link"
-      >
-        Authorization
-      </router-link>
+          <br>
+          <router-link
+            to="/authorization"
+            class="registrationHref__link link"
+          >
+            Authorization
+          </router-link>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -212,6 +216,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.flex-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .RegistrationComponent {
   display: flex;

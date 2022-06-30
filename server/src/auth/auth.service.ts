@@ -14,6 +14,7 @@ export class AuthService {
     private async generateToken(userDto: CreateUserDto) {
         const payload = {email: userDto.email, id: userDto.id, role: userDto.role}; // !!!тут одна роль!!!
         const tokenjwt = await this.jwtService.signAsync(payload);
+        // TODO: env заменить ConfigService
         return `Authentication=${tokenjwt}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRATION_TIME}`; //tokenjwt;
     }
 

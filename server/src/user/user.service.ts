@@ -10,6 +10,8 @@ export class UserService {
 
   constructor(private prisma: PrismaService) { }
 
+
+  // TODO: Не асинхронный метод
   create(createUserDto) {
     return this.prisma.user.create({
       data: {
@@ -18,16 +20,19 @@ export class UserService {
     });
   }
 
+  // TODO: Нет возвращаемых типов
   findAll() {
     return this.prisma.user.findMany();
   }
 
+  // TODO: Нет валидации на существование ресурса
   findOne(userWhereUniqueInput: Prisma.UserWhereUniqueInput) {
     return this.prisma.user.findUnique({
       where: userWhereUniqueInput,
     });
   }
 
+  // TODO: Нет валидации на существование ресурса
   update(params: {
     where: Prisma.UserWhereUniqueInput;
     data: Prisma.UserUpdateInput;
@@ -39,10 +44,12 @@ export class UserService {
     });
   }
 
+  // TODO: Нет валидации на существование ресурса
   remove(where: Prisma.UserWhereUniqueInput) {
     return this.prisma.user.delete({ where });
   }
 
+  // TODO: Нет валидации на существование ресурса
   async getUserByLogin(login: string) {
     const user = await this.prisma.user.findUnique({where: {login}});
     console.log(user);

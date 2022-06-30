@@ -1,3 +1,6 @@
+
+
+// TODO: Нет валидации
 export class CreateUserDto {
     id: Number
     login: string

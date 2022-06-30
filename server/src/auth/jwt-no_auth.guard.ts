@@ -39,6 +39,8 @@ export class JwtNoAuthGuard implements CanActivate {
             //req.user = user;
             return false;
         } catch (e) {
+return false
+            // TODO: Не возвращает boolean
           console.log(e);
             throw new BadRequestException({message: 'Ошибка при обработке!'})
         }

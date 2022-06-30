@@ -10,6 +10,11 @@ export class AuthController {
 
   constructor( private authService: AuthService) {}
 
+  // @Get('/checkLogin')
+  // async checkLogin() {
+  //
+  // }
+
   @Post('/login')
   async login(@Res({passthrough: true}) res: Response, @Body() userDto: CreateUserDto) {
     const jwtToken = await this.authService.login(userDto);
@@ -24,11 +29,13 @@ export class AuthController {
   //@UseGuards(RolesGuard)
 
   @UseGuards(JwtNoAuthGuard)
-  @Get('/login')
+  @Get('/isAuth')
   async logPage(@Res() res: Response){
     res.status(200).end();
   }
 
+
+  // TODO: Странная запись, не возвращается пользовать
   @Post('/register')
   async registration(@Res() res: Response, @Body() userDto: CreateUserDto) {
     if(Boolean(await this.authService.registration(userDto)) == true){

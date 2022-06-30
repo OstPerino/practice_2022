@@ -31,5 +31,20 @@ const router = new VueRouter({
     }
   ]
 })
+//
+router.beforeEach(async (to, from, next) => {
+  const response = await fetch('http://localhost:4000/isAuth',
+    {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'get'
+    })
+
+  console.log(response)
+  next()
+})
 
 export default router
