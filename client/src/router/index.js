@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import RegistrationComponent from '@/components/registration/RegistrationComponent'
 import AuthorizationComponent from '@/components/authorization/AuthorizationComponent'
+import MainComponent from '@/components/views/MainComponent'
 
 Vue.use(VueRouter)
 
@@ -10,8 +11,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/Authorization',
+      path: '/authorization',
       redirect: '/'
+    },
+    {
+      path: '/main',
+      name: 'Main',
+      component: MainComponent
     },
     {
       path: '/',

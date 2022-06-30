@@ -19,11 +19,25 @@
       >
         Field is required.
       </span>
+    </div>
+    <div class="RegistrationComponent__container">
+      <DefaultInputComponent
+        class="RegistrationComponent__item"
+        :placeholder="inputData.userLoginInput.placeholderContent"
+        :label-value="inputData.userLoginInput.labelContent"
+        v-model.trim="$v.inputData.userLoginInput.value.$model"
+      />
       <span
         class="RegistrationComponent__error"
-        v-show="!$v.inputData.userNameInput.value.minLength"
+        v-show="!$v.inputData.userLoginInput.value.required && $v.inputData.userLoginInput.value.$dirty"
       >
-        Field must have at least {{ $v.inputData.userNameInput.value.$params.minLength.min }} characters.
+        Field is required.
+      </span>
+      <span
+        class="RegistrationComponent__error"
+        v-show="!$v.inputData.userLoginInput.value.minLength"
+      >
+        Field must have at least {{ $v.inputData.userLoginInput.value.$params.minLength.min }} characters.
       </span>
     </div>
     <div class="RegistrationComponent__container">
@@ -89,6 +103,7 @@
     <DefaultButtonComponent
       class="RegistrationComponent__button"
       :button-content="buttonData.buttonContent"
+      @click.prevent="createUser"
     />
     <div class="RegistrationComponent__registrationHref registrationHref">
       <span
@@ -114,25 +129,20 @@ import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
 
 export default {
   name: 'registration-component.vue',
-  mounted () {
-    console.log(this.$v.inputData.userPasswordInput.value.$model)
-  },
   components: {
     DefaultInputComponent,
     DefaultButtonComponent
   },
-  computed: {
-    isDirty (expression, dirty) {
-      return !expression && dirty
-    }
-  },
   validations: {
     inputData: {
       userNameInput: {
-        value: { required, minLength: minLength(8) }
+        value: { required }
       },
       userEmailInput: {
         value: { required, email }
+      },
+      userLoginInput: {
+        value: { required, minLength: minLength(8) }
       },
       userPasswordInput: {
         value: { required, minLength: minLength(8) }
@@ -155,6 +165,11 @@ export default {
           placeholderContent: 'Type your email',
           value: ''
         },
+        userLoginInput: {
+          labelContent: 'Login',
+          placeholderContent: 'Type your login',
+          value: ''
+        },
         userPasswordInput: {
           labelContent: 'Password',
           placeholderContent: 'Type your password',
@@ -168,8 +183,29 @@ export default {
       },
       buttonData: {
         buttonContent: 'Sign up'
-      },
-      password: 'password'
+      }
+    }
+  },
+  methods: {
+    async createUser () {
+      const newUser = {
+        email: this.inputData.userEmailInput.value,
+        name: this.inputData.userNameInput.value,
+        login: this.inputData.userLoginInput.value,
+        password: this.inputData.userPasswordInput.value
+      }
+      const response = await fetch('http://localhost:4000/register',
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify(newUser)
+        })
+
+      if (response.status === 200) {
+        await this.$router.push('/authorization')
+      }
     }
   }
 }
@@ -180,10 +216,10 @@ export default {
 .RegistrationComponent {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   background-color: #F6FBF9;
   border-radius: 10px;
-  padding: 60px 80px;
+  padding: 30px 60px;
 
   &__container {
     padding-bottom: 15px;

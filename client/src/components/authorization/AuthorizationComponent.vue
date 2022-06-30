@@ -4,21 +4,21 @@
     <div class="AuthorizationComponent__container">
       <DefaultInputComponent
         class="AuthorizationComponent__item"
-        :placeholder="inputData.userEmailInput.placeholderContent"
-        :label-value="inputData.userEmailInput.labelContent"
-        v-model.trim="$v.inputData.userEmailInput.value.$model"
+        :placeholder="inputData.userLoginInput.placeholderContent"
+        :label-value="inputData.userLoginInput.labelContent"
+        v-model.trim="$v.inputData.userLoginInput.value.$model"
       />
       <span
         class="AuthorizationComponent__error"
-        v-show="!$v.inputData.userEmailInput.value.required && $v.inputData.userEmailInput.value.$dirty"
+        v-show="!$v.inputData.userLoginInput.value.required && $v.inputData.userLoginInput.value.$dirty"
       >
         Field is required.
       </span>
       <span
         class="AuthorizationComponent__error"
-        v-show="!$v.inputData.userEmailInput.value.email"
+        v-show="!$v.inputData.userLoginInput.value.minLength"
       >
-       Check if email is correct.
+       Check if login is correct.
       </span>
     </div>
     <div class="AuthorizationComponent__container">
@@ -35,9 +35,17 @@
         Field is required.
       </span>
     </div>
+    <div class="AuthorizationComponent__container">
+      <span
+        class="AuthorizationComponent__error missedUser"
+      >
+        Email or password is wrong
+      </span>
+    </div>
     <DefaultButtonComponent
       class="AuthorizationComponent__button "
       :button-content="this.buttonData.buttonContent"
+      @click.prevent="checkUser"
     />
     <div class="AuthorizationComponent__registrationHref registrationHref">
       <span
@@ -59,7 +67,7 @@
 <script>
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'authorization-component.vue',
@@ -74,6 +82,9 @@ export default {
       },
       userPasswordInput: {
         value: { required }
+      },
+      userLoginInput: {
+        value: { required, minLength: minLength(8) }
       }
     }
   },
@@ -89,10 +100,35 @@ export default {
           labelContent: 'Password',
           placeholderContent: 'Type your password',
           value: ''
+        },
+        userLoginInput: {
+          labelContent: 'User login',
+          placeholderContent: 'Type your email',
+          value: ''
         }
       },
       buttonData: {
         buttonContent: 'Log In'
+      }
+    }
+  },
+  methods: {
+    async checkUser () {
+      const userData = {
+        login: this.inputData.userLoginInput.value,
+        password: this.inputData.userPasswordInput.value
+      }
+      const response = await fetch('http://localhost:4000/login',
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify(userData)
+        })
+
+      if (response.status === 200) {
+        await this.$router.push('/main')
       }
     }
   }
@@ -138,6 +174,11 @@ export default {
     position: absolute;
     bottom: 0;
     left: 5px;
+  }
+
+  .missedUser {
+    font-size: 16px;
+    text-align: center;
   }
 
   .registrationHref {
