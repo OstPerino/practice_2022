@@ -1,19 +1,18 @@
 <template>
   <div>
-    <h1> Привет</h1>
-    <button
-      class="MainComponent__button "
-      @click.prevent="userExit"
-    >
-      Exit
-    </button>
+    <HeaderComponent />
 
   </div>
 </template>
 
 <script>
+import HeaderComponent from '@/components/views/HeaderComponent'
+
 export default {
   name: 'main-component.vue',
+  components: {
+    HeaderComponent
+  },
   methods: {
     async userExit () {
       const response = await fetch('http://localhost:4000/logout',
@@ -32,7 +31,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .MainComponent {
   &__button {
     background-color: #4978b3;
