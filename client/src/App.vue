@@ -17,14 +17,18 @@ export default {
 </script>
 
 <style lang='scss'>
+@font-face {
+  font-family: Poppins-logo;
+  src: url('ttf/Poppins/Poppins-Bold.ttf');
+}
+
 *,
 *::before,
 *::after {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&display=swap');
-  font-family: 'Barlow', sans-serif;
+  font-family: Poppins-logo;
 }
 
 .app {

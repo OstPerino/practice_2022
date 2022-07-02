@@ -1,17 +1,19 @@
 <template>
   <div>
-    <HeaderComponent />
-
+    <HeaderComponent/>
+    <TasksComponent/>
   </div>
 </template>
 
 <script>
 import HeaderComponent from '@/components/views/HeaderComponent'
+import TasksComponent from '@/components/views/TasksComponent'
 
 export default {
   name: 'main-component.vue',
   components: {
-    HeaderComponent
+    HeaderComponent,
+    TasksComponent
   },
   methods: {
     async userExit () {

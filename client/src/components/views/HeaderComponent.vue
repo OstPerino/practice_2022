@@ -42,10 +42,6 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@font-face {
-  font-family: Poppins-logo;
-  src: url('../../ttf/Poppins/Poppins-Bold.ttf');
-}
 
 .HeaderComponent {
   padding: 35px 0;
@@ -56,7 +52,6 @@ export default {
 
   &__logo {
     .logo {
-      font-family: Poppins-logo;
       font-size: 36px;
       color: #000;
       line-height: 71px;
