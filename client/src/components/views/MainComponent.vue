@@ -1,18 +1,15 @@
 <template>
   <div>
-    <HeaderComponent/>
     <TasksComponent/>
   </div>
 </template>
 
 <script>
-import HeaderComponent from '@/components/views/HeaderComponent'
 import TasksComponent from '@/components/views/TasksComponent'
 
 export default {
   name: 'main-component.vue',
   components: {
-    HeaderComponent,
     TasksComponent
   },
   methods: {
