@@ -26,7 +26,9 @@
           <span class='tasksHeader__left'>
             Tasks
           </span>
-          <AddTaskButton/>
+          <AddTaskButton
+            @click='createTask'
+          />
         </div>
         <div class='tasksList__list list'>
           <div class='list__item item'>
@@ -43,6 +45,11 @@
         </div>
       </div>
     </div>
+    <DialogAddTask
+      class='modalWindow'
+      v-show='showModal'
+      :show-dialog='showModal'
+    />
   </div>
 </template>
 
@@ -50,14 +57,26 @@
 import AddTaskButton from '@/components/UI/AddTaskButton'
 import OnePlayButton from '@/components/UI/OnePlayButton'
 import LastPlayButton from '@/components/UI/LastPlayButton'
+import DialogAddTask from '@/components/layouts/DialogAddTask'
 
 export default {
   components: {
     AddTaskButton,
     OnePlayButton,
-    LastPlayButton
+    LastPlayButton,
+    DialogAddTask
   },
-  name: 'TasksComponent'
+  name: 'TasksComponent',
+  data () {
+    return {
+      showModal: false
+    }
+  },
+  methods: {
+    createTask () {
+      this.showModal = !this.showModal
+    }
+  }
 }
 </script>
 
@@ -66,6 +85,14 @@ export default {
   width: 1440px;
   margin: 0 auto;
   display: flex;
+  position: relative;
+
+  .modalWindow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   &__timetracking {
     width: 590px;

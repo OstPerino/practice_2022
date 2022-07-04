@@ -1,24 +1,25 @@
 export default {
   state: () => ({
-    tasks: []
+    tasks: [],
+    taskTemporary: ''
   }),
   getters: {
     getTodos (state) {
       return state.tasks
+    },
+    getTaskTemporary (state) {
+      return state.taskTemporary
     }
   },
   mutations: {
-    addTodo (state, task) {
+    addTask (state, task) {
       state.tasks.push(task)
     },
-    deleteTodo (state, index) {
+    deleteTask (state, index) {
       state.tasks.splice(index, 1)
     },
-    changeStatus (state, index) {
-      state.task[index].done = !state.todos[index].done
-    },
-    changeTodo (state, payload) {
-      state.task[payload.index].todo = payload.newTodo
+    changeTask (state, payload) {
+      state.task[payload.index].todo = payload.task
     }
   },
   actions: {
