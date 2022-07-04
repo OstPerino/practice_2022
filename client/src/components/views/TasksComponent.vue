@@ -120,10 +120,12 @@ export default {
           border: none;
           text-align: center;
           cursor: pointer;
-          border-radius: 10px;
+          border-radius: 15px;
           position: relative;
 
           .image {
+            width: 20px;
+            height: 20px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -132,7 +134,33 @@ export default {
         }
       }
     }
-  }
 
+    .tasksList {
+      padding: 30px;
+      border-radius: 20px;
+      margin-top: 40px;
+      background-color: #fff;
+
+      &__tasksHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+      .tasksHeader {
+        &__addTaskButtonContainer {
+          button {
+            font-weight: 600;
+            font-size: 28px;
+            line-height: 42px;
+            background-color: transparent;
+            border: none;
+            color: #FABB18;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
 }
 </style>
