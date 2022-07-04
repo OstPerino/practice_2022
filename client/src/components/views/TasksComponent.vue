@@ -34,6 +34,23 @@
             </button>
           </div>
         </div>
+        <div class='tasksList__list list'>
+          <div class='list__item item'>
+            <div class='item__buttonContainer buttonContainer'>
+              <button class='play'>
+                <img src='../../assets/images/orangePlay.svg'>
+              </button>
+            </div>
+            <div class='item__right'>
+              <span class='item__taskName'>Project Four</span>
+              <div class='item__timer'>
+                <span class='timer'>
+                  00:30:00
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -105,7 +122,7 @@ export default {
 
     .startTimeTracker {
       background-color: #fff;
-      padding: 30px;
+      padding: 20px;
       display: flex;
       align-items: center;
       border-radius: 20px;
@@ -133,6 +150,18 @@ export default {
           }
         }
       }
+      &__text {
+        .startTimeTracker__header {
+          font-weight: 600;
+          font-size: 28px;
+          line-height: 42px;
+        }
+        .startTimeTracker__taskName {
+          font-weight: 500;
+          font-size: 28px;
+          line-height: 42px;
+        }
+      }
     }
 
     .tasksList {
@@ -147,6 +176,7 @@ export default {
         align-items: center;
         margin-bottom: 30px;
       }
+
       .tasksHeader {
         &__addTaskButtonContainer {
           button {
@@ -157,6 +187,60 @@ export default {
             border: none;
             color: #FABB18;
             cursor: pointer;
+          }
+        }
+      }
+
+      &__list {
+      }
+
+      .list {
+        &__item {
+          display: flex;
+          align-items: center;
+          border: 1px solid #F1F1F1;
+          border-radius: 20px;
+          padding: 15px;
+
+          .buttonContainer {
+            margin-right: 30px;
+            .play {
+              cursor: pointer;
+              padding: 30px;
+              border: none;
+              background-color: rgba(250, 187, 24, 0.1);
+              border-radius: 50%;
+              position: relative;
+
+              img {
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
+            }
+          }
+          .item__right {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .item__taskName {
+              font-weight: 600;
+              font-size: 18px;
+              line-height: 27px;
+            }
+            .item__timer {
+              .timer {
+                font-size: 14px;
+                font-weight: 400;
+                background-color: #FFF8E8;
+                border-radius: 10px;
+                padding: 10px 15px;
+              }
+            }
           }
         }
       }
