@@ -12,6 +12,27 @@
           </div>
         </div>
       </div>
+      <div>
+        <h2 class='timetracking__headerTasks'>Today Tasks</h2>
+        <ul>
+          <li
+            v-for='timer of taskTimers'
+            class='timetracking__todayTasks todayTasks'
+            :key='timer.id'
+          >
+          <div class='todayTasks__timeContainer timeContainer'>
+            <div class='taskContainer'>
+              <span class='weekResult__header'>Project 1</span>
+              <br>
+              <span class='timeContainer__time'>40:00:05</span>
+            </div>
+            <div class='timeContainer__icon'>
+              <img src='../../assets/images/timeLogo.svg'>
+            </div>
+          </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class='TasksComponent__tasks tasks'>
       <div class='tasks__startTimeTracker startTimeTracker'>
@@ -57,8 +78,22 @@
 </template>
 
 <script>
+import './TimerTodayComponent'
+
 export default {
-  name: 'TasksComponent'
+  name: 'TasksComponent',
+  data: () => {
+    return {
+      taskTimers: [
+        {
+          id: 1
+        },
+        {
+          id: 2
+        }
+      ]
+    }
+  }
 }
 </script>
 
@@ -80,12 +115,50 @@ export default {
       line-height: 81px;
     }
 
+    &__headerTasks {
+      padding-top: 60px;
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 60px;
+    }
+
     &__date {
       font-size: 28px;
       font-weight: 500;
       line-height: 42px;
     }
 
+    &__todayTasks {
+      margin-top: 30px;
+      background-color: #F9F9F9;
+      padding: 30px;
+      width: 470px;
+      border-radius: 16px;
+      list-style-type: none;
+
+      .timeContainer {
+        margin-top: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__taskContainer {
+
+        }
+
+        &__time {
+          font-weight: 600;
+          font-size: 30px;
+          line-height: 45px;
+        }
+
+        &__icon {
+          background-color: rgba(250, 187, 24, 0.1);;
+          padding: 40px;
+          border-radius: 15px;
+        }
+      }
+    }
     &__weekResult {
       margin-top: 50px;
       background-color: #F9F9F9;
@@ -94,7 +167,7 @@ export default {
       border-radius: 16px;
 
       .timeContainer {
-        margin-top: 45px;
+        margin-top: 25px;
         display: flex;
         align-items: center;
         justify-content: space-between;
