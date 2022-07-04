@@ -3,12 +3,18 @@
     id='app'
     class='app'
   >
+    <HeaderComponent/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import HeaderComponent from '@/components/views/HeaderComponent'
+
 export default {
+  components: {
+    HeaderComponent
+  },
   data: () => {
     return {}
   },
