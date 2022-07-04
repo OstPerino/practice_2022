@@ -1,69 +1,69 @@
 <template>
-    <div class="flex-container">
-      <form class="AuthorizationComponent">
-        <h2 class="AuthorizationComponent__header">Authorization</h2>
-        <div class="AuthorizationComponent__container">
-          <DefaultInputComponent
-            class="AuthorizationComponent__item"
-            :placeholder="inputData.userLoginInput.placeholderContent"
-            :label-value="inputData.userLoginInput.labelContent"
-            v-model.trim="$v.inputData.userLoginInput.value.$model"
-          />
-          <span
-            class="AuthorizationComponent__error"
-            v-show="!$v.inputData.userLoginInput.value.required && $v.inputData.userLoginInput.value.$dirty"
-          >
+  <div class='flex-container'>
+    <form class='AuthorizationComponent'>
+      <h2 class='AuthorizationComponent__header'>Authorization</h2>
+      <div class='AuthorizationComponent__container'>
+        <DefaultInputComponent
+          class='AuthorizationComponent__item'
+          :placeholder='inputData.userLoginInput.placeholderContent'
+          :label-value='inputData.userLoginInput.labelContent'
+          v-model.trim='$v.inputData.userLoginInput.value.$model'
+        />
+        <span
+          class='AuthorizationComponent__error'
+          v-show='!$v.inputData.userLoginInput.value.required && $v.inputData.userLoginInput.value.$dirty'
+        >
         Field is required.
       </span>
-          <span
-            class="AuthorizationComponent__error"
-            v-show="!$v.inputData.userLoginInput.value.minLength"
-          >
+        <span
+          class='AuthorizationComponent__error'
+          v-show='!$v.inputData.userLoginInput.value.minLength'
+        >
        Check if login is correct.
       </span>
-        </div>
-        <div class="AuthorizationComponent__container">
-          <DefaultInputComponent
-            class="AuthorizationComponent__item"
-            :placeholder="this.inputData.userPasswordInput.placeholderContent"
-            :label-value="this.inputData.userPasswordInput.labelContent"
-            v-model.trim="$v.inputData.userPasswordInput.value.$model"
-          />
-          <span
-            class="AuthorizationComponent__error"
-            v-show="!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty"
-          >
-        Field is required.
-      </span>
-        </div>
-        <div class="AuthorizationComponent__container">
-      <span
-        class="AuthorizationComponent__error missedUser"
-      >
-        Email or password is wrong
-      </span>
-        </div>
-        <DefaultButtonComponent
-          class="AuthorizationComponent__button "
-          :button-content="this.buttonData.buttonContent"
-          @click.prevent="checkUser"
+      </div>
+      <div class='AuthorizationComponent__container'>
+        <DefaultInputComponent
+          class='AuthorizationComponent__item'
+          :placeholder='this.inputData.userPasswordInput.placeholderContent'
+          :label-value='this.inputData.userPasswordInput.labelContent'
+          v-model.trim='$v.inputData.userPasswordInput.value.$model'
         />
-        <div class="AuthorizationComponent__registrationHref registrationHref">
+        <span
+          class='AuthorizationComponent__error'
+          v-show='!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty'
+        >
+            Field is required.
+          </span>
+      </div>
+      <div class='AuthorizationComponent__container'>
+          <span
+            class='AuthorizationComponent__error missedUser'
+          >
+            Email or password is wrong
+          </span>
+      </div>
+      <DefaultButtonComponent
+        class='AuthorizationComponent__button '
+        :button-content='this.buttonData.buttonContent'
+        @click.prevent='checkUser'
+      />
+      <div class='AuthorizationComponent__registrationHref registrationHref'>
       <span
-        class="registrationHref__link"
+        class='registrationHref__link'
       >
         Doesn't have an account?
       </span>
-          <br>
-          <router-link
-            to="/registration"
-            class="registrationHref__link link"
-          >
-            Registration
-          </router-link>
-        </div>
-      </form>
-    </div>
+        <br>
+        <router-link
+          to='/registration'
+          class='registrationHref__link link'
+        >
+          Registration
+        </router-link>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -139,7 +139,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 
 .flex-container {
   height: 100vh;
@@ -196,10 +196,12 @@ export default {
   .registrationHref {
     text-align: center;
     line-height: 20px;
+
     &__link {
       font-size: 14px;
       line-height: 16px;
     }
+
     .link {
       color: #48927c;
       text-decoration: none;

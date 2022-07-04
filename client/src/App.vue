@@ -1,36 +1,40 @@
 <template>
   <div
-    id="app"
-    class="app"
+    id='app'
+    class='app'
   >
-        <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
   data: () => {
-    return {
-    }
+    return {}
   },
   methods: {}
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
+@font-face {
+  font-family: Poppins-logo;
+  src: url('ttf/Poppins/Poppins-Bold.ttf');
+}
+
 *,
 *::before,
 *::after {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&display=swap');
-  font-family: 'Barlow', sans-serif;
+  font-family: Poppins-logo;
 }
+
 .app {
   width: 100vw;
   height: 100vh;
   font-size: 30px;
-  background: #84C7AE;
+  //background: #84C7AE;
 }
 </style>
