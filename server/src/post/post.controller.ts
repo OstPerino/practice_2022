@@ -1,17 +1,17 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
-import { PostService } from './post.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
+//import { PostService } from './post.service';
+//import { CreatePostDto } from './dto/create-post.dto';
+//import { UpdatePostDto } from './dto/update-post.dto';
 
-import { User as UserModel, Post as PostModel } from '@prisma/client';
+//import { User as UserModel, Post as PostModel } from '@prisma/client';
 
 
 @Controller('post')
 export class PostController {
-  constructor(private readonly postService: PostService) { }
+  //constructor(private readonly postService: PostService) { }
 
 
-
+/*
   @Put('publish/:id')
   async publishPost(@Param('id') id: string): Promise<PostModel> {
     return this.postService.updatePost({
@@ -69,5 +69,5 @@ export class PostController {
       },
     });
   }
-
+*/
 }

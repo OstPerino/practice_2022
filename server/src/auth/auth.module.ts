@@ -3,6 +3,10 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import {UserModule} from "../user/user.module";
 import {JwtModule} from "@nestjs/jwt";
+import { ConfigModule, ConfigService } from '@nestjs/config';
+ // как тут вытащить в нижние поля данные ^^^
+  // как тут вытащить в нижние поля данные
+   // как тут вытащить в нижние поля данные
 
 @Module({
   controllers: [AuthController],
@@ -16,9 +20,6 @@ import {JwtModule} from "@nestjs/jwt";
         }
       })
   ],
-    exports: [
-        AuthService,
-        JwtModule
-    ]
+    exports: [ AuthService, JwtModule ]
 })
 export class AuthModule {}
