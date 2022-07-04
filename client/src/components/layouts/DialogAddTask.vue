@@ -3,7 +3,7 @@
     <DefaultInputComponent
       placeholder='Task name'
       label-value='Write the task name'
-      :value='taskName'
+      v-model='taskName'
     />
     <DefaultButtonComponent
       button-content='Create task'
@@ -39,7 +39,11 @@ export default {
   },
   methods: {
     createTask () {
-      console.log(this.$store)
+      const item = {
+        name: this.taskName
+      }
+      this.$store.commit('addTask', item)
+      this.taskName = ''
     },
     exitDialog () {
       console.log('Exit dialog')
