@@ -15,9 +15,7 @@
     </div>
     <div class='TasksComponent__tasks tasks'>
       <div class='tasks__startTimeTracker startTimeTracker'>
-        <div class='startTimeTracker__buttonContainer'>
-          <button class='play'><img src='../../assets/images/play.svg' class='image'></button>
-        </div>
+        <LastPlayButton/>
         <div class='startTimeTracker__text'>
           <span class='startTimeTracker__header'>Start Time Tracker</span><br>
           <span class='startTimeTracker__taskName'>Task 1</span>
@@ -28,19 +26,11 @@
           <span class='tasksHeader__left'>
             Tasks
           </span>
-          <div class='tasksHeader__addTaskButtonContainer addTaskButtonContainer'>
-            <button class='addTaskButtonContainer__addButton'>
-              + Add Tasks
-            </button>
-          </div>
+          <AddTaskButton/>
         </div>
         <div class='tasksList__list list'>
           <div class='list__item item'>
-            <div class='item__buttonContainer buttonContainer'>
-              <button class='play'>
-                <img src='../../assets/images/orangePlay.svg'>
-              </button>
-            </div>
+            <OnePlayButton/>
             <div class='item__right'>
               <span class='item__taskName'>Project Four</span>
               <div class='item__timer'>
@@ -57,7 +47,16 @@
 </template>
 
 <script>
+import AddTaskButton from '@/components/UI/AddTaskButton'
+import OnePlayButton from '@/components/UI/OnePlayButton'
+import LastPlayButton from '@/components/UI/LastPlayButton'
+
 export default {
+  components: {
+    AddTaskButton,
+    OnePlayButton,
+    LastPlayButton
+  },
   name: 'TasksComponent'
 }
 </script>
@@ -191,9 +190,6 @@ export default {
         }
       }
 
-      &__list {
-      }
-
       .list {
         &__item {
           display: flex;
@@ -202,26 +198,6 @@ export default {
           border-radius: 20px;
           padding: 15px;
 
-          .buttonContainer {
-            margin-right: 30px;
-            .play {
-              cursor: pointer;
-              padding: 30px;
-              border: none;
-              background-color: rgba(250, 187, 24, 0.1);
-              border-radius: 50%;
-              position: relative;
-
-              img {
-                width: 20px;
-                height: 20px;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              }
-            }
-          }
           .item__right {
             width: 100%;
             display: flex;
