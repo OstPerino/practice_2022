@@ -9,21 +9,36 @@
         </span>
       </div>
     </div>
+    <EditTaskButton/>
+    <DeleteTaskButton @click='deleteTask'/>
   </div>
 </template>
 
 <script>
 import OnePlayButton from '@/components/UI/OnePlayButton'
+import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
+import EditTaskButton from '@/components/UI/EditTaskButton'
 
 export default {
   components: {
-    OnePlayButton
+    OnePlayButton,
+    DeleteTaskButton,
+    EditTaskButton
   },
   name: 'TaskComponent',
   props: {
     task: {
-      type: String,
+      type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    deleteTask () {
+      this.$store.commit('deleteTask', this.index)
     }
   }
 }

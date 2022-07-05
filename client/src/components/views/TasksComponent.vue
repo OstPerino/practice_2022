@@ -31,11 +31,15 @@
           />
         </div>
         <div class='tasksList__list list'>
-          <TaskComponent
-            v-for='(item, index) in $store.getters.getTodos'
-            :key='index'
-            :task='item'
-          />
+          <div class='task-wrapper' v-if='showTasks'>
+            <TaskComponent
+              v-for='(item, index) in $store.getters.getTasks'
+              :key='index'
+              :task='item'
+              :index='index'
+            />
+          </div>
+          <span class='list__error' v-else>Your task list is empty</span>
         </div>
       </div>
     </div>
@@ -54,6 +58,12 @@ import DialogAddTask from '@/components/layouts/DialogAddTask'
 import TaskComponent from '@/components/layouts/TaskComponent'
 
 export default {
+  mounted () {
+    this.checkTasks()
+  },
+  beforeUpdate () {
+    this.checkTasks()
+  },
   components: {
     AddTaskButton,
     LastPlayButton,
@@ -63,12 +73,16 @@ export default {
   name: 'TasksComponent',
   data () {
     return {
-      showModal: false
+      showModal: false,
+      showTasks: false
     }
   },
   methods: {
     createTask () {
       this.showModal = !this.showModal
+    },
+    checkTasks () {
+      this.showTasks = this.$store.getters.getTasks.length !== 0
     }
   }
 }
