@@ -40,8 +40,7 @@ export class AuthController {
     if(!user){
       res.status(400).end();
     }
-    res.status(200);
-    return user;
+    res.status(200).send(user);
   }
 
   @UseGuards(JwtNoAuthGuard)

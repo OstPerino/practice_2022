@@ -8,13 +8,13 @@ import {RolesGuard} from "./auth/roles.guard";
 export class AppController {
   constructor() {}
 
-  @Roles('admin')
+  @Roles('user','admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Get("/other")
   otherPage(@Res() res: Response) {
     // return "This is Other Page";
-    res.status(200).end();
+    res.status(200).send('Other Page');
   }
 
 }

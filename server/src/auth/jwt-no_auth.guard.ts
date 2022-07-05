@@ -15,8 +15,18 @@ export class JwtNoAuthGuard implements CanActivate {
             const authHeader = req.headers.cookie; //authorization
             if(authHeader){
               //return true;
-              const nameToken = authHeader.split('=')[0]
-              const token = authHeader.split('=')[1]
+              const moreCookie = authHeader.split('; ');
+              let myToken: string;
+              for (let i = 0; i < moreCookie.length; i++) {
+                const nameToken = moreCookie[i].split('=')[0];
+                if(nameToken === 'Authentication'){
+                  myToken = moreCookie[i];
+                  console.log('Found -> ' + myToken);
+                  break;
+                }
+              }
+              const nameToken = myToken.split('=')[0]
+              const token = myToken.split('=')[1]
 
               console.log('nameToken = ' + nameToken);
               console.log('token = ' + token);

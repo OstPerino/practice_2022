@@ -29,8 +29,19 @@ export class RolesGuard implements CanActivate {
             }
             const req = context.switchToHttp().getRequest();
             const authHeader = req.headers.cookie;
-            const nameToken = authHeader.split('=')[0]
-            const token = authHeader.split('=')[1]
+            const moreCookie = authHeader.split('; ');
+            let myToken: string;
+            for (let i = 0; i < moreCookie.length; i++) {
+              const nameToken = moreCookie[i].split('=')[0];
+              if(nameToken === 'Authentication'){
+                myToken = moreCookie[i];
+                console.log('!VOV!  ' + myToken);
+                break;
+              }
+            }
+
+            const nameToken = myToken.split('=')[0]
+            const token = myToken.split('=')[1]
 
             if (nameToken !== 'Authentication' && !token) {
                 throw new UnauthorizedException({message: 'Пользователь не авторизован(Roles)'})

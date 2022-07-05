@@ -13,11 +13,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   providers: [AuthService],
   imports: [
       UserModule,//forwardRef(() => UserModule), // forwardRef() need to use when !!!import and export!!! _rings_ appear
-      JwtModule.register({
-        secret: process.env.PRIVATE_KEY || "project2022",
-        signOptions: {
-          expiresIn: process.env.JWT_EXPIRATION_TIME || '1h'
-        }
+      JwtModule.registerAsync({
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: async (configService: ConfigService) => ({
+          secret: configService.get('PRIVATE_KEY') || "project2022",
+          signOptions: {
+            expiresIn: configService.get('JWT_EXPIRATION_TIME') || '1h'
+          },
+        }),
       })
   ],
     exports: [ AuthService, JwtModule ]
