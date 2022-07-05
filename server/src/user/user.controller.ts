@@ -26,7 +26,7 @@ export class UserController {
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update({
       where: { id: Number(id) },
-      data: {  },
+      data: { updateUserDto },
     });
   }
 

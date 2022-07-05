@@ -1,7 +1,7 @@
 import {Body, Controller, Post, Get, Delete, Res, UseGuards} from '@nestjs/common';
 import {CreateUserDto} from "../user/dto/create-user.dto";
+import {Login} from "./dto/login-auth.dto";
 import {AuthService} from "./auth.service";
-//import {JwtAuthGuard} from "./jwt-auth.guard";
 import {JwtNoAuthGuard} from "./jwt-no_auth.guard";
 import {Response} from "express";
 
@@ -16,11 +16,11 @@ export class AuthController {
   // }
 
   @Post('/login')
-  async login(@Res({passthrough: true}) res: Response, @Body() userDto: CreateUserDto) {
-    const jwtToken = await this.authService.login(userDto);
+  async login(@Res({passthrough: true}) res: Response, @Body() userAuth: Login) {
+    const jwtToken = await this.authService.login(userAuth);
     //res.cookie('jwt', jwtToken, {httpOnly: true});
     res.setHeader('Set-Cookie', jwtToken);
-    res.status(200).end();//.send( {message: 'Authentication(token generate)'} );
+    res.status(200).end();
   }
 
   //@UseGuards(JwtNoAuthGuard)
@@ -29,20 +29,18 @@ export class AuthController {
   //@UseGuards(RolesGuard)
 
   @UseGuards(JwtNoAuthGuard)
-  @Get('/isAuth')
+  @Get('/login')
   async logPage(@Res() res: Response){
     res.status(200).end();
   }
 
-
-  // TODO: Странная запись, не возвращается пользовать
   @Post('/register')
   async registration(@Res() res: Response, @Body() userDto: CreateUserDto) {
-    if(Boolean(await this.authService.registration(userDto)) == true){
-      res.status(200).end();
-      //res.redirect('/login');
+    const user = await this.authService.registration(userDto);
+    if(!user){
+      res.status(400).end();
     }
-    res.status(400).end();
+    res.status(200).send(user);
   }
 
   @UseGuards(JwtNoAuthGuard)
