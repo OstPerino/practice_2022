@@ -1,16 +1,26 @@
 <template>
   <div class='item'>
-    <OnePlayButton/>
+    <OnePlayButton />
     <div class='item__right'>
-      <span class='item__taskName'>{{task.name}}</span>
+      <span class='item__taskName' v-if='!showEdit'>{{ task.content }}</span>
+      <div class='edit' v-else>
+        <DefaultInputComponent
+          label-value='Edit task name'
+          placeholder='Write new task name'
+          v-model='taskValue'
+        />
+        <AcceptEditButton
+          @click='acceptEdit'
+        />
+      </div>
       <div class='item__timer'>
         <span class='timer'>
           00:00:00
         </span>
       </div>
     </div>
-    <EditTaskButton/>
-    <DeleteTaskButton @click='deleteTask'/>
+    <EditTaskButton @click='editTask' />
+    <DeleteTaskButton @click='deleteTask' />
   </div>
 </template>
 
@@ -18,9 +28,13 @@
 import OnePlayButton from '@/components/UI/OnePlayButton'
 import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
 import EditTaskButton from '@/components/UI/EditTaskButton'
+import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
+import AcceptEditButton from '@/components/UI/AcceptEditButton'
 
 export default {
   components: {
+    AcceptEditButton,
+    DefaultInputComponent,
     OnePlayButton,
     DeleteTaskButton,
     EditTaskButton
@@ -36,9 +50,24 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      taskValue: this.task.content,
+      showEdit: false
+    }
+  },
   methods: {
     deleteTask () {
       this.$store.commit('deleteTask', this.index)
+      this.$store.dispatch('deleteTask', this.task)
+    },
+    editTask () {
+      this.showEdit = !this.showEdit
+    },
+    acceptEdit () {
+      this.$store.commit('changeTask', { task: this.task, content: this.taskValue })
+      this.$store.dispatch('editTask', { task: this.task, content: this.taskValue })
+      this.showEdit = !this.showEdit
     }
   }
 }

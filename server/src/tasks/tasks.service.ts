@@ -8,9 +8,10 @@ import { Task, Prisma } from '@prisma/client';
 export class TasksService {
   constructor(private prisma: PrismaService) {}
 
-  async tasks(authorID: number): Promise<Task[] | null> { // у нас может и не быть задач
+  async tasks(authorID: number): Promise<Task[] | null> {
+    // у нас может и не быть задач
     try {
-      return await this.prisma.task.findMany({ where: {authorId: authorID} });
+      return await this.prisma.task.findMany({ where: { authorId: authorID } });
     } catch (error) {
       console.log(error);
     }
@@ -20,7 +21,10 @@ export class TasksService {
     try {
       const task = await this.prisma.task.create({ data: { ...dataTask } });
       if (!task) {
-          throw new HttpException('Не удалось создать задачу!', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Не удалось создать задачу!',
+          HttpStatus.BAD_REQUEST,
+        );
       }
       return task;
     } catch (error) {
@@ -30,40 +34,53 @@ export class TasksService {
 
   async task(authorID: number, taskID: string): Promise<Task> {
     try {
-      const task = await this.prisma.task.findFirst({ where: {id: Number(taskID), authorId: authorID} });
+      const task = await this.prisma.task.findFirst({
+        where: { id: Number(taskID), authorId: authorID },
+      });
       if (!task) {
-          throw new HttpException('Не удалось получить задачу!', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Не удалось получить задачу!',
+          HttpStatus.BAD_REQUEST,
+        );
       }
       return task;
     } catch (error) {
-        console.log(error);
-      }
+      console.log(error);
+    }
   }
 
   async updateTask(dataTask: UpdateTaskDto, id: string): Promise<Task> {
     try {
-      const task = await this.prisma.task.update({ data: { ...dataTask }, where: { id: Number(id)} });
+      const task = await this.prisma.task.update({
+        data: { ...dataTask },
+        where: { id: Number(id) },
+      });
       if (!task) {
-          throw new HttpException('Не удалось обновить задачу!', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Не удалось обновить задачу!',
+          HttpStatus.BAD_REQUEST,
+        );
       }
       return task;
     } catch (error) {
-        console.log(error);
-      }
+      console.log(error);
+    }
   }
 
   async deleteTask(idTask: string): Promise<Task> {
     try {
-      const task = await this.prisma.task.delete({ where: {id: Number(idTask)} });
+      const task = await this.prisma.task.delete({
+        where: { id: Number(idTask) },
+      });
       if (!task) {
-          throw new HttpException('Не удалось удалить задачу!', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'Не удалось удалить задачу!',
+          HttpStatus.BAD_REQUEST,
+        );
       }
       return task;
     } catch (error) {
-        console.log(error);
-      }
+      console.log(error);
+    }
   }
-
-
-
 }

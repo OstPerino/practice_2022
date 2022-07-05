@@ -58,6 +58,13 @@ import DialogAddTask from '@/components/layouts/DialogAddTask'
 import TaskComponent from '@/components/layouts/TaskComponent'
 
 export default {
+  async beforeMount () {
+    const response = await this.$store.dispatch('getAllTasks')
+    // this.$store.commit('setTasks', response)
+    this.$store.commit('setTasks', response)
+    // console.log(this.$store.getters.getTasks())
+    this.checkTasks()
+  },
   mounted () {
     this.checkTasks()
   },
@@ -83,6 +90,8 @@ export default {
     },
     checkTasks () {
       this.showTasks = this.$store.getters.getTasks.length !== 0
+    },
+    deleteTask () {
     }
   }
 }

@@ -12,6 +12,7 @@
     <DefaultButtonComponent
       button-content='Exit'
       @click='exitDialog'
+      :isDisabled='false'
     />
   </div>
 </template>
@@ -19,12 +20,23 @@
 <script>
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
+import { minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'DialogAddTask',
   components: {
     DefaultInputComponent,
     DefaultButtonComponent
+  },
+  computed: {
+    minLengthCheck () {
+      return this.taskName.length < 8
+    }
+  },
+  validations: {
+    taskName: {
+      minLength: minLength(8)
+    }
   },
   props: {
     showDialog: {
@@ -40,13 +52,14 @@ export default {
   methods: {
     createTask () {
       const item = {
-        name: this.taskName
+        content: this.taskName
       }
       this.$store.commit('addTask', item)
       this.taskName = ''
+      this.$store.dispatch('createNewTask', item)
     },
     exitDialog () {
-      console.log('Exit dialog')
+      console.log(this.$v)
     }
   }
 }

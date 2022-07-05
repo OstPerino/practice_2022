@@ -1,18 +1,29 @@
-import { Controller, Post, Get, Req, Res, UseGuards, Body, Param } from '@nestjs/common';
-import {Response, Request} from "express";
+import {
+  Controller,
+  Post,
+  Delete,
+  Put,
+  Get,
+  Req,
+  Res,
+  UseGuards,
+  Body,
+  Param,
+} from '@nestjs/common';
+import { Response, Request } from 'express';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from '@prisma/client';
-import {JwtAuthGuard} from "../auth/jwt-auth.guard";
-import {Roles} from "../auth/roles-auth.decorator";
-import {RolesGuard} from "../auth/roles.guard";
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Roles } from '../auth/roles-auth.decorator';
+import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('main')
 export class TasksController {
-  constructor( private taskService: TasksService) {}
+  constructor(private taskService: TasksService) {}
 
-  @Roles('user','admin')
+  @Roles('user', 'admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Get()
@@ -25,15 +36,7 @@ export class TasksController {
     res.send(tasks);
   }
 
-  @Roles('user','admin')
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
-  @Get('/create')
-  async createNewTaskPage(@Res() res: Response) {
-    res.status(200).end();
-  }
-
-  @Roles('user','admin')
+  @Roles('user', 'admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Post('/create')
@@ -44,32 +47,21 @@ export class TasksController {
     return task;
   }
 
-  @Roles('user','admin')
+  @Roles('user', 'admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Get('/update/:id')
-  async updateTaskPage(@Param('id') id: string, @Req() req: Request) {
-    const task = await this.taskService.task(req['user'].id, id);
-    return task;
-  }
-
-  @Roles('user','admin')
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
-  @Post('/update/:id')
+  @Put('/update/:id')
   async updateOneTask(@Param('id') id: string, @Body() taskDto: UpdateTaskDto) {
     const task = await this.taskService.updateTask(taskDto, id);
     return task;
   }
 
-  @Roles('user','admin')
+  @Roles('user', 'admin')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Get('/delete/:id')
+  @Delete('/delete/:id')
   async deleteOneTask(@Param('id') id: string) {
     const task = await this.taskService.deleteTask(id);
     return task;
   }
-
-
 }
