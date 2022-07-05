@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import HeaderComponent from '@/components/views/HeaderComponent'
+import HeaderComponent from '@/components/layouts/HeaderComponent'
 
 export default {
   components: {
