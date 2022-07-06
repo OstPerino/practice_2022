@@ -2,7 +2,7 @@
   <div class='TasksComponent'>
     <div class='TasksComponent__timetracking timetracking'>
       <h1 class='timetracking__header'>Today</h1>
-      <span class='timetracking__date'>Mon 22, 2021 | 10:00 AM</span>
+      <span class='timetracking__date'>{{ date | date }}</span>
       <div class='timetracking__weekResult weekResult'>
         <span class='weekResult__header'>Worked This Week</span>
         <div class='weekResult__timeContainer timeContainer'>
@@ -16,20 +16,13 @@
         <h2 class='timetracking__headerTasks'>Today Tasks</h2>
         <ul>
           <li
-            v-for='timer of taskTimers'
+            v-for='(item, index) of taskTimers'
             class='timetracking__todayTasks todayTasks'
-            :key='timer.id'
+            :key='index'
           >
-          <div class='todayTasks__timeContainer timeContainer'>
-            <div class='taskContainer'>
-              <span class='weekResult__header'>Project 1</span>
-              <br>
-              <span class='timeContainer__time'>40:00:05</span>
-            </div>
-            <div class='timeContainer__icon'>
-              <img src='../../assets/images/timeLogo.svg'>
-            </div>
-          </div>
+            <TimerTodayComponent
+              :title='item.title'
+              :timer='item.timer'/>
           </li>
         </ul>
       </div>
@@ -78,18 +71,33 @@
 </template>
 
 <script>
-import './TimerTodayComponent'
+import TimerTodayComponent from './TimerTodayComponent'
 
 export default {
   name: 'TasksComponent',
+  components: {
+    TimerTodayComponent
+  },
+  mounted () {
+    this.interval = setInterval(() => {
+      this.date = new Date()
+    }, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
+  },
   data: () => {
     return {
+      date: new Date(),
+      interval: null,
       taskTimers: [
         {
-          id: 1
+          title: 'Project 1',
+          timer: '40:00:05'
         },
         {
-          id: 2
+          title: 'Project 2',
+          timer: '35:00:05'
         }
       ]
     }
