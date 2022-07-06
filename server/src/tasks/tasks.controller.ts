@@ -18,39 +18,36 @@ import { Task } from '@prisma/client';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../auth/roles-auth.decorator';
 import { RolesGuard } from '../auth/roles.guard';
+import { Role } from '../enum/role.enum';
 
 @Controller('main')
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
-  @Roles('user', 'admin')
+  @Roles(Role.User, Role.Admin)
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Get()
-  async mainPage(@Req() req: Request, @Res() res: Response) {
+  async mainPage(@Req() req: Request) {
     // return "This is Main Page";
-    console.log('User from method:');
-    console.log(req['user'].id); // хранит даже не запихав его в гуарде
-
     const tasks = await this.taskService.tasks(req['user'].id);
 
-    // TODO: Ошибка
-    res.send(tasks);
+    return tasks;
   }
 
-  @Roles('user', 'admin')
+  @Roles(Role.User, Role.Admin)
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Post('/create')
   async createNewTask(@Req() req: Request, @Body() taskDto: CreateTaskDto) {
     taskDto.authorId = req['user'].id;
-    console.log('Type: ' + typeof taskDto.authorId);
     // TODO: Нет валидации на создание
+    //Они есть на уровне проверки полей класса CreateTaskDto
     const task = await this.taskService.createTask(taskDto);
     return task;
   }
 
-  @Roles('user', 'admin')
+  @Roles(Role.User, Role.Admin)
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Put('/update/:id')
@@ -59,7 +56,7 @@ export class TasksController {
     return task;
   }
 
-  @Roles('user', 'admin')
+  @Roles(Role.User, Role.Admin)
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Delete('/delete/:id')

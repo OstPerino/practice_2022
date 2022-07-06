@@ -16,9 +16,9 @@ export class RolesGuard implements CanActivate {
     constructor(private jwtService: JwtService,
                 private reflector: Reflector) {
     }
-
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         try {
+            console.log("---ROLES GUARD---");
             const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
                 context.getHandler(),
                 context.getClass(),
@@ -35,7 +35,7 @@ export class RolesGuard implements CanActivate {
               const nameToken = moreCookie[i].split('=')[0];
               if(nameToken === 'Authentication'){
                 myToken = moreCookie[i];
-                console.log('!VOV!  ' + myToken);
+                console.log('Found -> ' + myToken);
                 break;
               }
             }
@@ -49,11 +49,10 @@ export class RolesGuard implements CanActivate {
 
             const user = this.jwtService.verify(token);
             req.user = user;
-            console.log(user.role);
-            console.log(requiredRoles);
-            console.log('_role_');
+            console.log('User roles -> ' + user.role);
+            console.log('Roles for method -> ' + requiredRoles);
             const result = requiredRoles.some(role => user.role == role);
-            console.log(result);
+            console.log('Result ----> ' + result);
             return result;
             //return user.role.some(role => requiredRoles.includes(role.value)); // ??user.roles or user.role??
         } catch (e) {
