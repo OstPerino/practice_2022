@@ -1,6 +1,9 @@
 <template>
   <div class='addTaskButtonContainer'>
-    <button class='addTaskButtonContainer__addButton'>
+    <button
+      class='addTaskButtonContainer__addButton'
+      @click='onClickHandler'
+    >
       + Add Tasks
     </button>
   </div>
@@ -8,7 +11,12 @@
 
 <script>
 export default {
-  name: 'AddTaskButon'
+  name: 'AddTaskButon',
+  methods: {
+    onClickHandler (event) {
+      this.$emit('click', event)
+    }
+  }
 }
 </script>
 

@@ -29,9 +29,7 @@
     </div>
     <div class='TasksComponent__tasks tasks'>
       <div class='tasks__startTimeTracker startTimeTracker'>
-        <div class='startTimeTracker__buttonContainer'>
-          <button class='play'><img src='../../assets/images/play.svg' class='image'></button>
-        </div>
+        <LastPlayButton/>
         <div class='startTimeTracker__text'>
           <span class='startTimeTracker__header'>Start Time Tracker</span><br>
           <span class='startTimeTracker__taskName'>Task 1</span>
@@ -42,52 +40,71 @@
           <span class='tasksHeader__left'>
             Tasks
           </span>
-          <div class='tasksHeader__addTaskButtonContainer addTaskButtonContainer'>
-            <button class='addTaskButtonContainer__addButton'>
-              + Add Tasks
-            </button>
-          </div>
+          <AddTaskButton
+            @click='createTask'
+          />
         </div>
         <div class='tasksList__list list'>
-          <div class='list__item item'>
-            <div class='item__buttonContainer buttonContainer'>
-              <button class='play'>
-                <img src='../../assets/images/orangePlay.svg'>
-              </button>
-            </div>
-            <div class='item__right'>
-              <span class='item__taskName'>Project Four</span>
-              <div class='item__timer'>
-                <span class='timer'>
-                  00:30:00
-                </span>
-              </div>
-            </div>
+          <div class='task-wrapper' v-if='showTasks'>
+            <TaskComponent
+              v-for='(item, index) in $store.getters.getTasks'
+              :key='index'
+              :task='item'
+              :index='index'
+            />
           </div>
+          <span class='list__error' v-else>Your task list is empty</span>
         </div>
       </div>
     </div>
+    <DialogAddTask
+      class='modalWindow'
+      v-show='showModal'
+      :show-dialog='showModal'
+    />
   </div>
 </template>
 
 <script>
+import AddTaskButton from '@/components/UI/AddTaskButton'
+import LastPlayButton from '@/components/UI/LastPlayButton'
+import DialogAddTask from '@/components/layouts/DialogAddTask'
+import TaskComponent from '@/components/layouts/TaskComponent'
+
 import TimerTodayComponent from './TimerTodayComponent'
 
 export default {
-  name: 'TasksComponent',
-  components: {
-    TimerTodayComponent
+  async beforeMount () {
+    const response = await this.$store.dispatch('getAllTasks')
+    // this.$store.commit('setTasks', response)
+    this.$store.commit('setTasks', response)
+    // console.log(this.$store.getters.getTasks())
+    this.checkTasks()
   },
   mounted () {
+    this.checkTasks()
     this.interval = setInterval(() => {
       this.date = new Date()
     }, 1000)
   },
+  beforeUpdate () {
+    this.checkTasks()
+  },
   beforeDestroy () {
     clearInterval(this.interval)
   },
-  data: () => {
+  components: {
+    AddTaskButton,
+    LastPlayButton,
+    DialogAddTask,
+    TaskComponent
+    TimerTodayComponent
+  },
+  name: 'TasksComponent',
+  data () {
     return {
+      showModal: false,
+      showTasks: false,
       date: new Date(),
       interval: null,
       taskTimers: [
@@ -101,6 +118,16 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    createTask () {
+      this.showModal = !this.showModal
+    },
+    checkTasks () {
+      this.showTasks = this.$store.getters.getTasks.length !== 0
+    },
+    deleteTask () {
+    }
   }
 }
 </script>
@@ -110,6 +137,14 @@ export default {
   width: 1440px;
   margin: 0 auto;
   display: flex;
+  position: relative;
+
+  .modalWindow {
+    position: absolute;
+    top: calc(100vh * 0.5);
+    left: calc(100vw * 0.5);
+    transform: translate(-50%, -50%);
+  }
 
   &__timetracking {
     width: 590px;

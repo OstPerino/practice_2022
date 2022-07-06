@@ -1,12 +1,13 @@
 <template>
-  <div class="DefaultButtonComponent">
+<!--  <div class="DefaultButtonComponent">-->
     <button
       class="DefaultButtonComponent__button"
       @click="onClickHandler"
+      :disabled='isDisabled'
     >
       {{ this.buttonContent }}
     </button>
-  </div>
+<!--  </div>-->
 </template>
 
 <script>
@@ -16,7 +17,11 @@ export default {
     buttonContent: {
       type: String,
       required: true
-    }
+    },
+    isDisabled: Boolean
+  },
+  mounted () {
+    console.log(this.isDisabled)
   },
   methods: {
     onClickHandler (event) {
