@@ -33,6 +33,8 @@ export class TasksController {
     console.log(req['user'].id); // хранит даже не запихав его в гуарде
 
     const tasks = await this.taskService.tasks(req['user'].id);
+
+    // TODO: Ошибка
     res.send(tasks);
   }
 
@@ -43,6 +45,7 @@ export class TasksController {
   async createNewTask(@Req() req: Request, @Body() taskDto: CreateTaskDto) {
     taskDto.authorId = req['user'].id;
     console.log('Type: ' + typeof taskDto.authorId);
+    // TODO: Нет валидации на создание
     const task = await this.taskService.createTask(taskDto);
     return task;
   }

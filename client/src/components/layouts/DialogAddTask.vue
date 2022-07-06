@@ -8,11 +8,11 @@
     <DefaultButtonComponent
       button-content='Create task'
       @click='createTask'
+      :isDisabled="minLengthCheck"
     />
     <DefaultButtonComponent
       button-content='Exit'
       @click='exitDialog'
-      :isDisabled='false'
     />
   </div>
 </template>

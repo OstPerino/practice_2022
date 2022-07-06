@@ -18,9 +18,10 @@ export default {
       type: String,
       required: true
     },
-    isDisabled: {
-      type: Boolean
-    }
+    isDisabled: Boolean
+  },
+  mounted () {
+    console.log(this.isDisabled)
   },
   methods: {
     onClickHandler (event) {
