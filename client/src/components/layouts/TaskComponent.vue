@@ -1,5 +1,5 @@
 <template>
-  <div class='item'>
+  <div class='item' @mouseover='showButtons = true' @mouseleave='showButtons = false'>
     <OnePlayButton />
     <div class='item__right'>
       <span class='item__taskName' v-if='!showEdit'>{{ task.content }}</span>
@@ -19,8 +19,12 @@
         </span>
       </div>
     </div>
-    <EditTaskButton @click='editTask' />
-    <DeleteTaskButton @click='deleteTask' />
+    <transition name="slide-fade">
+      <div class='taskButtons' v-show='showButtons'>
+        <EditTaskButton @click='editTask' class='taskButtons__item'/>
+        <DeleteTaskButton @click='deleteTask' class='taskButton__item'/>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -30,6 +34,7 @@ import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
 import EditTaskButton from '@/components/UI/EditTaskButton'
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import AcceptEditButton from '@/components/UI/AcceptEditButton'
+// import IconButton from '@/components/UI/IconButton'
 
 export default {
   components: {
@@ -38,6 +43,7 @@ export default {
     OnePlayButton,
     DeleteTaskButton,
     EditTaskButton
+    // IconButton
   },
   name: 'TaskComponent',
   props: {
@@ -53,7 +59,9 @@ export default {
   data () {
     return {
       taskValue: this.task.content,
-      showEdit: false
+      showEdit: false,
+      showButtons: false
+      // deleteIcon: '<font-awesome-icon icon="fa-solid fa-trash"/>'
     }
   },
   methods: {
@@ -102,6 +110,25 @@ export default {
         padding: 10px 15px;
       }
     }
+  }
+  .taskButtons {
+    display: flex;
+    &__item {
+      margin-right: 10px;
+      &:first-child {
+        margin-left: 10px;
+      }
+    }
+  }
+  .slide-fade-enter-active {
+    transition: all .6s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
   }
 }
 </style>

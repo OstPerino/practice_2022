@@ -99,7 +99,7 @@ export default {
 
 <style scoped lang='scss'>
 .TasksComponent {
-  width: 1440px;
+  width: 1300px;
   margin: 0 auto;
   display: flex;
   position: relative;
@@ -113,18 +113,18 @@ export default {
 
   &__timetracking {
     width: 590px;
-    padding-right: 50px;
+    padding-right: 30px;
   }
 
   .timetracking {
     &__header {
-      font-size: 54px;
+      font-size: 30px;
       font-weight: 600;
       line-height: 81px;
     }
 
     &__date {
-      font-size: 28px;
+      font-size: 21px;
       font-weight: 500;
       line-height: 42px;
     }
@@ -133,7 +133,7 @@ export default {
       margin-top: 50px;
       background-color: #F9F9F9;
       padding: 30px;
-      width: 470px;
+      width: 370px;
       border-radius: 16px;
 
       .timeContainer {
@@ -144,28 +144,33 @@ export default {
 
         &__time {
           font-weight: 600;
-          font-size: 44px;
+          font-size: 30px;
           line-height: 66px;
         }
 
         &__icon {
           background-color: rgba(250, 187, 24, 0.1);;
-          padding: 40px;
+          padding: 30px;
           border-radius: 15px;
         }
+      }
+    }
+    .weekResult {
+      &__header {
+        font-size: 24px;
       }
     }
   }
 
   &__tasks {
     background-color: #F9F9F9;
-    padding: 50px;
+    padding: 20px;
     width: 100%;
     border-radius: 30px;
 
     .startTimeTracker {
       background-color: #fff;
-      padding: 20px;
+      padding: 5px 15px;
       display: flex;
       align-items: center;
       border-radius: 20px;
@@ -196,13 +201,13 @@ export default {
       &__text {
         .startTimeTracker__header {
           font-weight: 600;
-          font-size: 28px;
-          line-height: 42px;
+          font-size: 22px;
+          line-height: 26px;
         }
         .startTimeTracker__taskName {
           font-weight: 500;
-          font-size: 28px;
-          line-height: 42px;
+          font-size: 22px;
+          line-height: 26px;
         }
       }
     }
@@ -217,10 +222,13 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
       }
 
       .tasksHeader {
+        &__left {
+          font-size: 22px;
+        }
         &__addTaskButtonContainer {
           button {
             font-weight: 600;

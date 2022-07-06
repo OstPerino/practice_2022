@@ -1,7 +1,7 @@
 <template>
-  <div class='DeleteTaskButton'>
-    <button class='DeleteTaskButton__button' @click='onClickHandler'>
-      Delete
+  <div class='DeleteTaskButtonContainer'>
+    <button class='DeleteTaskButtonContainer__button' @click='onClickHandler'>
+      <font-awesome-icon icon='fa-solid fa-trash' class='icon' />
     </button>
   </div>
 </template>
@@ -17,6 +17,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
+.DeleteTaskButtonContainer {
+  &__button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
 
+  .icon {
+    color: #FABB18;
+    height: 15px;
+    width: 15px;
+  }
+}
 </style>

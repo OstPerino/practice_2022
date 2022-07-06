@@ -24,7 +24,7 @@ export default {
 .addTaskButtonContainer {
   &__addButton {
     font-weight: 600;
-    font-size: 28px;
+    font-size: 22px;
     line-height: 42px;
     background-color: transparent;
     border: none;
