@@ -69,8 +69,8 @@ export class TasksController {
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Put('/start_time/:id')
-  async startTaskTimer(@Param('id') id: string) {
-    const task = await this.taskService.startTaskTimer(id);
+  async startTaskTimer(@Param('id') id: string, @Req() req: Request) {
+    const task = await this.taskService.startTaskTimer(id, req['user'].id);
     return task;
   }
 

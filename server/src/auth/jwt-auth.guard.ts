@@ -30,7 +30,7 @@ export class JwtAuthGuard implements CanActivate {
               }
             }
 
-            if(!authHeader){
+            if(!myToken){
               console.log('not cookie');
               // throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет куки)'});
               return false;
@@ -40,7 +40,7 @@ export class JwtAuthGuard implements CanActivate {
             console.log('TOKEN = ' + token);
 
 
-            if (nameToken !== 'Authentication' && !token) {
+            if (!token) {
                 //throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет jwt токена)'});
                 return false;
             }

@@ -16,7 +16,7 @@ export class TasksService {
         if(task.status === true){
           const time = new Date();
           const presentTime = Math.round(time.getTime()/1000.0);
-          task.time += presentTime;
+          task.time += (presentTime - task.start_time);
         }
       });
       return tasks;
@@ -92,39 +92,54 @@ export class TasksService {
     }
   }
 
-  async startTaskTimer(id: string): Promise<Task> {
+  async startTaskTimer(id: string, authorID: number): Promise<Task> {
     try {
-      const task = await this.prisma.task.findFirst({
-        where: { id: Number(id) },
+      const tasks = await this.prisma.task.findMany({
+        where: { authorId: authorID },
       });
-      if (!task) {
+      if (!tasks) {
         throw new HttpException(
-          'Не удалось получить задачу!',
+          'Не удалось получить задачи!',
           HttpStatus.BAD_REQUEST,
         );
       }
-      if (!task.status) {
-        task.status = true;
-        const time = new Date();
-        const startTime = Math.round(time.getTime()/1000.0);
-        task.start_time = startTime;
-        console.log('start_time -> ' + task.start_time + '; time -> ' + task.time);
-        const updTask = await this.prisma.task.update({
-          data: { ...task },
-          where: { id: Number(id) },
-        });
-        if (!updTask) {
-          throw new HttpException(
-            'Не удалось обновить запуск задачи!',
-            HttpStatus.BAD_REQUEST,
-          );
+      let updTaskStart;
+      tasks.forEach(async task => {
+        if(task.status === true && task.id !== Number(id)){
+          const time = new Date();
+          const presentTime = Math.round(time.getTime()/1000.0);
+          task.time += (presentTime - task.start_time);
+          task.start_time = 0;
+          const updTaskStop = await this.prisma.task.update({
+            data: { ...task },
+            where: { id: Number(id) },
+          });
+          if (!updTaskStop) {
+            throw new HttpException(
+              'Не удалось обновить остановку задачи!',
+              HttpStatus.BAD_REQUEST,
+            );
+          }
         }
-        return updTask;
-      }
-      throw new HttpException(
-        'Задача уже запущена!',
-        HttpStatus.BAD_REQUEST,
-      );
+        if (task.status === false && task.id === Number(id)) {
+          task.status = true;
+          const time = new Date();
+          const startTime = Math.round(time.getTime()/1000.0);
+          task.start_time = startTime;
+          console.log('start_time -> ' + task.start_time + '; time -> ' + task.time);
+          updTaskStart = await this.prisma.task.update({
+            data: { ...task },
+            where: { id: Number(id) },
+          });
+          if (!updTaskStart) {
+            throw new HttpException(
+              'Не удалось обновить запуск задачи!',
+              HttpStatus.BAD_REQUEST,
+            );
+          }
+        }
+      });
+      return updTaskStart;
     } catch (error) {
       console.log(error);
     }
