@@ -6,7 +6,10 @@
       <div class='timetracking__weekResult weekResult'>
         <span class='weekResult__header'>Worked This Week</span>
         <div class='weekResult__timeContainer timeContainer'>
-          <span class='timeContainer__time'>40:00:05</span>
+          <TimerComponent
+            class='timeContainer__time'
+            value='30:00:05'
+          />
           <div class='timeContainer__icon'>
             <img src='../../assets/images/timeLogo.svg'>
           </div>
@@ -70,8 +73,8 @@ import AddTaskButton from '@/components/UI/AddTaskButton'
 import LastPlayButton from '@/components/UI/LastPlayButton'
 import DialogAddTask from '@/components/layouts/DialogAddTask'
 import TaskComponent from '@/components/layouts/TaskComponent'
-
 import TimerTodayComponent from './TimerTodayComponent'
+import TimerComponent from '@/components/UI/TimerComponent'
 
 export default {
   async beforeMount () {
@@ -97,8 +100,9 @@ export default {
     AddTaskButton,
     LastPlayButton,
     DialogAddTask,
-    TaskComponent
-    TimerTodayComponent
+    TaskComponent,
+    TimerTodayComponent,
+    TimerComponent
   },
   name: 'TasksComponent',
   data () {

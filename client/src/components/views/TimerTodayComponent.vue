@@ -2,7 +2,10 @@
   <div class='todayTasks__timeContainer timeContainer'>
     <div class='taskContainer'>
       <div class='timeTracking__header'>{{ this.title }}</div>
-      <span class='timeContainer__time'>{{ this.timer }}</span>
+      <TimerComponent
+        class='timeContainer__time'
+        :value=timer
+        />
     </div>
     <div class='timeContainer__icon'>
       <img src='../../assets/images/timeLogo.svg'>
@@ -11,8 +14,12 @@
 </template>
 
 <script>
+import TimerComponent from '@/components/UI/TimerComponent'
 export default {
   name: 'TimerTodayComponent',
+  components: {
+    TimerComponent
+  },
   props: {
     title: {
       type: String,
