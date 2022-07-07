@@ -64,4 +64,22 @@ export class TasksController {
     const task = await this.taskService.deleteTask(id);
     return task;
   }
+
+  @Roles(Role.User, Role.Admin)
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Put('/start_time/:id')
+  async startTaskTimer(@Param('id') id: string) {
+    const task = await this.taskService.startTaskTimer(id);
+    return task;
+  }
+
+  @Roles(Role.User, Role.Admin)
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Put('/stop_time/:id')
+  async stopTaskTimer(@Param('id') id: string) {
+    const task = await this.taskService.stopTaskTimer(id);
+    return task;
+  }
 }

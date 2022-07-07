@@ -24,19 +24,18 @@ export class JwtNoAuthGuard implements CanActivate {
                   break;
                 }
               }
-              if(!myToken){
-                return true;
-              }
-              const nameToken = myToken.split('=')[0]
-              const token = myToken.split('=')[1]
+              if(myToken) {
+                const nameToken = myToken.split('=')[0]
+                const token = myToken.split('=')[1]
 
-              console.log('nameToken = ' + nameToken);
-              console.log('token = ' + token);
+                console.log('nameToken = ' + nameToken);
+                console.log('token = ' + token);
 
-              if (nameToken == 'Authentication' && token) {
-                console.log('Авторизованный пользователь!');
-                // throw new BadRequestException({message: 'Пользователь авторизован'})
-                return false;
+                if (token) {
+                  console.log('Авторизованный пользователь!');
+                  // throw new BadRequestException({message: 'Пользователь авторизован'})
+                  return false;
+                }
               }
             }
             //req.user = user;

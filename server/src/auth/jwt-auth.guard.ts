@@ -16,6 +16,9 @@ export class JwtAuthGuard implements CanActivate {
 
         try {
             const authHeader = req.headers.cookie;// возможно надо будет просто вытащить cookie и уже их verify
+            if(!authHeader) {
+              return false;
+            }
             const moreCookie = authHeader.split('; ');
             let myToken: string;
             for (let i = 0; i < moreCookie.length; i++) {
