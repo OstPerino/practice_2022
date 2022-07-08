@@ -5,20 +5,22 @@
       <span class='item__taskName' v-if='!showEdit'>{{ task.content }}</span>
       <div class='edit' v-else>
         <DefaultInputComponent
-          label-value='Edit task name'
           placeholder='Write new task name'
           v-model='taskValue'
         />
         <AcceptEditButton
           @click='acceptEdit'
         />
+        <IconButton>
+          <font-awesome-icon icon='fa-solid fa-check' class='icon'/>
+        </IconButton>
       </div>
       <div class='item__timer'>
         <span class='timer'>
           00:00:00
         </span>
       </div>
-    </div>
+  </div>
     <transition name="slide-fade">
       <div class='taskButtons' v-show='showButtons'>
         <EditTaskButton @click='editTask' class='taskButtons__item'/>
@@ -34,16 +36,17 @@ import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
 import EditTaskButton from '@/components/UI/EditTaskButton'
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import AcceptEditButton from '@/components/UI/AcceptEditButton'
+import IconButton from '@/components/UI/IconButton'
 // import IconButton from '@/components/UI/IconButton'
 
 export default {
   components: {
+    IconButton,
     AcceptEditButton,
     DefaultInputComponent,
     OnePlayButton,
     DeleteTaskButton,
     EditTaskButton
-    // IconButton
   },
   name: 'TaskComponent',
   props: {
@@ -61,7 +64,6 @@ export default {
       taskValue: this.task.content,
       showEdit: false,
       showButtons: false
-      // deleteIcon: '<font-awesome-icon icon="fa-solid fa-trash"/>'
     }
   },
   methods: {
@@ -95,6 +97,10 @@ export default {
     justify-content: space-between;
     align-items: center;
 
+    .edit {
+      display: flex;
+    }
+
     .item__taskName {
       font-weight: 600;
       font-size: 18px;
@@ -124,7 +130,7 @@ export default {
     transition: all .6s ease;
   }
   .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
   .slide-fade-enter, .slide-fade-leave-to {
     transform: translateX(10px);

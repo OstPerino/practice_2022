@@ -11,16 +11,12 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/authorization',
-      redirect: '/'
-    },
-    {
-      path: '/main',
+      path: '/',
       name: 'Main',
       component: MainComponent
     },
     {
-      path: '/',
+      path: '/authorization',
       name: 'Authorization',
       component: AuthorizationComponent
     },
@@ -28,6 +24,10 @@ const router = new VueRouter({
       path: '/registration',
       name: 'Registration',
       component: RegistrationComponent
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })

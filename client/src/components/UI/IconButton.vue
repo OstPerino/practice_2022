@@ -1,13 +1,11 @@
 <template>
   <button class='iconButton' v-html='iconTag'>
+    <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  mounted () {
-    console.log(this.iconTag)
-  },
   name: 'IconButton',
   methods: {
     onClickHandler (event) {

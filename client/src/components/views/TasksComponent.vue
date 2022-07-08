@@ -60,9 +60,7 @@ import TaskComponent from '@/components/layouts/TaskComponent'
 export default {
   async beforeMount () {
     const response = await this.$store.dispatch('getAllTasks')
-    // this.$store.commit('setTasks', response)
     this.$store.commit('setTasks', response)
-    // console.log(this.$store.getters.getTasks())
     this.checkTasks()
   },
   mounted () {
