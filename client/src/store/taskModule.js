@@ -1,4 +1,6 @@
 /* eslint-disable */
+// import * as requestOptions from '../api/index'
+
 export default {
   state: () => ({
     tasks: [],
@@ -65,7 +67,6 @@ export default {
       )
     },
     async editTask({ dispatch }, payload) {
-      // console.log(payload.content)
       const response = await fetch(
         `http://localhost:4000/main/update/${payload.task.id}`,
         {

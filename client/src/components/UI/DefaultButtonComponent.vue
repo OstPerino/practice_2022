@@ -20,9 +20,6 @@ export default {
     },
     isDisabled: Boolean
   },
-  mounted () {
-    console.log(this.isDisabled)
-  },
   methods: {
     onClickHandler (event) {
       this.$emit('click', event)
