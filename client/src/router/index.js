@@ -13,17 +13,20 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'Main',
-      component: MainComponent
+      component: MainComponent,
+      meta: { requiresAuth: true }
     },
     {
       path: '/authorization',
       name: 'Authorization',
-      component: AuthorizationComponent
+      component: AuthorizationComponent,
+      meta: { requiresAuth: false }
     },
     {
       path: '/registration',
       name: 'Registration',
-      component: RegistrationComponent
+      component: RegistrationComponent,
+      meta: { requiresAuth: false }
     },
     {
       path: '*',
@@ -31,20 +34,10 @@ const router = new VueRouter({
     }
   ]
 })
-//
+
 // router.beforeEach(async (to, from, next) => {
-//   const response = await fetch('http://localhost:4000/isAuth',
-//     {
-//       headers: {
-//         Accept: 'application/json',
-//         'Content-Type': 'application/json'
-//       },
-//       credentials: 'include',
-//       method: 'get'
-//     })
+//   const { requiresAuth } = to.meta
 //
-//   console.log(response)
-//   next()
 // })
 
 export default router

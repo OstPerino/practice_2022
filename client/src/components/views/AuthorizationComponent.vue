@@ -73,22 +73,24 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'authorization-component.vue',
-  async mounted () {
-    const response = await fetch(
-      'http://localhost:4000/login',
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        method: 'GET'
-      }
-    )
-    if (response.status === 200) {
-      await this.$router.push('/authorization')
-    }
+  created () {
   },
+  // async mounted () {
+  //   const response = await fetch(
+  //     'http://localhost:4000/login',
+  //     {
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       credentials: 'include',
+  //       method: 'GET'
+  //     }
+  //   )
+  //   if (response.status === 200) {
+  //     await this.$router.push('/authorization')
+  //   }
+  // },
   components: {
     DefaultButtonComponent,
     DefaultInputComponent
@@ -136,7 +138,7 @@ export default {
         login: this.inputData.userLoginInput.value,
         password: this.inputData.userPasswordInput.value
       }
-      const response = await fetch('http://localhost:4000/login',
+      const checkUser = await fetch('http://localhost:4000/login',
         {
           headers: {
             Accept: 'application/json',
@@ -147,8 +149,8 @@ export default {
           body: JSON.stringify(userData)
         })
 
-      if (response.status === 200) {
-        await this.$router.push('/main')
+      if (checkUser.status === 200) {
+        await this.$router.push('/')
       }
     }
   }

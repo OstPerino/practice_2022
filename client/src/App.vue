@@ -3,7 +3,7 @@
     id='app'
     class='app'
   >
-    <HeaderComponent v-if="!$route.name !== 'authorization'"/>
+    <HeaderComponent/>
     <router-view></router-view>
   </div>
 </template>
