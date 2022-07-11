@@ -53,13 +53,14 @@ export default {
     createTask () {
       const item = {
         content: this.taskName
+        // isActive: false
       }
       this.$store.commit('addTask', item)
       this.taskName = ''
       this.$store.dispatch('createNewTask', item)
     },
     exitDialog () {
-      console.log(this.$v)
+      // console.log(this.$v)
     }
   }
 }

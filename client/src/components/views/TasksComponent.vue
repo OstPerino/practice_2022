@@ -8,7 +8,7 @@
         <div class='weekResult__timeContainer timeContainer'>
           <TimerComponent
             class='timeContainer__time'
-            value='30:00:05'
+            :value=2349
           />
           <div class='timeContainer__icon'>
             <img src='../../assets/images/timeLogo.svg'>
@@ -19,13 +19,14 @@
         <h2 class='timetracking__headerTasks'>Today Tasks</h2>
         <ul>
           <li
-            v-for='(item, index) of taskTimers'
+            v-for='(item, index) of $store.getters.getTasks'
             class='timetracking__todayTasks todayTasks'
             :key='index'
           >
             <TimerTodayComponent
-              :title='item.title'
-              :timer='item.timer'/>
+              :task='item'
+              :index='index'
+            />
           </li>
         </ul>
       </div>
@@ -88,6 +89,7 @@ export default {
     this.checkTasks()
     this.interval = setInterval(() => {
       this.date = new Date()
+      // this.updateTimers()
     }, 1000)
   },
   beforeUpdate () {
@@ -111,16 +113,7 @@ export default {
       showTasks: false,
       date: new Date(),
       interval: null,
-      taskTimers: [
-        {
-          title: 'Project 1',
-          timer: '40:00:05'
-        },
-        {
-          title: 'Project 2',
-          timer: '35:00:05'
-        }
-      ]
+      sum: 0
     }
   },
   methods: {
@@ -132,6 +125,12 @@ export default {
     },
     deleteTask () {
     }
+    // sumTimers (value) {this.$store.getters.getTasks.length
+    //   for (let i=0; i < this.$store.getters.getTasks.length; i++) {
+    //     value += this.item.time
+    //   }
+    //   return value
+    // }
   }
 }
 </script>

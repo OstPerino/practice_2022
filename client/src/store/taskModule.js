@@ -25,6 +25,14 @@ export default {
     changeTask(state, payload) {
       const toChange = state.tasks.find(item => item.id === payload.task.id)
       toChange.content = payload.content
+    },
+    startTask(state, task) {
+      const toChange = state.tasks.find(item => item.id === task.id)
+      toChange.time = task.time
+    },
+    stopTask (state, task) {
+      const toChange = state.tasks.find(item => item.id === task.id)
+      toChange.time = task.time
     }
   },
   actions: {
@@ -76,6 +84,34 @@ export default {
           credentials: 'include',
           method: 'PUT',
           body: JSON.stringify({ content: payload.content })
+        }
+      )
+    },
+    async startTaskTimer({ dispatch }, task) {
+      // console.log(payload.content)
+      const response = await fetch(
+        `http://localhost:4000/main/start_time/${task.id}`,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          method: 'PUT'
+        }
+      )
+    },
+    async stopTaskTimer({ dispatch }, task) {
+      // console.log(payload.content)
+      const response = await fetch(
+        `http://localhost:4000/main/stop_time/${task.id}`,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          method: 'PUT'
         }
       )
     }

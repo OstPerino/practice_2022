@@ -21,7 +21,7 @@ export default {
     isDisabled: Boolean
   },
   mounted () {
-    console.log(this.isDisabled)
+    // console.log(this.isDisabled)
   },
   methods: {
     onClickHandler (event) {

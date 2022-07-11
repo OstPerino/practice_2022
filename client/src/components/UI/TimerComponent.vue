@@ -8,31 +8,24 @@ export default {
   interval: null,
   props: {
     value: {
-      type: String,
-      required: true
+      type: Number,
+      required: false
     }
   },
   data () {
     return {
-      nHour: Number(this.value.slice(0, 2)),
-      nMinute: Number(this.value.slice(3, 5)),
-      nSecond: Number(this.value.slice(6, 8)),
+      nHour: Math.trunc(this.value / 3600),
+      nMinute: Math.trunc(this.value % 3600 / 60),
+      nSecond: this.value % 3600 % 60,
       newTimer: ''
     }
   },
   methods: {
     time () {
       this.interval = setInterval(() => {
-        if (this.nSecond === 59 && this.nMinute !== 59) {
-          this.nSecond = 0
-          this.nMinute += 1
-        } else if (this.nMinute === 59 && this.nSecond === 59) {
-          this.nSecond = 0
-          this.nMinute = 0
-          this.nHour += 1
-        } else {
-          this.nSecond += 1
-        }
+        this.nHour = Math.trunc(this.value / 3600)
+        this.nMinute = Math.trunc(this.value % 3600 / 60)
+        this.nSecond = this.value % 3600 % 60
         this.newTimer = this.numToStr(this.nHour) + ':' + this.numToStr(this.nMinute) + ':' + this.numToStr(this.nSecond)
       }, 1000)
     },
