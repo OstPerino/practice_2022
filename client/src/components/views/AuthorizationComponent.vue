@@ -1,6 +1,9 @@
 <template>
   <div class='flex-container'>
     <form class='AuthorizationComponent'>
+      <div class='AuthorizationComponent__container logoContainer'>
+        <span class='logo'>TEMP<span class='changeColor'>US</span></span>
+      </div>
       <h2 class='AuthorizationComponent__header'>Authorization</h2>
       <div class='AuthorizationComponent__container'>
         <DefaultInputComponent
@@ -34,9 +37,9 @@
           v-show='!$v.inputData.userPasswordInput.value.required && $v.inputData.userPasswordInput.value.$dirty'
         >
             Field is required.
-          </span>
+        </span>
       </div>
-      <div class='AuthorizationComponent__container'>
+      <div class='AuthorizationComponent__container wrong'>
           <span
             class='AuthorizationComponent__error missedUser'
           >
@@ -73,20 +76,17 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'authorization-component.vue',
-  async mounted () {
-    const response = await fetch(
-      'http://localhost:4000/login',
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        method: 'GET'
-      }
-    )
-    if (response.status === 200) {
-      await this.$router.push('/authorization')
+  async beforeCreate () {
+    const response = await fetch('http://localhost:4000/login', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'GET'
+    })
+    if (response.ok) {
+      await this.$router.push('/')
     }
   },
   components: {
@@ -136,7 +136,7 @@ export default {
         login: this.inputData.userLoginInput.value,
         password: this.inputData.userPasswordInput.value
       }
-      const response = await fetch('http://localhost:4000/login',
+      const checkUser = await fetch('http://localhost:4000/login',
         {
           headers: {
             Accept: 'application/json',
@@ -147,8 +147,9 @@ export default {
           body: JSON.stringify(userData)
         })
 
-      if (response.status === 200) {
-        await this.$router.push('/main')
+      if (checkUser.status === 200) {
+        localStorage.setItem('isAuth', 'true')
+        await this.$router.push('/')
       }
     }
   }
@@ -168,13 +169,27 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #F6FBF9;
+  background-color: #F9F9F9;
   border-radius: 10px;
   padding: 60px 80px;
 
   &__container {
     padding: 0 15px 15px 0;
     position: relative;
+  }
+
+  .logoContainer {
+    text-align: center;
+
+    .logo {
+      font-size: 37px;
+      color: #000;
+      line-height: 71px;
+
+      .changeColor {
+        color: #FABB18;
+      }
+    }
   }
 
   &__header {
@@ -204,6 +219,10 @@ export default {
     left: 5px;
   }
 
+  .wrong {
+    margin-top: 20px;
+  }
+
   .missedUser {
     font-size: 16px;
     text-align: center;
@@ -219,7 +238,7 @@ export default {
     }
 
     .link {
-      color: #48927c;
+      color: #FABB18;
       text-decoration: none;
     }
   }

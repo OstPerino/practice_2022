@@ -1,14 +1,22 @@
-import {Body, Controller, Post, Get, Delete, Res, UseGuards} from '@nestjs/common';
-import {CreateUserDto} from "../user/dto/create-user.dto";
-import {Login} from "./dto/login-auth.dto";
-import {AuthService} from "./auth.service";
-import {JwtNoAuthGuard} from "./jwt-no_auth.guard";
-import {Response} from "express";
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Delete,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { Login } from './dto/login-auth.dto';
+import { AuthService } from './auth.service';
+import { JwtNoAuthGuard } from './jwt-no_auth.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { Response } from 'express';
 
 @Controller()
 export class AuthController {
-
-  constructor( private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   // @Get('/checkLogin')
   // async checkLogin() {
@@ -16,7 +24,10 @@ export class AuthController {
   // }
 
   @Post('/login')
-  async login(@Res({passthrough: true}) res: Response, @Body() userAuth: Login) {
+  async login(
+    @Res({ passthrough: true }) res: Response,
+    @Body() userAuth: Login,
+  ) {
     const jwtToken = await this.authService.login(userAuth);
     //res.cookie('jwt', jwtToken, {httpOnly: true});
     res.setHeader('Set-Cookie', jwtToken);
@@ -28,16 +39,16 @@ export class AuthController {
   //@Roles("user") // работает ли если писать большими и тут нужно сделать доступ только !!! НЕ АВТОРИЗОВАННЫМ !!!
   //@UseGuards(RolesGuard)
 
-  @UseGuards(JwtNoAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/login')
-  async logPage(@Res() res: Response){
+  async logPage(@Res() res: Response) {
     res.status(200).end();
   }
 
   @Post('/register')
   async registration(@Res() res: Response, @Body() userDto: CreateUserDto) {
     const user = await this.authService.registration(userDto);
-    if(!user){
+    if (!user) {
       res.status(400).end();
     }
     res.status(200).send(user);
@@ -45,16 +56,14 @@ export class AuthController {
 
   @UseGuards(JwtNoAuthGuard)
   @Get('/register')
-  async regPage(@Res() res: Response){
+  async regPage(@Res() res: Response) {
     res.status(200).end();
   }
 
   @Get('/logout')
-  async logout(@Res({passthrough: true}) res: Response){
+  async logout(@Res({ passthrough: true }) res: Response) {
     console.log('Delete authorization token');
     res.clearCookie('Authentication');
     res.status(200).end();
   }
-
-
 }

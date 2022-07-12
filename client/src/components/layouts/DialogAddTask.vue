@@ -5,15 +5,25 @@
       label-value='Write the task name'
       v-model='taskName'
     />
-    <DefaultButtonComponent
-      button-content='Create task'
-      @click='createTask'
-      :isDisabled="minLengthCheck"
-    />
-    <DefaultButtonComponent
-      button-content='Exit'
-      @click='exitDialog'
-    />
+    <span
+      class='modalContainer__error'
+      v-show='minLengthCheck'
+      >
+      The task must have at least 8 characters.
+    </span>
+    <div class='modalContainer__buttonContainer'>
+      <DefaultButtonComponent
+        button-content='Create task'
+        @click='createTask'
+        :isDisabled="minLengthCheck"
+      />
+    </div>
+    <div class='modalContainer__buttonContainer'>
+      <DefaultButtonComponent
+        button-content='Exit'
+        @click='exitDialog'
+      />
+    </div>
   </div>
 </template>
 
@@ -53,7 +63,6 @@ export default {
     createTask () {
       const item = {
         content: this.taskName
-        // isActive: false
       }
       this.$store.commit('addTask', item)
       this.taskName = ''
@@ -61,14 +70,31 @@ export default {
     },
     exitDialog () {
       // console.log(this.$v)
+      // this.show = !this.show
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 .modalContainer {
-  padding: 50px 60px;
-  background-color: #FABB18;
+  padding: 60px 40px;
+  // padding: 50px 60px;
+  background-color: #F9F9F9;
+  border-radius: 30px;
+  box-shadow: 2px 2px 10px 1px;
+
+  &__error {
+    font-size: 12px;
+    color: #F47174;
+    // position: relative;
+    bottom: 0;
+    left: 5px;
+  }
+
+  &__buttonContainer {
+    margin-top: 10px;
+    text-align: center;
+  }
 }
 </style>

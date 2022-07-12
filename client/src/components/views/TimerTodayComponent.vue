@@ -29,22 +29,6 @@ export default {
       type: Number,
       required: true
     }
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // timer: {
-    //   type: String,
-    //   required: true
-    // }
-  },
-  // data () {
-  //   return {
-  //     taskTitle: this.task.titl
-  //   }
-  // }
-  methods: {
-
   }
 }
 </script>

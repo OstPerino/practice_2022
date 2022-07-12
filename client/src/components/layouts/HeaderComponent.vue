@@ -6,17 +6,13 @@
     <nav class='HeaderComponent__menu menu'>
       <ul class='menu__list list'>
         <li class='list__item timetracker'>
-          <div class='image'>
             <img src='../../assets/images/timetracker.svg'>
-          </div>
           <div class='href'>
             <a href='#' class='list__href'>Timetracker</a>
           </div>
         </li>
         <li class='list__item settings'>
-         <div class='image'>
            <img src='../../assets/images/settings.svg'>
-         </div>
           <div class='href'>
             <a href='#' class='list__href'>Settings</a>
           </div>
@@ -44,15 +40,16 @@ export default {
 <style scoped lang='scss'>
 
 .HeaderComponent {
+  font-size: 10px;
   padding: 35px 0;
-  width: 1440px;
+  width: 1300px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
 
   &__logo {
     .logo {
-      font-size: 36px;
+      font-size: 27px;
       color: #000;
       line-height: 71px;
 
@@ -64,19 +61,20 @@ export default {
   }
 
   &__menu {
+    display: flex;
+    align-items: center;
     .list {
       list-style-type: none;
       display: flex;
-      font-size: 18px;
+      font-size: 16px;
 
       &__item {
         display: flex;
-        flex-direction: row;
         align-items: center;
-        padding: 20px 25px;
+        padding: 15px 20px;
         border-radius: 18px;
         margin-right: 30px;
-        width: 245px;
+        width: 220px;
 
         &:last-child {
           margin-right: 0;

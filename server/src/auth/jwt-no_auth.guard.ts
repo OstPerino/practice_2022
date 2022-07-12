@@ -5,11 +5,10 @@ import {JwtService} from "@nestjs/jwt";
 @Injectable()
 export class JwtNoAuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) { }
-
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const req = context.switchToHttp().getRequest()
-
-        console.log(req.headers.cookie);
+        console.log("---NO AUTH GUARD---");
+        console.log('COOKIE -> ' + req.headers.cookie);
 
         try {
             const authHeader = req.headers.cookie; //authorization
@@ -25,16 +24,18 @@ export class JwtNoAuthGuard implements CanActivate {
                   break;
                 }
               }
-              const nameToken = myToken.split('=')[0]
-              const token = myToken.split('=')[1]
+              if(myToken) {
+                const nameToken = myToken.split('=')[0]
+                const token = myToken.split('=')[1]
 
-              console.log('nameToken = ' + nameToken);
-              console.log('token = ' + token);
+                console.log('nameToken = ' + nameToken);
+                console.log('token = ' + token);
 
-              if (nameToken == 'Authentication' && token) {
-                console.log('Авторизованный пользователь!');
-                // throw new BadRequestException({message: 'Пользователь авторизован'})
-                return false;
+                if (token) {
+                  console.log('Авторизованный пользователь!');
+                  // throw new BadRequestException({message: 'Пользователь авторизован'})
+                  return false;
+                }
               }
             }
             //req.user = user;

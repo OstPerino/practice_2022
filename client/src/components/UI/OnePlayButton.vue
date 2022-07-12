@@ -5,8 +5,14 @@
       @click='onClickHandler'
     >
       <img
+        v-if='buttonType'
         class='play__content'
         src='../../assets/images/orangePlay.svg'
+      >
+      <img
+        v-else
+        class='play__content'
+        src='../../assets/images/play.svg'
       >
     </button>
   </div>
@@ -15,6 +21,12 @@
 <script>
 export default {
   name: 'OnePlayButton',
+  props: {
+    buttonType: {
+      type: Boolean,
+      required: true
+    }
+  },
   methods: {
     onClickHandler (event) {
       this.$emit('click', event)

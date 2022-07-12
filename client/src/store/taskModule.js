@@ -1,4 +1,6 @@
 /* eslint-disable */
+// import * as requestOptions from '../api/index'
+
 export default {
   state: () => ({
     tasks: [],
@@ -7,9 +9,6 @@ export default {
   getters: {
     getTasks(state) {
       return state.tasks
-    },
-    getTaskTemporary(state) {
-      return state.taskTemporary
     }
   },
   mutations: {
@@ -25,6 +24,17 @@ export default {
     changeTask(state, payload) {
       const toChange = state.tasks.find(item => item.id === payload.task.id)
       toChange.content = payload.content
+    },
+    changeStatus(state, task) {
+      const toChange = state.tasks.find(item => item.id === task.id)
+      toChange.status = !toChange.status
+    },
+    turnOff(state) {
+      state.tasks.forEach((item) => {
+        if (item.status) {
+          item.status = false
+        }
+      })
     },
     startTask(state, task) {
       const toChange = state.tasks.find(item => item.id === task.id)
@@ -73,7 +83,6 @@ export default {
       )
     },
     async editTask({ dispatch }, payload) {
-      // console.log(payload.content)
       const response = await fetch(
         `http://localhost:4000/main/update/${payload.task.id}`,
         {
@@ -88,7 +97,6 @@ export default {
       )
     },
     async startTaskTimer({ dispatch }, task) {
-      // console.log(payload.content)
       const response = await fetch(
         `http://localhost:4000/main/start_time/${task.id}`,
         {

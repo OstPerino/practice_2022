@@ -22,10 +22,14 @@ model User {
 }
 
 model Task {
-  id        Int      @default(autoincrement()) @id
-  content   String
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  id          Int        @default(autoincrement()) @id
+  content     String
+  time        Int?       @default(0)
+  status      Boolean?   @default(false)
+  start_time  Int?       @default(0)
+  author      User?      @relation(fields: [authorId], references: [id])
+  authorId    Int?
 }
 
 // TODO: Вынести роли пользователя в enum
+//Выполнено, не уверен нужно ли делать это тут

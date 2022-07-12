@@ -12,6 +12,19 @@ export default {
   components: {
     TasksComponent
   },
+  async beforeCreate () {
+    const response = await fetch('http://localhost:4000/login', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'GET'
+    })
+    if (!response.ok) {
+      await this.$router.push('/authorization')
+    }
+  },
   methods: {
     async userExit () {
       const response = await fetch('http://localhost:4000/logout',

@@ -1,24 +1,28 @@
 <template>
-  <div class='item'>
+  <div class='item' @mouseover='showButtons = true' @mouseleave='showButtons = false'>
     <OnePlayButton
-      v-if='!taskPlaying'
+      v-if='!task.status'
+      :button-type='!task.status'
       @click.prevent='startTask'
     />
-    <LastPlayButton
+    <OnePlayButton
       v-else
-      @click='stopTask'
+      :button-type='!task.status'
+      @click.prevent='stopTask'
     />
     <div class='item__right'>
       <span class='item__taskName' v-if='!showEdit'>{{ task.content }}</span>
       <div class='edit' v-else>
         <DefaultInputComponent
-          label-value='Edit task name'
           placeholder='Write new task name'
           v-model='taskValue'
         />
         <AcceptEditButton
           @click='acceptEdit'
         />
+        <IconButton>
+          <font-awesome-icon icon='fa-solid fa-check' class='icon'/>
+        </IconButton>
       </div>
       <div class='item__timer'>
         <TimerComponent
@@ -26,30 +30,37 @@
           :value='taskTimer'
         />
       </div>
-    </div>
-    <EditTaskButton @click='editTask' />
-    <DeleteTaskButton @click='deleteTask' />
+  </div>
+    <transition name="slide-fade">
+      <div class='taskButtons' v-show='showButtons'>
+        <EditTaskButton @click='editTask' class='taskButtons__item'/>
+        <DeleteTaskButton @click='deleteTask' class='taskButton__item'/>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 import OnePlayButton from '@/components/UI/OnePlayButton'
 import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
 import EditTaskButton from '@/components/UI/EditTaskButton'
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import AcceptEditButton from '@/components/UI/AcceptEditButton'
+import IconButton from '@/components/UI/IconButton'
+
 import TimerComponent from '@/components/UI/TimerComponent'
-import LastPlayButton from '@/components/UI/LastPlayButton'
+// import LastPlayButton from '@/components/UI/LastPlayButton'
 
 export default {
   components: {
-    LastPlayButton,
-    TimerComponent,
+    IconButton,
     AcceptEditButton,
     DefaultInputComponent,
     OnePlayButton,
     DeleteTaskButton,
-    EditTaskButton
+    EditTaskButton,
+    TimerComponent
   },
   name: 'TaskComponent',
   interval: null,
@@ -68,7 +79,9 @@ export default {
       taskValue: this.task.content,
       taskTimer: this.task.time,
       taskPlaying: this.task.status,
-      showEdit: false
+      // taskPlaying: this.$store.getters.getTaskById(this.task.id).status,
+      showEdit: false,
+      showButtons: false
     }
   },
   methods: {
@@ -86,23 +99,23 @@ export default {
     },
     startTask () {
       console.log('start')
-      this.taskPlaying = true
-      this.$store.getters.getTasks.forEach((item) => {
-
-      })
+      this.taskPlaying = !this.taskPlaying
+      this.$store.commit('turnOff')
+      this.$store.commit('changeStatus', this.task)
       this.$store.commit('startTask', this.task)
       this.$store.dispatch('startTaskTimer', this.task)
     },
     stopTask () {
       console.log('stop')
-      this.taskPlaying = false
+      this.taskPlaying = !this.taskPlaying
+      this.$store.commit('changeStatus', this.task)
       this.$store.commit('stopTask', this.task)
       this.$store.dispatch('stopTaskTimer', this.task)
     }
   },
-  mounted () {
+  beforeMount () {
     this.interval = setInterval(() => {
-      if (this.taskPlaying) {
+      if (this.task.status) {
         this.taskTimer += 1
       }
     }, 1000)
@@ -124,6 +137,10 @@ export default {
     justify-content: space-between;
     align-items: center;
 
+    .edit {
+      display: flex;
+    }
+
     .item__taskName {
       font-weight: 600;
       font-size: 18px;
@@ -139,6 +156,25 @@ export default {
         padding: 10px 15px;
       }
     }
+  }
+  .taskButtons {
+    display: flex;
+    &__item {
+      margin-right: 10px;
+      &:first-child {
+        margin-left: 10px;
+      }
+    }
+  }
+  .slide-fade-enter-active {
+    transition: all .6s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
   }
 }
 </style>

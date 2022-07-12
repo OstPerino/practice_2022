@@ -10,11 +10,15 @@ export class JwtAuthGuard implements CanActivate {
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const req = context.switchToHttp().getRequest()
-        console.log(typeof req.headers.cookie);
-        console.log(req.headers.cookie);
+
+        console.log("---AUTH GUARD---");
+        console.log('COOKIE -> ' + req.headers.cookie);
 
         try {
             const authHeader = req.headers.cookie;// возможно надо будет просто вытащить cookie и уже их verify
+            if(!authHeader) {
+              return false;
+            }
             const moreCookie = authHeader.split('; ');
             let myToken: string;
             for (let i = 0; i < moreCookie.length; i++) {
@@ -26,7 +30,7 @@ export class JwtAuthGuard implements CanActivate {
               }
             }
 
-            if(!authHeader){
+            if(!myToken){
               console.log('not cookie');
               // throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет куки)'});
               return false;
@@ -36,7 +40,7 @@ export class JwtAuthGuard implements CanActivate {
             console.log('TOKEN = ' + token);
 
 
-            if (nameToken !== 'Authentication' && !token) {
+            if (!token) {
                 //throw new UnauthorizedException({'message': 'Пользователь не авторизован(нет jwt токена)'});
                 return false;
             }
@@ -53,8 +57,8 @@ export class JwtAuthGuard implements CanActivate {
             ////console.log(userdb);
 
             req.user = user;
-            console.log('User from req:');
-            console.log(req.user);
+            //console.log('User from req:');
+            //console.log(req.user);
             return true;
         } catch (e) {
           console.log(e);
