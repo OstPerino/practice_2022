@@ -68,6 +68,7 @@
             :placeholder='inputData.userPasswordInput.placeholderContent'
             :label-value='inputData.userPasswordInput.labelContent'
             v-model.trim='$v.inputData.userPasswordInput.value.$model'
+            :isPassword='isPassword'
           />
           <span
             class='RegistrationComponent__error'
@@ -88,6 +89,7 @@
             :placeholder='inputData.confirmPasswordInput.placeholderContent'
             :label-value='inputData.confirmPasswordInput.labelContent'
             v-model.trim='$v.inputData.confirmPasswordInput.value.$model'
+            :isPassword='isPassword'
           />
           <span
             class='RegistrationComponent__error'
@@ -105,6 +107,7 @@
         <DefaultButtonComponent
           class='RegistrationComponent__button'
           :button-content='buttonData.buttonContent'
+          :isDisabled='disableButton'
           @click.prevent='createUser'
         />
         <div class='RegistrationComponent__registrationHref registrationHref'>
@@ -143,20 +146,23 @@ export default {
       method: 'GET'
     })
     if (response.ok) {
-      await this.$router.push('/')
+      await this.$router.push('/authorization')
     }
   },
   components: {
     DefaultInputComponent,
     DefaultButtonComponent
   },
+  updated () {
+    this.disableButton = this.$v.$anyError
+  },
   validations: {
     inputData: {
       userNameInput: {
-        value: { required }
+        value: { required, minLength: minLength(5) }
       },
       userEmailInput: {
-        value: { required, email }
+        value: { required, email, minLength: minLength(5) }
       },
       userLoginInput: {
         value: { required, minLength: minLength(8) }
@@ -200,7 +206,9 @@ export default {
       },
       buttonData: {
         buttonContent: 'Sign up'
-      }
+      },
+      disableButton: true,
+      isPassword: 'password'
     }
   },
   methods: {
@@ -241,9 +249,9 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  background-color: #F6FBF9;
+  background-color: #F9F9F9;
   border-radius: 10px;
-  padding: 30px 60px;
+  padding: 15px 60px;
 
   &__container {
     padding-bottom: 15px;
@@ -251,7 +259,7 @@ export default {
   }
 
   &__header {
-    font-size: 30px;
+    font-size: 26px;
     color: #181A18;
   }
 
@@ -271,7 +279,7 @@ export default {
     font-size: 12px;
     color: #F47174;
     position: absolute;
-    bottom: 0;
+    bottom: -3px;
     left: 5px;
   }
 
@@ -285,7 +293,7 @@ export default {
     }
 
     .link {
-      color: #48927c;
+      color: #FABB18;
       text-decoration: none;
     }
   }

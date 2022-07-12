@@ -18,7 +18,10 @@ export default {
       type: String,
       required: true
     },
-    isDisabled: Boolean
+    isDisabled: {
+      type: Boolean,
+      required: false
+    }
   },
   methods: {
     onClickHandler (event) {
@@ -32,7 +35,7 @@ export default {
 .DefaultButtonComponent {
   &__button {
     background-color: #FABB18;
-    padding: 15px 45px;
+    padding: 10px 20px;
     border: none;
     color: #000;
     font-size: 20px;

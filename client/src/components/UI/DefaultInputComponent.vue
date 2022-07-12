@@ -28,7 +28,7 @@ export default {
       required: true
     },
     isPassword: {
-      type: Boolean,
+      type: String,
       required: false
     }
   },
@@ -53,7 +53,7 @@ export default {
   }
 
   &__input {
-    padding: 10px 5px;
+    padding: 5px 5px;
     font-size: 14px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     outline: none;

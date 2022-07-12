@@ -31,6 +31,7 @@
           :placeholder='this.inputData.userPasswordInput.placeholderContent'
           :label-value='this.inputData.userPasswordInput.labelContent'
           v-model.trim='$v.inputData.userPasswordInput.value.$model'
+          :isPassword='isPassword'
         />
         <span
           class='AuthorizationComponent__error'
@@ -39,7 +40,7 @@
             Field is required.
           </span>
       </div>
-      <div class='AuthorizationComponent__container wrong'>
+      <div class='AuthorizationComponent__container wrong' v-if='showError'>
           <span
             class='AuthorizationComponent__error missedUser'
           >
@@ -76,6 +77,9 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'authorization-component.vue',
+  updated () {
+    this.disableButton = this.$v.$anyError
+  },
   async beforeCreate () {
     const response = await fetch('http://localhost:4000/login', {
       headers: {
@@ -127,7 +131,10 @@ export default {
       },
       buttonData: {
         buttonContent: 'Log In'
-      }
+      },
+      showError: false,
+      isPassword: 'password',
+      disableButton: true
     }
   },
   methods: {
@@ -148,8 +155,15 @@ export default {
         })
 
       if (checkUser.status === 200) {
-        localStorage.setItem('isAuth', 'true')
+        // if (!this.showError) {
+        //   this.showError = !this.showError
+        // }
         await this.$router.push('/')
+      } else {
+        if (this.showError) {
+          this.showError = !this.showError
+        }
+        await this.$router.push('/Authorization')
       }
     }
   }
@@ -171,7 +185,7 @@ export default {
   gap: 10px;
   background-color: #F9F9F9;
   border-radius: 10px;
-  padding: 60px 80px;
+  padding: 30px 60px;
 
   &__container {
     padding: 0 15px 15px 0;
@@ -215,12 +229,12 @@ export default {
     font-size: 12px;
     color: #F47174;
     position: absolute;
-    bottom: 0;
+    bottom: -3px;
     left: 5px;
   }
 
   .wrong {
-    margin-top: 20px;
+    margin-top: 25px;
   }
 
   .missedUser {
