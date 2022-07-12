@@ -31,10 +31,10 @@ export default {
 <style scoped lang="scss">
 .DefaultButtonComponent {
   &__button {
-    background-color: #84C7AE;
+    background-color: #FABB18;
     padding: 15px 45px;
     border: none;
-    color: #fff;
+    color: #000;
     font-size: 20px;
     cursor: pointer;
     border-radius: 30px;

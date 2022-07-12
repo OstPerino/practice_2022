@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import RegistrationComponent from '@/components/views/RegistrationComponent'
@@ -34,10 +36,5 @@ const router = new VueRouter({
     }
   ]
 })
-
-// router.beforeEach(async (to, from, next) => {
-//   const { requiresAuth } = to.meta
-//
-// })
 
 export default router

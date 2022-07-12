@@ -3,7 +3,7 @@
     id='app'
     class='app'
   >
-    <HeaderComponent/>
+    <HeaderComponent v-show='$route.name === "Main"'/>
     <router-view></router-view>
   </div>
 </template>
@@ -18,7 +18,8 @@ export default {
   data: () => {
     return {}
   },
-  methods: {}
+  methods: {
+  }
 }
 </script>
 

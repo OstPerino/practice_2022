@@ -133,6 +133,19 @@ import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
 
 export default {
   name: 'registration-component.vue',
+  async beforeCreate () {
+    const response = await fetch('http://localhost:4000/login', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'GET'
+    })
+    if (response.ok) {
+      await this.$router.push('/')
+    }
+  },
   components: {
     DefaultInputComponent,
     DefaultButtonComponent
