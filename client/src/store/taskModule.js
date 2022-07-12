@@ -36,6 +36,7 @@ export default {
         }
       })
     },
+    // TODO: одинаковые методы
     startTask(state, task) {
       const toChange = state.tasks.find(item => item.id === task.id)
       toChange.time = task.time
@@ -55,6 +56,8 @@ export default {
         credentials: 'include',
         method: 'GET'
       })
+
+      // if (response.ok)
 
       return response.json()
     },

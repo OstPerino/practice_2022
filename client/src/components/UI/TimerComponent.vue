@@ -21,6 +21,7 @@ export default {
     }
   },
   methods: {
+    //TODO: Вынести в computed преобразованное значение таймера
     time () {
       this.interval = setInterval(() => {
         this.nHour = Math.trunc(this.value / 3600)

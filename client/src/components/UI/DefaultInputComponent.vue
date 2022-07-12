@@ -3,9 +3,9 @@
       <label class="DefaultInputComponent__label">{{ this.labelValue }}</label>
       <input
         class="DefaultInputComponent__input"
-        :value="this.value"
+        :value="value"
         @input="updateInput"
-        :placeholder="this.placeholder"
+        :placeholder="placeholder"
         :type="isPassword"
       />
     </div>

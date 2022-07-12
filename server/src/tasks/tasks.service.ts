@@ -21,6 +21,7 @@ export class TasksService {
       });
       return tasks;
     } catch (error) {
+      // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -36,6 +37,7 @@ export class TasksService {
       }
       return task;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -53,6 +55,7 @@ export class TasksService {
       }
       return task;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -71,6 +74,7 @@ export class TasksService {
       }
       return task;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -88,6 +92,7 @@ export class TasksService {
       }
       return task;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -104,6 +109,8 @@ export class TasksService {
         );
       }
       let updTaskStart;
+
+      // TODO: Отрефакторить DRY
       tasks.forEach(async task => {
         if(task.status === true && task.id !== Number(id)){
           const time = new Date();
@@ -142,6 +149,7 @@ export class TasksService {
       });
       return updTaskStart;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -157,6 +165,7 @@ export class TasksService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      // TODO: Отрефакторить DRY
       if (task.status) {
         task.status = false;
         const time = new Date();
@@ -181,6 +190,7 @@ export class TasksService {
         HttpStatus.BAD_REQUEST,
       );
     } catch (error) {
+      // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }

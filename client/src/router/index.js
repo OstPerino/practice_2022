@@ -18,6 +18,7 @@ const router = new VueRouter({
       component: MainComponent,
       meta: { requiresAuth: true }
     },
+    // TODO: вынести
     {
       path: '/authorization',
       name: 'Authorization',

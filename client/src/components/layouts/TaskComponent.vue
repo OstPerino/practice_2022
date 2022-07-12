@@ -1,5 +1,6 @@
 <template>
   <div class='item' @mouseover='showButtons = true' @mouseleave='showButtons = false'>
+<!-- TODO: попробовать менять src -->
     <OnePlayButton
       v-if='!task.status'
       :button-type='!task.status'
@@ -79,7 +80,6 @@ export default {
       taskValue: this.task.content,
       taskTimer: this.task.time,
       taskPlaying: this.task.status,
-      // taskPlaying: this.$store.getters.getTaskById(this.task.id).status,
       showEdit: false,
       showButtons: false
     }
@@ -99,6 +99,7 @@ export default {
     },
     startTask () {
       console.log('start')
+      // TOD: mapActions, mapState и тд...
       this.taskPlaying = !this.taskPlaying
       this.$store.commit('turnOff')
       this.$store.commit('changeStatus', this.task)
@@ -114,6 +115,7 @@ export default {
     }
   },
   beforeMount () {
+    // TODO: clear interval
     this.interval = setInterval(() => {
       if (this.task.status) {
         this.taskTimer += 1

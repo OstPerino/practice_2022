@@ -81,6 +81,7 @@ export default {
     this.disableButton = this.$v.$anyError
   },
   async beforeCreate () {
+    // TODO: mixin
     const response = await fetch('http://localhost:4000/login', {
       headers: {
         Accept: 'application/json',

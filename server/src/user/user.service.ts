@@ -21,6 +21,8 @@ export class UserService {
       }
       return user;
     } catch (error) {
+      // TODO: Нет возвращаемой ошибки
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -34,6 +36,7 @@ export class UserService {
       //console.log(user);
       return user;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -51,6 +54,7 @@ export class UserService {
       }
       return users;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -72,6 +76,7 @@ export class UserService {
       }
       return user;
     } catch (error) {
+       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -86,6 +91,7 @@ export class UserService {
       const { where, data } = params;
       return await this.prisma.user.update({ data, where });
     } catch (error) {
+      // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
@@ -96,6 +102,7 @@ export class UserService {
     try {
       return await this.prisma.user.delete({ where });
     } catch (error) {
+      // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
   }
