@@ -21,9 +21,9 @@
         <AcceptEditButton
           @click='acceptEdit'
         />
-        <IconButton>
-          <font-awesome-icon icon='fa-solid fa-check' class='icon'/>
-        </IconButton>
+<!--        <IconButton>-->
+<!--          <font-awesome-icon icon='fa-solid fa-check' class='icon'/>-->
+<!--        </IconButton>-->
       </div>
       <div class='item__timer'>
         <TimerComponent
@@ -61,6 +61,9 @@ export default {
     DeleteTaskButton,
     EditTaskButton,
     TimerComponent
+  },
+  beforeCreate () {
+    console.log(this.taskTimer)
   },
   name: 'TaskComponent',
   interval: null,
