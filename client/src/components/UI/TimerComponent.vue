@@ -14,16 +14,22 @@ export default {
   },
   data () {
     return {
-      nHour: Math.trunc(this.value / 3600),
-      nMinute: Math.trunc(this.value % 3600 / 60),
-      nSecond: this.value % 3600 % 60
+      // nHour: Math.trunc(this.value / 3600),
+      // nMinute: Math.trunc(this.value % 3600 / 60),
+      // nSecond: this.value % 3600 % 60
     }
   },
   computed: {
     time: function (nHour, nMinute, nSecond) {
-      nHour = Math.trunc(this.value / 3600)
-      nMinute = Math.trunc(this.value % 3600 / 60)
-      nSecond = this.value % 3600 % 60
+      if (this.value !== undefined) {
+        nHour = Math.trunc(this.value / 3600)
+        nMinute = Math.trunc(this.value % 3600 / 60)
+        nSecond = this.value % 3600 % 60
+      } else {
+        nHour = 0
+        nMinute = 0
+        nSecond = 0
+      }
       return this.numToStr(nHour) + ':' + this.numToStr(nMinute) + ':' + this.numToStr(nSecond)
     }
   },
