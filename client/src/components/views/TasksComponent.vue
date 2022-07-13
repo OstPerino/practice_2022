@@ -65,6 +65,7 @@
       class='modalWindow'
       v-show='showModal'
       :show-dialog='showModal'
+      @exitHandler='changeShowModal'
     />
   </div>
 </template>
@@ -121,14 +122,9 @@ export default {
     checkTasks () {
       this.showTasks = this.$store.getters.getTasks.length !== 0
     },
-    deleteTask () {
+    changeShowModal () {
+      this.showModal = false
     }
-    // sumTimers (value) {this.$store.getters.getTasks.length
-    //   for (let i=0; i < this.$store.getters.getTasks.length; i++) {
-    //     value += this.item.time
-    //   }
-    //   return value
-    // }
   }
 }
 </script>

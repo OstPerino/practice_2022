@@ -21,9 +21,6 @@
         <AcceptEditButton
           @click='acceptEdit'
         />
-<!--        <IconButton>-->
-<!--          <font-awesome-icon icon='fa-solid fa-check' class='icon'/>-->
-<!--        </IconButton>-->
       </div>
       <div class='item__timer'>
         <TimerComponent
@@ -35,7 +32,7 @@
     <transition name="slide-fade">
       <div class='taskButtons' v-show='showButtons'>
         <EditTaskButton @click='editTask' class='taskButtons__item'/>
-        <DeleteTaskButton @click='deleteTask' class='taskButton__item'/>
+        <DeleteTaskButton @click='deleteTask({task: task, index: index})' class='taskButton__item'/>
       </div>
     </transition>
   </div>
@@ -43,15 +40,15 @@
 
 <script>
 /* eslint-disable */
+import { mapActions } from 'vuex'
+
 import OnePlayButton from '@/components/UI/OnePlayButton'
 import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
 import EditTaskButton from '@/components/UI/EditTaskButton'
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import AcceptEditButton from '@/components/UI/AcceptEditButton'
 import IconButton from '@/components/UI/IconButton'
-
 import TimerComponent from '@/components/UI/TimerComponent'
-// import LastPlayButton from '@/components/UI/LastPlayButton'
 
 export default {
   components: {
@@ -63,11 +60,10 @@ export default {
     EditTaskButton,
     TimerComponent
   },
-  beforeCreate () {
-    console.log(this.taskTimer)
-  },
   name: 'TaskComponent',
   interval: null,
+  beforeCreate () {
+  },
   props: {
     task: {
       type: Object,
@@ -88,32 +84,24 @@ export default {
     }
   },
   methods: {
-    deleteTask () {
-      this.$store.commit('deleteTask', this.index)
-      this.$store.dispatch('deleteTask', this.task)
-    },
+    ...mapActions([
+      'createNewTask',
+      'deleteTask'
+    ]),
     editTask () {
       this.showEdit = !this.showEdit
     },
     acceptEdit () {
-      this.$store.commit('changeTask', { task: this.task, content: this.taskValue })
       this.$store.dispatch('editTask', { task: this.task, content: this.taskValue })
       this.showEdit = !this.showEdit
     },
     startTask () {
-      console.log('start')
-      // TOD: mapActions, mapState и тд...
+      // TODO: mapActions, mapState и тд...
       this.taskPlaying = !this.taskPlaying
-      this.$store.commit('turnOff')
-      this.$store.commit('changeStatus', this.task)
-      this.$store.commit('startTask', this.task)
       this.$store.dispatch('startTaskTimer', this.task)
     },
     stopTask () {
-      console.log('stop')
       this.taskPlaying = !this.taskPlaying
-      this.$store.commit('changeStatus', this.task)
-      this.$store.commit('stopTask', this.task)
       this.$store.dispatch('stopTaskTimer', this.task)
     }
   },
