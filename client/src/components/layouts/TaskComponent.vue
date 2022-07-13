@@ -43,15 +43,15 @@
 
 <script>
 /* eslint-disable */
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+
 import OnePlayButton from '@/components/UI/OnePlayButton'
 import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
 import EditTaskButton from '@/components/UI/EditTaskButton'
 import DefaultInputComponent from '@/components/UI/DefaultInputComponent'
 import AcceptEditButton from '@/components/UI/AcceptEditButton'
 import IconButton from '@/components/UI/IconButton'
-
 import TimerComponent from '@/components/UI/TimerComponent'
-// import LastPlayButton from '@/components/UI/LastPlayButton'
 
 export default {
   components: {
@@ -62,9 +62,6 @@ export default {
     DeleteTaskButton,
     EditTaskButton,
     TimerComponent
-  },
-  beforeCreate () {
-    console.log(this.taskTimer)
   },
   name: 'TaskComponent',
   interval: null,
@@ -88,32 +85,27 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'deleteTask'
+    ]),
     deleteTask () {
-      this.$store.commit('deleteTask', this.index)
-      this.$store.dispatch('deleteTask', this.task)
+      this.$store.dispatch('deleteTask', { task: this.task, index: this.index })
     },
     editTask () {
       this.showEdit = !this.showEdit
     },
     acceptEdit () {
-      this.$store.commit('changeTask', { task: this.task, content: this.taskValue })
       this.$store.dispatch('editTask', { task: this.task, content: this.taskValue })
       this.showEdit = !this.showEdit
     },
     startTask () {
-      console.log('start')
-      // TOD: mapActions, mapState и тд...
+      // TODO: mapActions, mapState и тд...
       this.taskPlaying = !this.taskPlaying
-      this.$store.commit('turnOff')
-      this.$store.commit('changeStatus', this.task)
-      this.$store.commit('startTask', this.task)
       this.$store.dispatch('startTaskTimer', this.task)
     },
     stopTask () {
       console.log('stop')
       this.taskPlaying = !this.taskPlaying
-      this.$store.commit('changeStatus', this.task)
-      this.$store.commit('stopTask', this.task)
       this.$store.dispatch('stopTaskTimer', this.task)
     }
   },

@@ -18,7 +18,7 @@ export default {
     addTask(state, task) {
       state.tasks.push(task)
     },
-    deleteTask(state, index) {
+    deleteTaskFromStore(state, index) {
       state.tasks.splice(index, 1)
     },
     changeTask(state, payload) {
@@ -30,7 +30,7 @@ export default {
       toChange.status = !toChange.status
     },
     turnOff(state) {
-      state.tasks.forEach((item) => {
+      state.tasks.forEach(item => {
         if (item.status) {
           item.status = false
         }
@@ -41,7 +41,7 @@ export default {
       const toChange = state.tasks.find(item => item.id === task.id)
       toChange.time = task.time
     },
-    stopTask (state, task) {
+    stopTask(state, task) {
       const toChange = state.tasks.find(item => item.id === task.id)
       toChange.time = task.time
     }
@@ -72,9 +72,9 @@ export default {
         body: JSON.stringify(task)
       })
     },
-    async deleteTask({ dispatch }, task) {
+    async deleteTask(context, payload) {
       const response = await fetch(
-        `http://localhost:4000/main/delete/${task.id}`,
+        `http://localhost:4000/main/delete/${payload.task.id}`,
         {
           headers: {
             Accept: 'application/json',
@@ -84,8 +84,9 @@ export default {
           method: 'DELETE'
         }
       )
+      context.commit('deleteTaskFromStore', payload.index)
     },
-    async editTask({ dispatch }, payload) {
+    async editTask(context, payload) {
       const response = await fetch(
         `http://localhost:4000/main/update/${payload.task.id}`,
         {
@@ -98,8 +99,12 @@ export default {
           body: JSON.stringify({ content: payload.content })
         }
       )
+      context.commit('changeTask', {
+        task: payload.task,
+        content: payload.content
+      })
     },
-    async startTaskTimer({ dispatch }, task) {
+    async startTaskTimer(context, task) {
       const response = await fetch(
         `http://localhost:4000/main/start_time/${task.id}`,
         {
@@ -111,9 +116,11 @@ export default {
           method: 'PUT'
         }
       )
+      context.commit('turnOff')
+      context.commit('changeStatus', task)
+      context.commit('startTask', task)
     },
-    async stopTaskTimer({ dispatch }, task) {
-      // console.log(payload.content)
+    async stopTaskTimer(context, task) {
       const response = await fetch(
         `http://localhost:4000/main/stop_time/${task.id}`,
         {
@@ -125,6 +132,8 @@ export default {
           method: 'PUT'
         }
       )
+      context.commit('changeStatus', task)
+      context.commit('stopTask', task)
     }
   }
 }
