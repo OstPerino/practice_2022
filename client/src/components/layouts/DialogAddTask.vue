@@ -21,7 +21,7 @@
     <div class='modalContainer__buttonContainer'>
       <DefaultButtonComponent
         button-content='Exit'
-        @click='exitDialog'
+        @click='$emit("exitHandler")'
       />
     </div>
   </div>
@@ -67,9 +67,8 @@ export default {
       this.taskName = ''
       await this.$store.dispatch('createNewTask', item)
     },
-    exitDialog () {
-      // console.log(this.$v)
-      // this.show = !this.show
+    exitHandler (event) {
+      this.$emit('click', event)
     }
   }
 }

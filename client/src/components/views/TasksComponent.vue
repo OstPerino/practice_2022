@@ -65,6 +65,7 @@
       class='modalWindow'
       v-show='showModal'
       :show-dialog='showModal'
+      @exitHandler='changeShowModal'
     />
   </div>
 </template>
@@ -120,6 +121,9 @@ export default {
     },
     checkTasks () {
       this.showTasks = this.$store.getters.getTasks.length !== 0
+    },
+    changeShowModal () {
+      this.showModal = false
     }
   }
 }
