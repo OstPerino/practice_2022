@@ -9,7 +9,7 @@ export class StatTaskService {
   async getStatsTask(task: Task, lastTime: number, presentTime: number): Promise<StatTask[]> {
     try {
       let stats = await this.prisma.statTask.findMany({
-        where: { id: task.id , stop_time: { gte: lastTime, lte: presentTime } },
+        where: { taskID: task.id , stop_time: { gte: lastTime, lte: presentTime } },
       });
       if (!stats) {
         throw new HttpException(

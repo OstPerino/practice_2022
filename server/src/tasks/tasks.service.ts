@@ -230,9 +230,27 @@ export class TasksService {
     console.log("timeClient: " + timeClient);
     console.log("presentTime: " + presentTime);
     console.log("LASTTIME: " + lastTime);
-    //for (let index = 0; index < tasks.length; index++) {
-    //  this.statTaskService.getStatsTask(tasks[index], lastTime, presentTime);
-    //}
+    // Использую тут for, а не forEach так как из-за async await не удается...
+    // ...заменить переменную времени(return прорабатывает быстрее чем замена)
+    for (let index = 0; index < tasks.length; index++) {
+      console.log("TASKS[INDEX]_______");
+      console.log(tasks[index]);
+      let stats = await this.statTaskService.getStatsTask(tasks[index], lastTime, presentTime);
+      let sum: number = 0;
+      for (let i = 0; i < stats.length; i++) {
+        sum += stats[i].time;
+      }
+      /*
+      stats.forEach( stat => {
+        sum += stat.time;
+      });
+      */
+      console.log("SUM: " + sum);
+
+      tasks[index].time = sum;
+      console.log("TASK.TIME: " + tasks[index].time);
+    }
+    /*
     tasks.forEach(async task => {
       let stats = await this.statTaskService.getStatsTask(task, lastTime, presentTime);
       let sum: number = 0;
@@ -244,6 +262,7 @@ export class TasksService {
       task.time = sum;
       console.log("TASK.TIME: " + task.time);
     });
+    */
     console.log(tasks);
     return tasks;
   }
