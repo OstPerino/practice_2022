@@ -63,7 +63,6 @@ export default {
   name: 'TaskComponent',
   interval: null,
   beforeCreate () {
-
   },
   props: {
     task: {
@@ -87,7 +86,7 @@ export default {
   methods: {
     ...mapActions([
       'createNewTask',
-      'deleteTask',
+      'deleteTask'
     ]),
     editTask () {
       this.showEdit = !this.showEdit

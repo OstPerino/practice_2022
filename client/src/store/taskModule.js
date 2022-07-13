@@ -68,8 +68,8 @@ export default {
         method: 'POST',
         body: JSON.stringify(task)
       })
-      // context.commit('addTask', response.json())
-      // return response.json()
+      const newTask = await response.json()
+      context.commit('addTask', newTask)
     },
     async deleteTask(context, payload) {
       const response = await fetch(
