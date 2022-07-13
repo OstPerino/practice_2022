@@ -11,6 +11,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// TODO: прописать Enum Roles
+
 model User {
   id    Int     @default(autoincrement()) @id
   login String  @unique
@@ -27,8 +29,19 @@ model Task {
   time        Int?       @default(0)
   status      Boolean?   @default(false)
   start_time  Int?       @default(0)
+  create_time  Int?      @default(0)
+  last_activity  Int?    @default(0)
   author      User?      @relation(fields: [authorId], references: [id])
   authorId    Int?
+  stats StatTask[]
+}
+
+model StatTask {
+  id          Int        @default(autoincrement()) @id
+  task        Task?     @relation(fields: [taskID], references: [id])
+  taskID      Int?
+  time        Int       @default(0)
+  stop_time   Int       @default(0)
 }
 
 // TODO: Вынести роли пользователя в enum

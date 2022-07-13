@@ -3,15 +3,30 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Task, Prisma } from '@prisma/client';
+import {StatTaskService} from "../stat-task/stat-task.service";
 
 @Injectable()
 export class TasksService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService,
+              private statTaskService: StatTaskService) {}
+
+  async findMore(authorID: number):Promise<Task[] | null> {
+    let tasks = await this.prisma.task.findMany({
+      where: { authorId: authorID },
+    });
+    if (!tasks) {
+      throw new HttpException(
+        'Не удалось получить задачи!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return tasks;
+  }
 
   async tasks(authorID: number): Promise<Task[] | null> {
     // у нас может и не быть задач
     try {
-      const tasks = await this.prisma.task.findMany({ where: { authorId: authorID } });
+      const tasks = await this.findMore(authorID);
       tasks.forEach(task => {
         if(task.status === true){
           const time = new Date();
@@ -28,6 +43,9 @@ export class TasksService {
 
   async createTask(dataTask: CreateTaskDto): Promise<Task> {
     try {
+      const time = new Date();
+      const presentTime = Math.round(time.getTime()/1000.0);
+      dataTask.create_time = presentTime;
       const task = await this.prisma.task.create({ data: { ...dataTask } });
       if (!task) {
         throw new HttpException(
@@ -99,15 +117,7 @@ export class TasksService {
 
   async startTaskTimer(id: string, authorID: number): Promise<Task> {
     try {
-      const tasks = await this.prisma.task.findMany({
-        where: { authorId: authorID },
-      });
-      if (!tasks) {
-        throw new HttpException(
-          'Не удалось получить задачи!',
-          HttpStatus.BAD_REQUEST,
-        );
-      }
+      const tasks =  await this.findMore(authorID);
       let updTaskStart;
 
       // TODO: Отрефакторить DRY
@@ -115,6 +125,7 @@ export class TasksService {
         if(task.status === true && task.id !== Number(id)){
           const time = new Date();
           const presentTime = Math.round(time.getTime()/1000.0);
+          task.last_activity = presentTime;
           task.time += (presentTime - task.start_time);
           task.start_time = 0;
           task.status = false;
@@ -133,18 +144,20 @@ export class TasksService {
           task.status = true;
           const time = new Date();
           const startTime = Math.round(time.getTime()/1000.0);
+          task.last_activity = startTime;
           task.start_time = startTime;
           console.log('start_time -> ' + task.start_time + '; time -> ' + task.time);
-          updTaskStart = await this.prisma.task.update({
+          const updTask = this.prisma.task.update({ // await
             data: { ...task },
             where: { id: Number(id) },
           });
-          if (!updTaskStart) {
+          if (!updTask) {
             throw new HttpException(
               'Не удалось обновить запуск задачи!',
               HttpStatus.BAD_REQUEST,
             );
           }
+          updTaskStart = updTask;
         }
       });
       return updTaskStart;
@@ -170,7 +183,9 @@ export class TasksService {
         task.status = false;
         const time = new Date();
         const stop_time = Math.round(time.getTime()/1000.0);
-        task.time += (stop_time - task.start_time);
+        task.last_activity = stop_time;
+        let path_time = (stop_time - task.start_time)
+        task.time += path_time;
         console.log('stop_time -> ' + stop_time + '; time -> ' + task.time);
         task.start_time = 0;
         const updTask = await this.prisma.task.update({
@@ -180,6 +195,18 @@ export class TasksService {
         if (!updTask) {
           throw new HttpException(
             'Не удалось обновить остановку задачи!',
+            HttpStatus.BAD_REQUEST,
+          );
+        }
+        let stat = {
+          taskID: task.id,
+          time: path_time,
+          stop_time: stop_time
+        }
+        const statTask = await this.prisma.statTask.create({ data: { ...stat } });
+        if (!statTask) {
+          throw new HttpException(
+            'Не удалось создать статистику задачи!',
             HttpStatus.BAD_REQUEST,
           );
         }
@@ -193,5 +220,31 @@ export class TasksService {
       // TODO: Нет возвращаемой ошибки
       console.log(error);
     }
+  }
+
+  async firstStat(timeClient: number, authorID: number): Promise<Task[] | null> {
+    let tasks = await this.findMore(authorID);
+    const time = new Date();
+    let presentTime = Math.round(time.getTime()/1000.0);
+    let lastTime = (presentTime - (timeClient + time.getSeconds()));//(timeClient*3600) + (time.getMinutes()*60)
+    console.log("timeClient: " + timeClient);
+    console.log("presentTime: " + presentTime);
+    console.log("LASTTIME: " + lastTime);
+    //for (let index = 0; index < tasks.length; index++) {
+    //  this.statTaskService.getStatsTask(tasks[index], lastTime, presentTime);
+    //}
+    tasks.forEach(async task => {
+      let stats = await this.statTaskService.getStatsTask(task, lastTime, presentTime);
+      let sum: number = 0;
+      stats.forEach( stat => {
+        sum += stat.time;
+      });
+      console.log("SUM: " + sum);
+
+      task.time = sum;
+      console.log("TASK.TIME: " + task.time);
+    });
+    console.log(tasks);
+    return tasks;
   }
 }
