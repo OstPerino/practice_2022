@@ -21,14 +21,21 @@ export default {
     }
   },
   methods: {
-    //TODO: Вынести в computed преобразованное значение таймера
+    // TODO: Вынести в computed преобразованное значение таймера
     time () {
-      this.interval = setInterval(() => {
-        this.nHour = Math.trunc(this.value / 3600)
-        this.nMinute = Math.trunc(this.value % 3600 / 60)
-        this.nSecond = this.value % 3600 % 60
+      if (this.value !== undefined) {
+        this.interval = setInterval(() => {
+          this.nHour = Math.trunc(this.value / 3600)
+          this.nMinute = Math.trunc(this.value % 3600 / 60)
+          this.nSecond = this.value % 3600 % 60
+          this.newTimer = this.numToStr(this.nHour) + ':' + this.numToStr(this.nMinute) + ':' + this.numToStr(this.nSecond)
+        }, 1000)
+      } else {
+        this.nHour = 0
+        this.nMinute = 0
+        this.nSecond = 0
         this.newTimer = this.numToStr(this.nHour) + ':' + this.numToStr(this.nMinute) + ':' + this.numToStr(this.nSecond)
-      }, 1000)
+      }
     },
     numToStr (value) {
       return (value < 10) ? '0' + String(value) : String(value)
