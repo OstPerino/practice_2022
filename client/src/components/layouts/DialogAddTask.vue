@@ -60,13 +60,14 @@ export default {
     }
   },
   methods: {
-    createTask () {
+    async createTask () {
       const item = {
         content: this.taskName
       }
       this.$store.commit('addTask', item)
       this.taskName = ''
-      this.$store.dispatch('createNewTask', item)
+      await this.$store.dispatch('createNewTask', item)
+      // this.$store.commit('addTask', response.json())
     },
     exitDialog () {
       // console.log(this.$v)

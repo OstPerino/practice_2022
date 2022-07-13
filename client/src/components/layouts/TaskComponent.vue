@@ -21,9 +21,6 @@
         <AcceptEditButton
           @click='acceptEdit'
         />
-<!--        <IconButton>-->
-<!--          <font-awesome-icon icon='fa-solid fa-check' class='icon'/>-->
-<!--        </IconButton>-->
       </div>
       <div class='item__timer'>
         <TimerComponent
@@ -35,7 +32,7 @@
     <transition name="slide-fade">
       <div class='taskButtons' v-show='showButtons'>
         <EditTaskButton @click='editTask' class='taskButtons__item'/>
-        <DeleteTaskButton @click='deleteTask' class='taskButton__item'/>
+        <DeleteTaskButton @click='deleteTask({task: task, index: index})' class='taskButton__item'/>
       </div>
     </transition>
   </div>
@@ -43,7 +40,7 @@
 
 <script>
 /* eslint-disable */
-import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 import OnePlayButton from '@/components/UI/OnePlayButton'
 import DeleteTaskButton from '@/components/UI/DeleteTaskButton'
@@ -65,6 +62,9 @@ export default {
   },
   name: 'TaskComponent',
   interval: null,
+  beforeCreate () {
+
+  },
   props: {
     task: {
       type: Object,
@@ -86,11 +86,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'deleteTask'
+      'createNewTask',
+      'deleteTask',
     ]),
-    deleteTask () {
-      this.$store.dispatch('deleteTask', { task: this.task, index: this.index })
-    },
     editTask () {
       this.showEdit = !this.showEdit
     },
@@ -104,7 +102,6 @@ export default {
       this.$store.dispatch('startTaskTimer', this.task)
     },
     stopTask () {
-      console.log('stop')
       this.taskPlaying = !this.taskPlaying
       this.$store.dispatch('stopTaskTimer', this.task)
     }

@@ -56,12 +56,9 @@ export default {
         credentials: 'include',
         method: 'GET'
       })
-
-      // if (response.ok)
-
       return response.json()
     },
-    async createNewTask(state, task) {
+    async createNewTask(context, task) {
       const response = await fetch('http://localhost:4000/main/create', {
         headers: {
           Accept: 'application/json',
@@ -71,6 +68,8 @@ export default {
         method: 'POST',
         body: JSON.stringify(task)
       })
+      // context.commit('addTask', response.json())
+      // return response.json()
     },
     async deleteTask(context, payload) {
       const response = await fetch(

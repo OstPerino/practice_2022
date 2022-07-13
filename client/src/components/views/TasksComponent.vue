@@ -120,15 +120,7 @@ export default {
     },
     checkTasks () {
       this.showTasks = this.$store.getters.getTasks.length !== 0
-    },
-    deleteTask () {
     }
-    // sumTimers (value) {this.$store.getters.getTasks.length
-    //   for (let i=0; i < this.$store.getters.getTasks.length; i++) {
-    //     value += this.item.time
-    //   }
-    //   return value
-    // }
   }
 }
 </script>
