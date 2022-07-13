@@ -1,5 +1,5 @@
 <template>
-  <span>{{ this.newTimer }}</span>
+  <span>{{ time }}</span>
 </template>
 
 <script>
@@ -16,26 +16,21 @@ export default {
     return {
       nHour: Math.trunc(this.value / 3600),
       nMinute: Math.trunc(this.value % 3600 / 60),
-      nSecond: this.value % 3600 % 60,
-      newTimer: ''
+      nSecond: this.value % 3600 % 60
+    }
+  },
+  computed: {
+    time: function (nHour, nMinute, nSecond) {
+      nHour = Math.trunc(this.value / 3600)
+      nMinute = Math.trunc(this.value % 3600 / 60)
+      nSecond = this.value % 3600 % 60
+      return this.numToStr(nHour) + ':' + this.numToStr(nMinute) + ':' + this.numToStr(nSecond)
     }
   },
   methods: {
-    //TODO: Вынести в computed преобразованное значение таймера
-    time () {
-      this.interval = setInterval(() => {
-        this.nHour = Math.trunc(this.value / 3600)
-        this.nMinute = Math.trunc(this.value % 3600 / 60)
-        this.nSecond = this.value % 3600 % 60
-        this.newTimer = this.numToStr(this.nHour) + ':' + this.numToStr(this.nMinute) + ':' + this.numToStr(this.nSecond)
-      }, 1000)
-    },
     numToStr (value) {
       return (value < 10) ? '0' + String(value) : String(value)
     }
-  },
-  mounted () {
-    this.time()
   }
 }
 </script>

@@ -51,7 +51,6 @@ import AcceptEditButton from '@/components/UI/AcceptEditButton'
 import IconButton from '@/components/UI/IconButton'
 
 import TimerComponent from '@/components/UI/TimerComponent'
-// import LastPlayButton from '@/components/UI/LastPlayButton'
 
 export default {
   components: {
@@ -79,7 +78,6 @@ export default {
     return {
       taskValue: this.task.content,
       taskTimer: this.task.time,
-      taskPlaying: this.task.status,
       showEdit: false,
       showButtons: false
     }
@@ -98,29 +96,31 @@ export default {
       this.showEdit = !this.showEdit
     },
     startTask () {
-      console.log('start')
-      // TOD: mapActions, mapState и тд...
-      this.taskPlaying = !this.taskPlaying
+      // console.log('start')
+      // TODO: mapActions, mapState и тд...
       this.$store.commit('turnOff')
       this.$store.commit('changeStatus', this.task)
-      this.$store.commit('startTask', this.task)
+      this.$store.commit('changeTaskTime', this.task)
       this.$store.dispatch('startTaskTimer', this.task)
     },
     stopTask () {
-      console.log('stop')
-      this.taskPlaying = !this.taskPlaying
+      // console.log('stop')
+      // clearInterval(this.interval)
       this.$store.commit('changeStatus', this.task)
-      this.$store.commit('stopTask', this.task)
+      this.$store.commit('changeTaskTime', this.task)
       this.$store.dispatch('stopTaskTimer', this.task)
     }
   },
   beforeMount () {
-    // TODO: clear interval
+    // TODO: запуск интервала по условию
     this.interval = setInterval(() => {
       if (this.task.status) {
         this.taskTimer += 1
       }
     }, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
   }
 }
 </script>

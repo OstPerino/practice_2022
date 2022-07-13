@@ -36,12 +36,7 @@ export default {
         }
       })
     },
-    // TODO: одинаковые методы
-    startTask(state, task) {
-      const toChange = state.tasks.find(item => item.id === task.id)
-      toChange.time = task.time
-    },
-    stopTask (state, task) {
+    changeTaskTime(state, task) {
       const toChange = state.tasks.find(item => item.id === task.id)
       toChange.time = task.time
     }
