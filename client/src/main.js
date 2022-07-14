@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import { Vuelidate } from 'vuelidate'
 import VueRouter from 'vue-router'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faTrash,
@@ -16,7 +18,7 @@ import store from './store'
 
 library.add(faTrash, faPen, faCheck, faXmark)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.use(Vuelidate, VueRouter)
+Vue.use(Vuelidate, VueRouter, Vuetify)
 Vue.config.productionTip = false
 Vue.filter('date', dateFilter)
 
