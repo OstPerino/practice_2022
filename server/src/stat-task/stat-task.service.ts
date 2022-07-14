@@ -6,7 +6,7 @@ import { StatTask, Task, Prisma } from '@prisma/client';
 export class StatTaskService {
   constructor(private prisma: PrismaService) {}
 
-  async getStatsTask(task: Task, lastTime: number, presentTime: number): Promise<StatTask[]> {
+  async getStatsTask(task: Task, lastTime: number, presentTime: number): Promise<StatTask[] | null> {
     try {
       let stats = await this.prisma.statTask.findMany({
         where: { taskID: task.id , stop_time: { gte: lastTime, lte: presentTime } },
@@ -17,13 +17,12 @@ export class StatTaskService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      console.log("ALL tasks FOR TASK(" + task.id + "):");
+      console.log(stats);
+      console.log("END ALL tasks");
       return stats;
     } catch (error) {
       console.log(error);
     }
   }
-
-  //async create statTask(stat: StatTask): Promise<StatTask> {
-
-  //}
 }

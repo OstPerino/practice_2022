@@ -19,6 +19,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Roles } from '../auth/roles-auth.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 import { Role } from '../enum/role.enum';
+import { ReadStatsTaskDto } from "../stat-task/dto/read-stats-task.dto"
 
 @Controller('main')
 export class TasksController {
@@ -86,13 +87,24 @@ export class TasksController {
   @Roles(Role.User, Role.Admin)
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Get("/stat")
-  // TIMECLIENT - ЭТО ВРЕМЯ ПОЛЬЗОВАТЕЛЯ В СЕКУНДАХ...
-  //...(ТОЕСТЬ BACK ДОЛЖЕН ПОЛУЧИТЬ ЧАСЫ(ПЕРЕВЕДЕННЫЕ В СЕКУНДЫ) ПЛЮС МИНУТЫ(ПЕРЕВЕДЕННЫЕ В СЕКУНДЫ))
-  async statPage(@Req() req: Request) {//@Body() timeClient: number,
-    console.log(req['body']);
-
-    const tasks = await this.taskService.firstStat(req['body'].timeClient, req['user'].id);
+  @Get("/statDay/:time")
+  async statPage(@Param('time') timeZone: string, @Req() req: Request) {
+    //console.log(req['body']);
+    const tasks = await this.taskService.firstStat(Number(timeZone), req['user'].id);//req['body'].timeClient
     return tasks;
+  }
+
+
+  @Roles(Role.User, Role.Admin)
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Post("/stat/:id")
+  // я должен получить часовой пояс в !!!МИНУТАХ(со знаком)!!! (две строки)
+  // я должен получить два параметра - это тип времен.интервала И часовой пояс в МИНУТАХ
+  async statotherPage(@Param('id') numPage: string, @Req() req: Request, @Body() client: ReadStatsTaskDto) {
+    //console.log(req['body']);
+    const obj = await this.taskService.getStatBetweenDates(client, Number(numPage), req['user'].id);//req['body']
+
+    return obj;
   }
 }
