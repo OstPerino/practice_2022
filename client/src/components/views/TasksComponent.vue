@@ -15,21 +15,21 @@
           </div>
         </div>
       </div>
-      <div>
-        <h2 class='timetracking__headerTasks'>Today Tasks</h2>
-        <ul>
-          <li
-            v-for='(item, index) of $store.getters.getTasks'
-            class='timetracking__todayTasks todayTasks'
-            :key='index'
-          >
-            <TimerTodayComponent
-              :task='item'
-              :index='index'
-            />
-          </li>
-        </ul>
-      </div>
+<!--      <div>-->
+<!--        <h2 class='timetracking__headerTasks'>Today Tasks</h2>-->
+<!--        <ul>-->
+<!--          <li-->
+<!--            v-for='(item, index) of $store.getters.getTasks'-->
+<!--            class='timetracking__todayTasks todayTasks'-->
+<!--            :key='index'-->
+<!--          >-->
+<!--            <TimerTodayComponent-->
+<!--              :task='item'-->
+<!--              :index='index'-->
+<!--            />-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
     </div>
     <div class='TasksComponent__tasks tasks'>
       <div class='tasks__startTimeTracker startTimeTracker'>
@@ -75,7 +75,7 @@ import AddTaskButton from '@/components/UI/AddTaskButton'
 import LastPlayButton from '@/components/UI/LastPlayButton'
 import DialogAddTask from '@/components/layouts/DialogAddTask'
 import TaskComponent from '@/components/layouts/TaskComponent'
-import TimerTodayComponent from './TimerTodayComponent'
+// import TimerTodayComponent from './TimerTodayComponent'
 import TimerComponent from '@/components/UI/TimerComponent'
 
 export default {
@@ -102,7 +102,7 @@ export default {
     LastPlayButton,
     DialogAddTask,
     TaskComponent,
-    TimerTodayComponent,
+    // TimerTodayComponent,
     TimerComponent
   },
   name: 'TasksComponent',
@@ -172,7 +172,7 @@ export default {
       margin-top: 30px;
       background-color: #F9F9F9;
       padding: 30px;
-      width: 470px;
+      width: 370px;
       border-radius: 16px;
       list-style-type: none;
 

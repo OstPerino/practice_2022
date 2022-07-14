@@ -8,13 +8,13 @@
         <li class='list__item timetracker'>
             <img src='../../assets/images/timetracker.svg'>
           <div class='href'>
-            <a href='#' class='list__href'>Timetracker</a>
+            <router-link to='/' class='list__href'>Timetracker</router-link>
           </div>
         </li>
         <li class='list__item settings'>
            <img src='../../assets/images/settings.svg'>
           <div class='href'>
-            <a href='#' class='list__href'>Settings</a>
+            <router-link to='/analytics' class='list__href'>Analytics</router-link>
           </div>
         </li>
       </ul>
