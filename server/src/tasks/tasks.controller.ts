@@ -82,4 +82,17 @@ export class TasksController {
     const task = await this.taskService.stopTaskTimer(id);
     return task;
   }
+
+  @Roles(Role.User, Role.Admin)
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Get("/stat")
+  // TIMECLIENT - ЭТО ВРЕМЯ ПОЛЬЗОВАТЕЛЯ В СЕКУНДАХ...
+  //...(ТОЕСТЬ BACK ДОЛЖЕН ПОЛУЧИТЬ ЧАСЫ(ПЕРЕВЕДЕННЫЕ В СЕКУНДЫ) ПЛЮС МИНУТЫ(ПЕРЕВЕДЕННЫЕ В СЕКУНДЫ))
+  async statPage(@Req() req: Request) {//@Body() timeClient: number,
+    console.log(req['body']);
+
+    const tasks = await this.taskService.firstStat(req['body'].timeClient, req['user'].id);
+    return tasks;
+  }
 }

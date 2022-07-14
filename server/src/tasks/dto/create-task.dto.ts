@@ -26,4 +26,13 @@ export class CreateTaskDto {
     @IsOptional()
     @IsEmpty()
     start_time: number;
+
+    @IsOptional()
+    @IsEmpty()
+    create_time: number;
+
+    @IsOptional()
+    @IsEmpty()
+    last_activity: number;
+
 }
