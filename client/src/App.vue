@@ -3,6 +3,12 @@
     id='app'
     class='app'
   >
+    <div class='up-container'>
+      <HeaderComponent v-show='$route.name !== "Authorization" && $route.name !== "Registration"'/>
+      <router-view class='views'></router-view>
+    </div>
+    <FooterComponent v-show='$route.name !== "Authorization" && $route.name !== "Registration"'/>
+  </div>
     <HeaderComponent v-show='$route.name !== "Authorization" && $route.name !== "Registration"'/>
     <router-view></router-view>
   </v-app>
@@ -10,10 +16,12 @@
 
 <script>
 import HeaderComponent from '@/components/layouts/HeaderComponent'
+import FooterComponent from '@/components/layouts/FooterComponent'
 
 export default {
   components: {
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   },
   data: () => {
     return {}
@@ -42,6 +50,9 @@ export default {
   width: 100vw;
   height: 100vh;
   font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   //background: #84C7AE;
 }
 </style>

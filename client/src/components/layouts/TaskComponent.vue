@@ -116,6 +116,7 @@ export default {
   border: 1px solid #F1F1F1;
   border-radius: 20px;
   padding: 15px;
+  background-color: #fff;
 
   .item__right {
     width: 100%;
