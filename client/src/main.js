@@ -17,6 +17,7 @@ import dateFilter from '@/filters/dateFilter'
 import router from './router'
 import store from './store'
 
+
 library.add(
   faTrash,
   faPen,
@@ -27,6 +28,7 @@ library.add(
   faVk,
   faTelegram
 )
+library.add(faTrash, faPen, faCheck, faXmark, faVk, faTelegram)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vuelidate, VueRouter)
 Vue.config.productionTip = false

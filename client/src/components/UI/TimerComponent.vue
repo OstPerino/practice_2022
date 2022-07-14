@@ -1,5 +1,5 @@
 <template>
-  <span>{{ this.newTimer }}</span>
+  <span>{{ time }}</span>
 </template>
 
 <script>
@@ -14,35 +14,29 @@ export default {
   },
   data () {
     return {
-      nHour: Math.trunc(this.value / 3600),
-      nMinute: Math.trunc(this.value % 3600 / 60),
-      nSecond: this.value % 3600 % 60,
-      newTimer: ''
+      // nHour: Math.trunc(this.value / 3600),
+      // nMinute: Math.trunc(this.value % 3600 / 60),
+      // nSecond: this.value % 3600 % 60
+    }
+  },
+  computed: {
+    time: function (nHour, nMinute, nSecond) {
+      if (this.value !== undefined) {
+        nHour = Math.trunc(this.value / 3600)
+        nMinute = Math.trunc(this.value % 3600 / 60)
+        nSecond = this.value % 3600 % 60
+      } else {
+        nHour = 0
+        nMinute = 0
+        nSecond = 0
+      }
+      return this.numToStr(nHour) + ':' + this.numToStr(nMinute) + ':' + this.numToStr(nSecond)
     }
   },
   methods: {
-    // TODO: Вынести в computed преобразованное значение таймера
-    time () {
-      if (this.value !== undefined) {
-        this.interval = setInterval(() => {
-          this.nHour = Math.trunc(this.value / 3600)
-          this.nMinute = Math.trunc(this.value % 3600 / 60)
-          this.nSecond = this.value % 3600 % 60
-          this.newTimer = this.numToStr(this.nHour) + ':' + this.numToStr(this.nMinute) + ':' + this.numToStr(this.nSecond)
-        }, 1000)
-      } else {
-        this.nHour = 0
-        this.nMinute = 0
-        this.nSecond = 0
-        this.newTimer = this.numToStr(this.nHour) + ':' + this.numToStr(this.nMinute) + ':' + this.numToStr(this.nSecond)
-      }
-    },
     numToStr (value) {
       return (value < 10) ? '0' + String(value) : String(value)
     }
-  },
-  mounted () {
-    this.time()
   }
 }
 </script>

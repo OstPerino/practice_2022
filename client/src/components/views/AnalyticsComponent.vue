@@ -12,6 +12,16 @@
         button-content='Check analytics'
       />
       <ArrowRight class='rightArrow'/>
+    <form class='AnalyticsComponent__chooseInterval'>
+      <v-btn
+        class="mx-2"
+        fab
+        dark
+        large
+        color="cyan"
+      >
+        asd
+      </v-btn>
     </form>
     <div class='AnalyticsComponent__tasks tasks'>
       <div class='tasks__header'>
@@ -88,6 +98,7 @@ export default {
       border-radius: 16px;
       text-align: center;
     }
+  &__chooseInterval {
   }
 }
 </style>

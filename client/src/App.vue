@@ -1,5 +1,5 @@
 <template>
-  <div
+  <v-app
     id='app'
     class='app'
   >
@@ -9,6 +9,9 @@
     </div>
     <FooterComponent v-show='$route.name !== "Authorization" && $route.name !== "Registration"'/>
   </div>
+    <HeaderComponent v-show='$route.name !== "Authorization" && $route.name !== "Registration"'/>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
