@@ -96,12 +96,15 @@ export default {
     }
   },
   beforeMount () {
-    // TODO: clear interval
+    // TODO: запуск интервала по условию
     this.interval = setInterval(() => {
       if (this.task.status) {
         this.taskTimer += 1
       }
     }, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
   }
 }
 </script>

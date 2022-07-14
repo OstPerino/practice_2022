@@ -88,7 +88,6 @@ export default {
     this.checkTasks()
     this.interval = setInterval(() => {
       this.date = new Date()
-      // this.updateTimers()
     }, 1000)
   },
   beforeUpdate () {

@@ -36,15 +36,10 @@ export default {
         }
       })
     },
-    // TODO: одинаковые методы
-    startTask(state, task) {
+    changePlayTask(state, task) {
       const toChange = state.tasks.find(item => item.id === task.id)
       toChange.time = task.time
     },
-    stopTask(state, task) {
-      const toChange = state.tasks.find(item => item.id === task.id)
-      toChange.time = task.time
-    }
   },
   actions: {
     async getAllTasks(state) {
@@ -117,7 +112,7 @@ export default {
       )
       context.commit('turnOff')
       context.commit('changeStatus', task)
-      context.commit('startTask', task)
+      context.commit('changePlayTask', task)
     },
     async stopTaskTimer(context, task) {
       const response = await fetch(
@@ -132,7 +127,7 @@ export default {
         }
       )
       context.commit('changeStatus', task)
-      context.commit('stopTask', task)
+      context.commit('changePlayTask', task)
     }
   }
 }
