@@ -17,7 +17,6 @@ import dateFilter from '@/filters/dateFilter'
 import router from './router'
 import store from './store'
 
-
 library.add(
   faTrash,
   faPen,
