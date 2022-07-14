@@ -1,11 +1,11 @@
 <template>
-  <div
+  <v-app
     id='app'
     class='app'
   >
     <HeaderComponent v-show='$route.name !== "Authorization" && $route.name !== "Registration"'/>
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>

@@ -1,6 +1,15 @@
 <template>
   <div class='AnalyticsComponent'>
     <form class='AnalyticsComponent__chooseInterval'>
+      <v-btn
+        class="mx-2"
+        fab
+        dark
+        large
+        color="cyan"
+      >
+        asd
+      </v-btn>
     </form>
   </div>
 </template>
@@ -12,5 +21,8 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-
+.AnalyticsComponent {
+  &__chooseInterval {
+  }
+}
 </style>
