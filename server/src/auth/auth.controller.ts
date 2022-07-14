@@ -18,11 +18,6 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  // @Get('/checkLogin')
-  // async checkLogin() {
-  //
-  // }
-
   @Post('/login')
   async login(
     @Res({ passthrough: true }) res: Response,
