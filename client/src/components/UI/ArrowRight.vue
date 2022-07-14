@@ -20,8 +20,8 @@ export default {
 
 <style scoped lang='scss'>
 .ArrowButton {
-  border: 3px solid black;
-  padding: 10px;
+  border: 4px solid black;
+  padding: 15px;
   cursor: pointer;
   border-radius: 50%;
   background-color: transparent;
