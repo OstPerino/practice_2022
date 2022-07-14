@@ -1,7 +1,8 @@
 <template>
+
   <div class='AnalyticsComponent'>
     <form class='AnalyticsComponent__chooseInterval chooseInterval'>
-      <ArrowLeft class='leftArrow' />
+      <ArrowLeft class='leftArrow'/>
       <select class='chooseInterval__select select'>
         <option value='day' class='select__item'>Day</option>
         <option value='week' class='select__item'>Week</option>
@@ -11,7 +12,17 @@
         @click.prevent=''
         button-content='Check analytics'
       />
-      <ArrowRight class='rightArrow' />
+      <ArrowRight class='rightArrow'/>
+    <form class='AnalyticsComponent__chooseInterval'>
+      <v-btn
+        class="mx-2"
+        fab
+        dark
+        large
+        color="cyan"
+      >
+        asd
+      </v-btn>
     </form>
     <div class='AnalyticsComponent__tasks tasks'>
       <div class='tasks__header'>
@@ -50,7 +61,6 @@ export default {
 .AnalyticsComponent {
   width: 1300px;
   margin: 0 auto;
-
   &__chooseInterval {
     padding: 10px;
     border-radius: 16px;
@@ -62,7 +72,6 @@ export default {
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-
     &__select {
       font-size: 20px;
       line-height: 20px;
@@ -72,21 +81,17 @@ export default {
       color: #fff;
       margin-right: 40px;
     }
-
     .rightArrow {
       margin-left: 40px;
     }
-
     .leftArrow {
       margin-right: 45px;
     }
   }
-
   .tasks {
     padding: 30px;
     background-color: #F9F9F9;
     border-radius: 16px;
-
     &__header {
       background-color: #fff;
       margin-bottom: 10px;
@@ -94,6 +99,7 @@ export default {
       border-radius: 16px;
       text-align: center;
     }
+  &__chooseInterval {
   }
 }
 </style>
