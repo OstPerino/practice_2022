@@ -1,5 +1,8 @@
 <template>
-
+  <div class='AnalyticsComponent'>
+    <form class='AnalyticsComponent__chooseInterval'>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -8,6 +11,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
 
 </style>

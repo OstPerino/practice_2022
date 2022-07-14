@@ -4,12 +4,12 @@
     <OnePlayButton
       v-if='!task.status'
       :button-type='!task.status'
-      @click.prevent='startTask'
+      @click.prevent='startTaskTimer(task)'
     />
     <OnePlayButton
       v-else
       :button-type='!task.status'
-      @click.prevent='stopTask'
+      @click.prevent='stopTaskTimer(task)'
     />
     <div class='item__right'>
       <span class='item__taskName' v-if='!showEdit'>{{ task.content }}</span>
@@ -62,8 +62,6 @@ export default {
   },
   name: 'TaskComponent',
   interval: null,
-  beforeCreate () {
-  },
   props: {
     task: {
       type: Object,
@@ -85,7 +83,9 @@ export default {
   methods: {
     ...mapActions([
       'createNewTask',
-      'deleteTask'
+      'deleteTask',
+      'startTaskTimer',
+      'stopTaskTimer'
     ]),
     editTask () {
       this.showEdit = !this.showEdit
@@ -93,15 +93,6 @@ export default {
     acceptEdit () {
       this.$store.dispatch('editTask', { task: this.task, content: this.taskValue })
       this.showEdit = !this.showEdit
-    },
-    startTask () {
-      // TODO: mapActions, mapState и тд...
-      this.taskPlaying = !this.taskPlaying
-      this.$store.dispatch('startTaskTimer', this.task)
-    },
-    stopTask () {
-      this.taskPlaying = !this.taskPlaying
-      this.$store.dispatch('stopTaskTimer', this.task)
     }
   },
   beforeMount () {

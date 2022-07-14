@@ -8,25 +8,13 @@
         <li class='list__item timetracker'>
             <img src='../../assets/images/timetracker.svg'>
           <div class='href'>
-            <a href='#' class='list__href'>Timetracker</a>
+            <router-link to='/' class='list__href'>Timetracker</router-link>
           </div>
         </li>
-<!--        <li class='list__item settings'>-->
-<!--           <img src='../../assets/images/settings.svg'>-->
-<!--          <div class='href'>-->
-<!--            <a href='#' class='list__href'>Settings</a>-->
-<!--          </div>-->
-<!--        </li>-->
-        <li class='list__item analytic'>
-          <img src='../../assets/images/settings.svg'>
+        <li class='list__item settings'>
+           <img src='../../assets/images/settings.svg'>
           <div class='href'>
-            <router-link
-              href='#'
-              class='list__href'
-              to='/analytic'
-              >
-              Analytic
-            </router-link>
+            <router-link to='/analytics' class='list__href'>Analytics</router-link>
           </div>
         </li>
       </ul>
@@ -110,10 +98,6 @@ export default {
       }
 
       .settings {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-
-      .analytic {
         background-color: rgba(0, 0, 0, 0.05);
       }
     }
