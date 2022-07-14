@@ -1,6 +1,6 @@
 <template>
-  <div class='AnalyticsComponent'>
-    <form class='AnalyticsComponent__chooseInterval chooseInterval'>
+  <form class='AnalyticsComponent'>
+    <div class='AnalyticsComponent__chooseInterval chooseInterval'>
       <ArrowLeft class='leftArrow' />
       <select class='chooseInterval__select select'>
         <option value='day' class='select__item'>Day</option>
@@ -12,6 +12,7 @@
         button-content='Check analytics'
       />
       <ArrowRight class='rightArrow' />
+      </div>
       <div class='AnalyticsComponent__tasks tasks'>
         <div class='tasks__header'>
           Sun May 01 2022 18:00:00 - Sun May 08 2022 18:00:00
@@ -25,8 +26,7 @@
           />
         </div>
       </div>
-    </form>
-  </div>
+  </form>
 </template>
 
 <script>
