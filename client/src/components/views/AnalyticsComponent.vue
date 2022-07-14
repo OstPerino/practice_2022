@@ -1,16 +1,65 @@
 <template>
   <div class='AnalyticsComponent'>
-    <form class='AnalyticsComponent__chooseInterval'>
+    <form class='AnalyticsComponent__chooseInterval chooseInterval'>
+      <ArrowLeft class='leftArrow'/>
+      <select class='chooseInterval__select select'>
+        <option value='day' class='select__item'>Day</option>
+        <option value='week' class='select__item'>Week</option>
+        <option value='month' class='select__item'>Month</option>
+      </select>
+      <DefaultButtonComponent
+        @click.prevent=''
+        button-content='Check analytics'
+      />
+      <ArrowRight class='rightArrow'/>
     </form>
   </div>
 </template>
 
 <script>
+import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
+import ArrowLeft from '@/components/UI/ArrowLeft'
+import ArrowRight from '@/components/UI/ArrowRight'
+
 export default {
-  name: 'AnalyticsComponent'
+  name: 'AnalyticsComponent',
+  components: {
+    DefaultButtonComponent,
+    ArrowRight,
+    ArrowLeft
+  }
 }
 </script>
 
 <style scoped lang='scss'>
+.AnalyticsComponent {
+  width: 1300px;
+  margin: 0 auto;
+  &__chooseInterval {
+    padding: 30px;
+    border-radius: 16px;
+  }
 
+  .chooseInterval {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F9F9;
+    &__select {
+      font-size: 20px;
+      line-height: 20px;
+      border-radius: 8px;
+      padding: 10px 70px 10px 5px;
+      background-color: #000;
+      color: #fff;
+      margin-right: 40px;
+    }
+    .rightArrow {
+      margin-left: 40px;
+    }
+    .leftArrow {
+      margin-right: 45px;
+    }
+  }
+}
 </style>

@@ -7,14 +7,16 @@ import {
   faTrash,
   faPen,
   faCheck,
-  faXmark
+  faXmark,
+  faArrowLeftLong,
+  faArrowRightLong
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import dateFilter from '@/filters/dateFilter'
 import router from './router'
 import store from './store'
 
-library.add(faTrash, faPen, faCheck, faXmark)
+library.add(faTrash, faPen, faCheck, faXmark, faArrowLeftLong, faArrowRightLong)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vuelidate, VueRouter)
 Vue.config.productionTip = false
