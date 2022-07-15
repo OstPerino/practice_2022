@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEmpty, IsInt, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmpty, IsNumber, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateTaskDto {
