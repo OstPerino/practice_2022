@@ -101,7 +101,6 @@ export default {
     LastPlayButton,
     DialogAddTask,
     TaskComponent,
-    // TimerTodayComponent,
     TimerComponent
   },
   name: 'TasksComponent',

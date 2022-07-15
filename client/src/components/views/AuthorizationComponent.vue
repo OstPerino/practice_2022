@@ -161,9 +161,7 @@ export default {
         // }
         await this.$router.push('/')
       } else {
-        if (this.showError) {
-          this.showError = !this.showError
-        }
+        this.showError = true
         await this.$router.push('/Authorization')
       }
     }

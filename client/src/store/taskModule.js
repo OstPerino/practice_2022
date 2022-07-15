@@ -39,7 +39,7 @@ export default {
     changePlayTask(state, task) {
       const toChange = state.tasks.find(item => item.id === task.id)
       toChange.time = task.time
-    },
+    }
   },
   actions: {
     async getAllTasks(state) {

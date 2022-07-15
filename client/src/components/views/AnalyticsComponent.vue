@@ -2,29 +2,48 @@
 
   <div class='AnalyticsComponent'>
     <form class='AnalyticsComponent__chooseInterval chooseInterval'>
-      <ArrowLeft class='leftArrow'/>
-      <select class='chooseInterval__select select'>
+      <ArrowLeft class='leftArrow' />
+      <select class='chooseInterval__select select' @change='onChange'>
         <option value='day' class='select__item'>Day</option>
         <option value='week' class='select__item'>Week</option>
         <option value='month' class='select__item'>Month</option>
       </select>
       <DefaultButtonComponent
-        @click.prevent=''
+        @click.prevent='checkAnalytics'
         button-content='Check analytics'
       />
-      <ArrowRight class='rightArrow'/>
+      <ArrowRight class='rightArrow' />
     </form>
     <div class='AnalyticsComponent__tasks tasks'>
       <div class='tasks__header'>
-        Sun May 01 2022 18:00:00 - Sun May 08 2022 18:00:00
+        <span v-if='!resultQuery.timeInterval'>Today</span>
+        <span v-else>{{ this.resultQuery.timeInterval }}</span>
       </div>
       <div class='tasks__wrapper'>
-        <TaskComponent
-          v-for='(item, index) in $store.getters.getTasks'
-          :key='index'
-          :task='item'
-          :index='index'
-        />
+        <div class='day' v-if='optionValue === "day"'>
+          <AnalyticTask
+            v-for='(item, index) in $store.getters.getCurrentTasks'
+            :key='index'
+            :task='item'
+            :index='index'
+          />
+        </div>
+        <div class='week' v-else-if='optionValue === "week"'>
+          <AnalyticTask
+            v-for='(item, index) in $store.getters.getWeekTasks'
+            :key='index'
+            :task='item'
+            :index='index'
+          />
+        </div>
+        <div class='month' v-else-if='optionValue === "month"'>
+          <AnalyticTask
+            v-for='(item, index) in $store.getters.getMonthTasks'
+            :key='index'
+            :task='item'
+            :index='index'
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -34,15 +53,84 @@
 import DefaultButtonComponent from '@/components/UI/DefaultButtonComponent'
 import ArrowLeft from '@/components/UI/ArrowLeft'
 import ArrowRight from '@/components/UI/ArrowRight'
-import TaskComponent from '@/components/layouts/TaskComponent'
+import AnalyticTask from '@/components/layouts/AnalyticTask'
 
 export default {
   name: 'AnalyticsComponent',
+  async beforeMount () {
+    const response = await this.$store.dispatch('setAnalyticTasks')
+    this.$store.commit('setLocalTasks', response)
+    const responseWeek = await fetch('http://localhost:4000/main/stat/0', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'POST',
+      body: JSON.stringify({
+        timeClient: -420,
+        interval: 'week'
+      })
+    })
+    const resultWeek = await responseWeek.json()
+    this.$store.commit('setWeekTasks', resultWeek.tasks)
+    const responseMonth = await fetch('http://localhost:4000/main/stat/0', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      method: 'POST',
+      body: JSON.stringify({
+        timeClient: -420,
+        interval: 'month'
+      })
+    })
+    const resultMonth = await responseMonth.json()
+    this.$store.commit('setMonthTasks', resultMonth.tasks)
+    this.checkTasks()
+  },
   components: {
-    TaskComponent,
+    AnalyticTask,
     DefaultButtonComponent,
     ArrowRight,
     ArrowLeft
+  },
+  data () {
+    return {
+      showTasks: false,
+      optionValue: 'day',
+      resultQuery: {}
+    }
+  },
+  methods: {
+    checkTasks () {
+      this.showTasks = this.$store.getters.getTasks.length !== 0
+    },
+    onChange (event) {
+      this.optionValue = event.target.value
+    },
+    async checkAnalytics () {
+      // const response = await fetch('http://localhost:4000/main/stat/0', {
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      //   credentials: 'include',
+      //   method: 'POST',
+      //   body: JSON.stringify({
+      //     timeClient: -420,
+      //     interval: this.optionValue
+      //   })
+      // })
+      // this.resultQuery = await response.json()
+      // console.log(this.optionValue)
+      // if (this.optionValue === 'week') {
+      //   this.$store.commit('setWeekTasks', this.resultQuery.tasks)
+      // } else if (this.optionValue === 'month') {
+      //   this.$store.commit('setMonthTasks', this.resultQuery.tasks)
+      // }
+    }
   }
 }
 </script>
@@ -51,6 +139,7 @@ export default {
 .AnalyticsComponent {
   width: 1300px;
   margin: 0 auto;
+
   &__chooseInterval {
     padding: 10px;
     border-radius: 16px;
@@ -62,6 +151,7 @@ export default {
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+
     &__select {
       font-size: 20px;
       line-height: 20px;
@@ -71,13 +161,16 @@ export default {
       color: #fff;
       margin-right: 40px;
     }
+
     .rightArrow {
       margin-left: 40px;
     }
+
     .leftArrow {
       margin-right: 45px;
     }
   }
+
   .tasks {
     padding: 30px;
     background-color: #F9F9F9;

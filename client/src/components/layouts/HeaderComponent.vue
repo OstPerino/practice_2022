@@ -21,8 +21,8 @@
     </nav>
     <div class='HeaderComponent__user user'>
       <div class='user__data data'>
-        <span class='data__name'>Manjay Gupta</span><br>
-        <span class='data__role'>UX/UI Designer</span>
+        <span class='data__name'>Alexey</span><br>
+        <span class='data__role'>alexey.cj@gmail.com</span>
       </div>
       <div class='user__image'>
         <img src='../../assets/images/profilePicture.png' alt='user picture'>
