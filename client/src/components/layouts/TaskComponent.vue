@@ -20,6 +20,7 @@
         />
         <AcceptEditButton
           @click='acceptEdit'
+          class='accept'
         />
       </div>
       <div class='item__timer'>
@@ -126,6 +127,7 @@ export default {
 
     .edit {
       display: flex;
+      align-items: center;
     }
 
     .item__taskName {
