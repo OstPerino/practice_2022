@@ -78,7 +78,7 @@ export default {
       taskValue: this.task.content,
       taskTimer: this.task.time,
       showEdit: false,
-      showButtons: false
+      showButtons: false,
     }
   },
   methods: {
